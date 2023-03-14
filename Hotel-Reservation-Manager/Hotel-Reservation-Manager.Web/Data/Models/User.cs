@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace Hotel_Reservation_Manager.Data.Models
 {
     //TO-DO User: IdentityRole
-    public class User
+    public class User: IdentityUser
     {
         //username,password,email and phonenumber will be inherited from IdentityUser
-        public string Id = Guid.NewGuid().ToString();
         public string Password { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
