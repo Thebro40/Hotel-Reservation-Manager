@@ -2,6 +2,7 @@
 
 namespace Hotel_Reservation_Manager.Web.Data.Models
 {
+    //TO-DO User: IdentityRole
     public class User
     {
         //username,password,email and phonenumber will be inherited from IdentityUser
