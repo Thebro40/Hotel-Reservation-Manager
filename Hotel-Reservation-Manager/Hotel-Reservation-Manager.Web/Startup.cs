@@ -1,4 +1,4 @@
-using Hotel_Reservation_Manager.Web.Data;
+using Hotel_Reservation_Manager.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hotel_Reservation_Manager.Web
+namespace Hotel_Reservation_Manager
 {
     public class Startup
     {

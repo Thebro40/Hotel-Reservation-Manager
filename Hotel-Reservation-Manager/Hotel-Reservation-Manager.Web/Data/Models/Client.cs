@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Hotel_Reservation_Manager.Web.Data.Models
+namespace Hotel_Reservation_Manager.Data.Models
 {
     public class Client
     {
