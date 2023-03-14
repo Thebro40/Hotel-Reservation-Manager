@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>aspnet-Hotel_Reservation_Manager.Web-CD903E26-0C03-44B3-A4CD-A7A06CB6C63B</UserSecretsId>
-    <RootNamespace>Hotel_Reservation_Manager.Web</RootNamespace>
+    <UserSecretsId>aspnet-Hotel_Reservation_Manager-CD903E26-0C03-44B3-A4CD-A7A06CB6C63B</UserSecretsId>
+    <RootNamespace>Hotel_Reservation_Manager</RootNamespace>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
 
