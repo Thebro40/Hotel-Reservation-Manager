@@ -1,6 +1,7 @@
 using Hotel_Reservation_Manager.Data;
 using Hotel_Reservation_Manager.Data.Models;
 using Hotel_Reservation_Manager.Services;
+using Hotel_Reservation_Manager.Services.Rooms;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,6 +39,7 @@ namespace Hotel_Reservation_Manager
             services.AddRazorPages();
 
             services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IRoomsService, RoomsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,53 @@
+﻿@model RoomsIndexViewModel
+@{
+}
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Number</th>
+            <th>Room Type</th>
+            <th>Capacity</th>
+            <th>PricePerBedAdult</th>
+            <th>PricePerBedChild</th>
+            <th>Availability</th>
+        </tr>
+    </thead>
+    <a asp-controller="Rooms" asp-action="Create">Create Room</a>
+    <tbody>
+        @foreach (var item in Model.Rooms)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Capacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PricePerBedAdult)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PricePerBedChild)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsAvailable)
+                </td>
+                <td>
+                    @*@if (this.User.IsInRole("Admin"))*@
+                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>                 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
