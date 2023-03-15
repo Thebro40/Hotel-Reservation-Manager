@@ -4,14 +4,16 @@ using Hotel_Reservation_Manager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hotel_Reservation_Manager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230315113920_SeedNewAdmin")]
+    partial class SeedNewAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,8 +130,8 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EGN")
-                        .HasColumnType("int");
+                    b.Property<string>("EGN")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
@@ -203,6 +205,32 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "988db3fc-c1f8-4f62-aa60-8ec6c8d4b1ff",
+                            EGN = "12121",
+                            Email = "admin@abv.bg",
+                            EmailConfirmed = true,
+                            FirstName = "ss",
+                            HireDate = new DateTime(2023, 3, 15, 13, 39, 20, 48, DateTimeKind.Local).AddTicks(2080),
+                            IsActive = true,
+                            LastName = "s2s",
+                            LockoutEnabled = false,
+                            MiddleName = "vv",
+                            NormalizedEmail = "ADMIN@ABV.BG",
+                            NormalizedUserName = "Admin",
+                            Password = "Pa$$w0rd",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL/gWogu8sgr6F/L3FPYnfnLIRtqHP3m96adNXqI1MrYIrMlc0PTw7JA1GTbT1Aghg==",
+                            PhoneNumber = "1111111111",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "3158df5f-6924-4f40-a259-a7da08e17bd7",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
