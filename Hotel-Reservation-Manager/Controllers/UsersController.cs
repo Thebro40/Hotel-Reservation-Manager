@@ -43,7 +43,7 @@ namespace Hotel_Reservation_Manager.Controllers
         //GET: Users/Edit/(Id)
         public async Task<IActionResult> Edit(string id)
         {
-            UserEditViewModel model = await usersService.GetUserEditViewModelAsync(id);
+            UserEditViewModel model = await usersService.EditUserByIdAsync(id);
             return View(model);
         }
 
@@ -62,21 +62,21 @@ namespace Hotel_Reservation_Manager.Controllers
         //GET: Users/Delete/(Id)
         public async Task<IActionResult> Delete(string id)
         {
-            UserDetailsViewModel model = await usersService.GetUserDeleteViewModelAsyncById(id);
+            UserDetailsViewModel model = await usersService.DeletUserByIdAsync(id);
             return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(UserDetailsViewModel model)
         {
-            await usersService.DeleteUserAsync(model);
+            await usersService.DeleteUserConfirmedAsync(model);
             return RedirectToAction(nameof(Index));
         }
 
         //GET: Users/Details/(Id)
         public async Task<IActionResult> Details(string id)
         {
-            UserDetailsViewModel model = await usersService.GetUserDetailsViewModelByIdAsync(id);
+            UserDetailsViewModel model = await usersService.GetUserDetailsByIdAsync(id);
             return View(model);
         }
 

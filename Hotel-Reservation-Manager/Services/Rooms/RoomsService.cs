@@ -82,7 +82,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
             }
             return null;
         }
-        public async Task UpdateRoom(RoomEditViewModel model)
+        public async Task UpdateRoomAsync(RoomEditViewModel model)
         {
             Room room = new Room()
             {
@@ -115,7 +115,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
             }
             return null;
         }
-        public async Task DeleteConfirmRoom(RoomDetailsViewModel model)
+        public async Task DeleteConfirmRoomAsync(RoomDetailsViewModel model)
         {
             Room room = await this.context.Rooms.FindAsync(model.Id);
             if (room != null)

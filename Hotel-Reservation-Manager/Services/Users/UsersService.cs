@@ -17,7 +17,7 @@ namespace Hotel_Reservation_Manager.Services
             this.context = context;
         }
         //TO-DO ADD VALIDATIONS AND CHECKS
-        public async Task<UserDetailsViewModel> GetUserDetailsViewModelByIdAsync(string id)
+        public async Task<UserDetailsViewModel> GetUserDetailsByIdAsync(string id)
         {
             User user = await this.context.Users.FindAsync(id);
             if (user != null)
@@ -78,7 +78,7 @@ namespace Hotel_Reservation_Manager.Services
             await this.context.SaveChangesAsync();
 
         }
-        public async Task<UserEditViewModel> GetUserEditViewModelAsync(string id)
+        public async Task<UserEditViewModel> EditUserByIdAsync(string id)
         {
             User user = await this.context.Users.FindAsync(id);
             if (user != null)
@@ -118,7 +118,7 @@ namespace Hotel_Reservation_Manager.Services
             this.context.Update(user);
             await context.SaveChangesAsync();
         }
-        public async Task<UserDetailsViewModel> GetUserDeleteViewModelAsyncById(string id)
+        public async Task<UserDetailsViewModel> DeletUserByIdAsync(string id)
         {
             User user = await this.context.Users.FindAsync(id);
             if (user != null)
@@ -140,7 +140,7 @@ namespace Hotel_Reservation_Manager.Services
             }
             return null;
         }
-        public async Task DeleteUserAsync(UserDetailsViewModel model)
+        public async Task DeleteUserConfirmedAsync(UserDetailsViewModel model)
         {
             User user = await this.context.Users.FindAsync(model.Id);
             if (user != null)

@@ -54,7 +54,7 @@ namespace Hotel_Reservation_Manager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(RoomEditViewModel model)
         {
-            await roomsService.UpdateRoom(model);
+            await roomsService.UpdateRoomAsync(model);
             return RedirectToAction(nameof(Index));
         }
 
@@ -70,7 +70,7 @@ namespace Hotel_Reservation_Manager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(RoomDetailsViewModel model)
         {
-            await roomsService.DeleteConfirmRoom(model);
+            await roomsService.DeleteConfirmRoomAsync(model);
             return RedirectToAction(nameof(Index));
         }
     }
