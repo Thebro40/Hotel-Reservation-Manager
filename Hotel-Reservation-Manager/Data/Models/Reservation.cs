@@ -6,7 +6,7 @@ namespace Hotel_Reservation_Manager.Data.Models
     public class Reservation
     {
         public int Id { get; set; }
-        public virtual Room ReservedRoom { get; set; }
+        public virtual ICollection<Room> ReservedRooms { get; set; }
         //TO-DO User or IdentityUser?
         public virtual User IssuingUser { get; set; }
         public virtual ICollection<Customer> PeopleStaying { get; set; }

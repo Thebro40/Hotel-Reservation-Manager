@@ -10,6 +10,7 @@
         public decimal PricePerBedAdult { get; set; }
         public decimal PricePerBedChild { get; set; }
         public int Number { get; set; }
+        public virtual Reservation Reservation { get; set; }
         
     }
     public enum RoomType
