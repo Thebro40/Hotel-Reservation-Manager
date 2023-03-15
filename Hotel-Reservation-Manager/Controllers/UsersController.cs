@@ -16,8 +16,6 @@ namespace Hotel_Reservation_Manager.Controllers
             this.usersService = usersService;
             this.userManager = userManager;
         }
-
-
         public async Task<IActionResult> Index()
         {
             var users = await usersService.GetUsersAsync();
@@ -29,8 +27,8 @@ namespace Hotel_Reservation_Manager.Controllers
         {
             return View();
         }
-        [HttpPost]
 
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(UserCreateViewModel model)
         {

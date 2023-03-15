@@ -78,7 +78,6 @@ namespace Hotel_Reservation_Manager.Services
             await this.context.SaveChangesAsync();
 
         }
-
         public async Task<UserEditViewModel> GetUserEditViewModelAsync(string id)
         {
             User user = await this.context.Users.FindAsync(id);

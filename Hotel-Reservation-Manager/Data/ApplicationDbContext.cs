@@ -26,6 +26,16 @@ namespace Hotel_Reservation_Manager.Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            /*
+             * builder.Entity<Tech>(
+                entity =>
+            {
+                entity.HasOne(x => x.User)
+                  .WithOne(x => x.Tech)
+                 .HasForeignKey<Tech>(x => x.UserId)
+                 .OnDelete(DeleteBehavior.Cascade);
+            });
+            */
             base.OnModelCreating(builder);
             var password = new PasswordHasher<User>();
             User user = new User
