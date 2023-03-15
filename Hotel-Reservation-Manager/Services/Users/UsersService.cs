@@ -118,12 +118,12 @@ namespace Hotel_Reservation_Manager.Services
             this.context.Update(user);
             await context.SaveChangesAsync();
         }
-        public async Task<UserDeleteViewModel> GetUserDeleteViewModelAsyncById(string id)
+        public async Task<UserDetailsViewModel> GetUserDeleteViewModelAsyncById(string id)
         {
             User user = await this.context.Users.FindAsync(id);
             if (user != null)
             {
-                return new UserDeleteViewModel()
+                return new UserDetailsViewModel()
                 {
                     UserName = user.UserName,
                     PhoneNumber = user.PhoneNumber,
@@ -140,7 +140,7 @@ namespace Hotel_Reservation_Manager.Services
             }
             return null;
         }
-        public async Task DeleteUserAsync(UserDeleteViewModel model)
+        public async Task DeleteUserAsync(UserDetailsViewModel model)
         {
             User user = await this.context.Users.FindAsync(model.Id);
             if (user != null)

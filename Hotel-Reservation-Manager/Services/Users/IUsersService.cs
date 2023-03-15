@@ -10,8 +10,8 @@ namespace Hotel_Reservation_Manager.Services
         Task CreateUserAsync(UserCreateViewModel user);
         Task<UserEditViewModel> GetUserEditViewModelAsync(string id);
         Task UpdateUserAsync(UserEditViewModel model);
-        Task<UserDeleteViewModel> GetUserDeleteViewModelAsyncById(string id);
-        Task DeleteUserAsync(UserDeleteViewModel model);
+        Task<UserDetailsViewModel> GetUserDeleteViewModelAsyncById(string id);
+        Task DeleteUserAsync(UserDetailsViewModel model);
 
     }
 }

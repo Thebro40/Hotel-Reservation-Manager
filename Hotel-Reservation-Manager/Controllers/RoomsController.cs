@@ -61,14 +61,14 @@ namespace Hotel_Reservation_Manager.Controllers
         // GET: RoomsController/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            RoomDeleteViewModel model = await roomsService.DeleteRoomByIdAsync(id);
+            RoomDetailsViewModel model = await roomsService.DeleteRoomByIdAsync(id);
             return View(model);
         }
 
         // POST: RoomsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(RoomDeleteViewModel model)
+        public async Task<IActionResult> Delete(RoomDetailsViewModel model)
         {
             await roomsService.DeleteConfirmRoom(model);
             return RedirectToAction(nameof(Index));

@@ -10,7 +10,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
         Task CreateRoomAsync(RoomCreateViewModel model);
         Task<RoomEditViewModel> EditRoomByIdAsync(int id);
         Task UpdateRoom(RoomEditViewModel model);
-        Task DeleteConfirmRoom(RoomDeleteViewModel model);
-        Task<RoomDeleteViewModel> DeleteRoomByIdAsync(int id);
+        Task DeleteConfirmRoom(RoomDetailsViewModel model);
+        Task<RoomDetailsViewModel> DeleteRoomByIdAsync(int id);
     }
 }
