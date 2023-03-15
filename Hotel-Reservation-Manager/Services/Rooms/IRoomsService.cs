@@ -6,9 +6,11 @@ namespace Hotel_Reservation_Manager.Services.Rooms
     public interface IRoomsService
     {
         Task<RoomsIndexViewModel> GetRoomsAsync();
-        Task<RoomDetailsViewModel> GetRoomDetailsViewModelAsyncById(int id);
+        Task<RoomDetailsViewModel> GetRoomDetailsByIdAsync(int id);
         Task CreateRoomAsync(RoomCreateViewModel model);
-        Task<RoomEditViewModel> GetRoomEditViewModelAsync(int id);
+        Task<RoomEditViewModel> EditRoomByIdAsync(int id);
         Task UpdateRoom(RoomEditViewModel model);
+        Task DeleteConfirmRoom(RoomDeleteViewModel model);
+        Task<RoomDeleteViewModel> DeleteRoomByIdAsync(int id);
     }
 }

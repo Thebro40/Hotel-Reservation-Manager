@@ -23,7 +23,7 @@ namespace Hotel_Reservation_Manager.Controllers
         // GET: RoomsController/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            RoomDetailsViewModel model = await roomsService.GetRoomDetailsViewModelAsyncById(id);
+            RoomDetailsViewModel model = await roomsService.GetRoomDetailsByIdAsync(id);
             return View(model);
         }
 
@@ -45,7 +45,7 @@ namespace Hotel_Reservation_Manager.Controllers
         // GET: RoomsController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            RoomEditViewModel model = await roomsService.GetRoomEditViewModelAsync(id);
+            RoomEditViewModel model = await roomsService.EditRoomByIdAsync(id);
             return View(model);
         }
 
@@ -59,24 +59,19 @@ namespace Hotel_Reservation_Manager.Controllers
         }
 
         // GET: RoomsController/Delete/5
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            RoomDeleteViewModel model = await roomsService.DeleteRoomByIdAsync(id);
+            return View(model);
         }
 
         // POST: RoomsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(RoomDeleteViewModel model)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await roomsService.DeleteConfirmRoom(model);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

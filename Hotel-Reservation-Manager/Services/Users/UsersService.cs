@@ -149,6 +149,5 @@ namespace Hotel_Reservation_Manager.Services
                await this.context.SaveChangesAsync();
             }          
         }
-
     }
 }

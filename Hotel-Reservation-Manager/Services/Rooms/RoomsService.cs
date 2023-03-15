@@ -30,7 +30,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
                 .ToListAsync();
             return model;
         }
-        public async Task<RoomDetailsViewModel> GetRoomDetailsViewModelAsyncById(int id)
+        public async Task<RoomDetailsViewModel> GetRoomDetailsByIdAsync(int id)
         {
             Room room = await this.context.Rooms.FindAsync(id);
             if (room != null)
@@ -64,7 +64,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
             await this.context.Rooms.AddAsync(room);
             await this.context.SaveChangesAsync();
         }
-        public async Task<RoomEditViewModel> GetRoomEditViewModelAsync(int id)
+        public async Task<RoomEditViewModel> EditRoomByIdAsync(int id)
         {
             Room room = await this.context.Rooms.FindAsync(id);
             if (room != null)
@@ -86,16 +86,43 @@ namespace Hotel_Reservation_Manager.Services.Rooms
         {
             Room room = new Room()
             {
-                Id=model.Id,
-                Capacity=model.Capacity,
-                IsAvailable=model.IsAvailable,
-                Number=model.Number,
-                PricePerBedAdult=model.PricePerBedAdult,
-                PricePerBedChild=model.PricePerBedChild,
-                RoomType=model.RoomType,
+                Id = model.Id,
+                Capacity = model.Capacity,
+                IsAvailable = model.IsAvailable,
+                Number = model.Number,
+                PricePerBedAdult = model.PricePerBedAdult,
+                PricePerBedChild = model.PricePerBedChild,
+                RoomType = model.RoomType,
             };
             this.context.Update(room);
             await context.SaveChangesAsync();
+        }
+        public async Task<RoomDeleteViewModel> DeleteRoomByIdAsync(int id)
+        {
+            Room room = await this.context.Rooms.FindAsync(id);
+            if (room != null)
+            {
+                return new RoomDeleteViewModel()
+                {
+                    Capacity= room.Capacity,
+                    Id= room.Id,
+                    IsAvailable= room.IsAvailable,
+                    Number=room.Number,
+                    PricePerBedAdult= room.PricePerBedAdult,
+                    PricePerBedChild= room.PricePerBedChild,
+                    RoomType= room.RoomType,
+                };
+            }
+            return null;
+        }
+        public async Task DeleteConfirmRoom(RoomDeleteViewModel model)
+        {
+            Room room = await this.context.Rooms.FindAsync(model.Id);
+            if (room != null)
+            {
+                this.context.Rooms.Remove(room);
+                await this.context.SaveChangesAsync();
+            }
         }
     }
 }
