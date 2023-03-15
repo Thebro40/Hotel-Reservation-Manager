@@ -11,8 +11,11 @@ namespace Hotel_Reservation_Manager.Controllers
     {
         private readonly IUsersService usersService;
         private readonly UserManager<User> userManager;
-        public UsersController(IUsersService usersService, UserManager<User> userManager)
+        public readonly IPasswordHasher<User> passwordHasher;
+
+        public UsersController(IUsersService usersService, UserManager<User> userManager, IPasswordHasher<User> passwordHasher)
         {
+            this.passwordHasher = passwordHasher;
             this.usersService = usersService;
             this.userManager = userManager;
         }

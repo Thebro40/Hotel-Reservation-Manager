@@ -2,6 +2,7 @@
 using Hotel_Reservation_Manager.Data.Models;
 using Hotel_Reservation_Manager.ViewModels;
 using Hotel_Reservation_Manager.ViewModels.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -12,9 +13,11 @@ namespace Hotel_Reservation_Manager.Services
     public class UsersService : IUsersService
     {
         private readonly ApplicationDbContext context;
-        public UsersService(ApplicationDbContext context)
+        public readonly IPasswordHasher<User> passwordHasher;
+        public UsersService(ApplicationDbContext context,  IPasswordHasher<User> passwordHasher)
         {
             this.context = context;
+            this.passwordHasher = passwordHasher;
         }
         //TO-DO ADD VALIDATIONS AND CHECKS
         public async Task<UserDetailsViewModel> GetUserDetailsByIdAsync(string id)
@@ -59,21 +62,29 @@ namespace Hotel_Reservation_Manager.Services
         }
         public async Task CreateUserAsync(UserCreateViewModel model)
         {
+
             User user = new User()
             {
+
                 UserName = model.UserName,
+                NormalizedUserName = model.UserName.ToUpper(),
+                Email = model.Email,
+                NormalizedEmail = model.Email.ToUpper(),
                 PhoneNumber = model.PhoneNumber,
-                Password = model.Password,
+                //Password = model.Password,
                 FirstName = model.FirstName,
                 MiddleName = model.MiddleName,
                 LastName = model.LastName,
                 EGN = model.EGN,
-                Email = model.Email,
                 HireDate = model.HireDate,
                 IsActive = model.IsActive,
                 FireDate = model.FireDate,
 
             };
+            var hashedPassword = passwordHasher.HashPassword(user, model.Password);
+            user.SecurityStamp = Guid.NewGuid().ToString();
+            user.PasswordHash = hashedPassword;
+            
             await this.context.Users.AddAsync(user);
             await this.context.SaveChangesAsync();
 
@@ -87,7 +98,7 @@ namespace Hotel_Reservation_Manager.Services
                 {
                     UserName = user.UserName,
                     PhoneNumber = user.PhoneNumber,
-                    Password = user.Password,
+                    Password = user.PasswordHash.ToString().Substring(0, 8),
                     FirstName = user.FirstName,
                     MiddleName = user.MiddleName,
                     LastName = user.LastName,
@@ -106,7 +117,7 @@ namespace Hotel_Reservation_Manager.Services
             User user = await this.context.Users.FindAsync(model.Id);
             user.UserName = model.UserName;
             user.PhoneNumber = model.PhoneNumber;
-            user.Password = model.Password;
+            //user.Password = model.Password;
             user.FirstName = model.FirstName;
             user.MiddleName = model.MiddleName;
             user.LastName = model.LastName;
@@ -127,7 +138,7 @@ namespace Hotel_Reservation_Manager.Services
                 {
                     UserName = user.UserName,
                     PhoneNumber = user.PhoneNumber,
-                    Password = user.Password,
+                    //Password = user.Password,
                     FirstName = user.FirstName,
                     MiddleName = user.MiddleName,
                     LastName = user.LastName,

@@ -4,14 +4,16 @@ using Hotel_Reservation_Manager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hotel_Reservation_Manager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230315200518_321312")]
+    partial class _321312
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,6 +172,9 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -206,22 +211,23 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                         {
                             Id = "8e445864-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "87fae9ea-d3ce-4a7b-9163-ef700a4e68a5",
+                            ConcurrencyStamp = "9b281c5d-e2b8-4c96-9927-8b8b582f6e73",
                             EGN = "12121",
                             Email = "admin@abv.bg",
                             EmailConfirmed = true,
                             FirstName = "ss",
-                            HireDate = new DateTime(2023, 3, 15, 23, 11, 52, 421, DateTimeKind.Local).AddTicks(8804),
+                            HireDate = new DateTime(2023, 3, 15, 22, 5, 18, 163, DateTimeKind.Local).AddTicks(3435),
                             IsActive = true,
                             LastName = "s2s",
                             LockoutEnabled = false,
                             MiddleName = "vv",
                             NormalizedEmail = "ADMIN@ABV.BG",
                             NormalizedUserName = "ADMIN@ABV.BG",
-                            PasswordHash = "AQAAAAEAACcQAAAAEF+dWSOfagARZ5pCiKpHyunSZD9MeB18XfKL/M8FtmWCnzejLSlFMC5phUtlXXTyDg==",
+                            Password = "Password",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIojNyl/IwhKkIqvT5zZvW+qb5UtLQze+VoQi0sMvWbq/cAKGz5tV/M4YCBkq57ujA==",
                             PhoneNumber = "1111111111",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "c42c42c6-d85e-4a96-917e-7e9cc8a71e68",
+                            SecurityStamp = "45dfef0f-497b-4a55-9553-06d24aabbe54",
                             TwoFactorEnabled = false,
                             UserName = "admin@abv.bg"
                         });

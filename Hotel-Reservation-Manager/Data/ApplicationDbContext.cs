@@ -44,7 +44,7 @@ namespace Hotel_Reservation_Manager.Data
                 Id = "8e445864-a24d-4543-a6c6-9443d048cdb9",
                 UserName = "admin@abv.bg",
                 NormalizedUserName = "admin@abv.bg".ToUpper(),
-                Password = "Pa$$w0rd",
+                //Password = "Password",
                 PasswordHash = password.HashPassword(null, "Pa$$w0rd"),
                 Email = "admin@abv.bg",
                 NormalizedEmail = "ADMIN@ABV.BG",
