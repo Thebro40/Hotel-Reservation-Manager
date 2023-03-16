@@ -14,8 +14,10 @@ namespace Hotel_Reservation_Manager.Services
     {
         private readonly ApplicationDbContext context;
         public readonly IPasswordHasher<User> passwordHasher;
-        public UsersService(ApplicationDbContext context,  IPasswordHasher<User> passwordHasher)
+        private readonly UserManager<User> userManager;
+        public UsersService(ApplicationDbContext context,  IPasswordHasher<User> passwordHasher, UserManager<User> userManager)
         {
+            this.userManager = userManager;
             this.context = context;
             this.passwordHasher = passwordHasher;
         }
@@ -62,10 +64,9 @@ namespace Hotel_Reservation_Manager.Services
         }
         public async Task CreateUserAsync(UserCreateViewModel model)
         {
-
+            //Create User
             User user = new User()
-            {
-
+            {        
                 UserName = model.UserName,
                 NormalizedUserName = model.UserName.ToUpper(),
                 Email = model.Email,
@@ -85,8 +86,13 @@ namespace Hotel_Reservation_Manager.Services
             user.SecurityStamp = Guid.NewGuid().ToString();
             user.PasswordHash = hashedPassword;
             
+            //Add User to database and save
             await this.context.Users.AddAsync(user);
             await this.context.SaveChangesAsync();
+            
+            //Add User to role
+            await userManager.AddToRoleAsync(user, "User");
+
 
         }
         public async Task<UserEditViewModel> EditUserByIdAsync(string id)
@@ -96,6 +102,7 @@ namespace Hotel_Reservation_Manager.Services
             {
                 return new UserEditViewModel()
                 {
+                    Id = user.Id,
                     UserName = user.UserName,
                     PhoneNumber = user.PhoneNumber,
                     Password = user.PasswordHash.ToString().Substring(0, 8),
@@ -116,20 +123,27 @@ namespace Hotel_Reservation_Manager.Services
         {
             User user = await this.context.Users.FindAsync(model.Id);
             user.UserName = model.UserName;
+            user.NormalizedUserName = model.UserName.ToUpper();
+            user.Email = model.Email;
+            user.NormalizedEmail = model.Email.ToUpper();
             user.PhoneNumber = model.PhoneNumber;
-            //user.Password = model.Password;
+            //user.PasswordHash = model.Password;
             user.FirstName = model.FirstName;
             user.MiddleName = model.MiddleName;
             user.LastName = model.LastName;
             user.EGN = model.EGN;
-            user.Email = model.Email;
             user.HireDate = model.HireDate;
             user.IsActive = model.IsActive;
             user.FireDate = model.FireDate;
+            user.SecurityStamp = Guid.NewGuid().ToString();
+
+            var hashedPassword = passwordHasher.HashPassword(user, model.Password);
+            user.PasswordHash = hashedPassword;
+
             this.context.Update(user);
             await context.SaveChangesAsync();
         }
-        public async Task<UserDetailsViewModel> DeletUserByIdAsync(string id)
+        public async Task<UserDetailsViewModel> DeleteUserByIdAsync(string id)
         {
             User user = await this.context.Users.FindAsync(id);
             if (user != null)

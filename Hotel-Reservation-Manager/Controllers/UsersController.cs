@@ -4,6 +4,7 @@ using Hotel_Reservation_Manager.ViewModels.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Hotel_Reservation_Manager.Controllers
@@ -12,14 +13,10 @@ namespace Hotel_Reservation_Manager.Controllers
     public class UsersController : Controller
     {
         private readonly IUsersService usersService;
-        private readonly UserManager<User> userManager;
-        public readonly IPasswordHasher<User> passwordHasher;
 
-        public UsersController(IUsersService usersService, UserManager<User> userManager, IPasswordHasher<User> passwordHasher)
+        public UsersController(IUsersService usersService)
         {
-            this.passwordHasher = passwordHasher;
             this.usersService = usersService;
-            this.userManager = userManager;
         }
         public async Task<IActionResult> Index()
         {
@@ -36,7 +33,7 @@ namespace Hotel_Reservation_Manager.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(UserCreateViewModel model)
-        {
+        {          
             if (ModelState.IsValid)
             {
                 await usersService.CreateUserAsync(model);
@@ -67,7 +64,7 @@ namespace Hotel_Reservation_Manager.Controllers
         //GET: Users/Delete/(Id)
         public async Task<IActionResult> Delete(string id)
         {
-            UserDetailsViewModel model = await usersService.DeletUserByIdAsync(id);
+            UserDetailsViewModel model = await usersService.DeleteUserByIdAsync(id);
             return View(model);
         }
         [HttpPost]
