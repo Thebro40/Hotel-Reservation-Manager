@@ -139,6 +139,21 @@ namespace Hotel_Reservation_Manager.Services
 
             var hashedPassword = passwordHasher.HashPassword(user, model.Password);
             user.PasswordHash = hashedPassword;
+            //Remove Role if IsActive isn't true
+            if (model.IsActive == false)
+            {
+                await userManager.RemoveFromRoleAsync(user, "User");
+            }
+            else
+            {
+                //Add User role if IsActive is true and User doesnt have Admin or User role
+                if (!await userManager.IsInRoleAsync(user, "Admin") || !await userManager.IsInRoleAsync(user, "User"))
+                {
+                  await userManager.AddToRoleAsync(user, "User");
+                }
+            }
+
+
 
             this.context.Update(user);
             await context.SaveChangesAsync();
