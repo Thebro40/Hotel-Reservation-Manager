@@ -15,7 +15,10 @@
             <th>Availability</th>
         </tr>
     </thead>
+    @if (this.User.IsInRole("Admin"))
+                {
     <a asp-controller="Rooms" asp-action="Create">Create Room</a>
+                }
     <tbody>
         @foreach (var item in Model.Rooms)
         {
@@ -42,10 +45,15 @@
                     @Html.DisplayFor(modelItem => item.IsAvailable)
                 </td>
                 <td>
-                    @*@if (this.User.IsInRole("Admin"))*@
+                    @if (this.User.IsInRole("Admin"))
+                    {
                         <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
-                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>                 
+                    }
+                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                    @if (this.User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+                    }
                 </td>
             </tr>
         }

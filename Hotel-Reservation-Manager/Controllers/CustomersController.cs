@@ -1,10 +1,12 @@
 ﻿using Hotel_Reservation_Manager.Services.Customers;
 using Hotel_Reservation_Manager.ViewModels.Customers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Hotel_Reservation_Manager.Controllers
 {
+    [Authorize]
     public class CustomersController : Controller
     {
         public ICustomersService customersService { get; set; }

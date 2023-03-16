@@ -1,4 +1,5 @@
-﻿using Hotel_Reservation_Manager.ViewModels.Users;
+﻿using Hotel_Reservation_Manager.Data.Models;
+using Hotel_Reservation_Manager.ViewModels.Users;
 using System.Threading.Tasks;
 
 namespace Hotel_Reservation_Manager.Services
@@ -10,8 +11,7 @@ namespace Hotel_Reservation_Manager.Services
         Task CreateUserAsync(UserCreateViewModel user);
         Task<UserEditViewModel> EditUserByIdAsync(string id);
         Task UpdateUserAsync(UserEditViewModel model);
-        Task<UserDetailsViewModel> DeletUserByIdAsync(string id);
+        Task<UserDetailsViewModel> DeleteUserByIdAsync(string id);
         Task DeleteUserConfirmedAsync(UserDetailsViewModel model);
-
     }
 }
