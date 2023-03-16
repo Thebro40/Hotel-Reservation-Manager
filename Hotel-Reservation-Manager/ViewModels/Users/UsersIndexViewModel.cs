@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FireAndIce.ViewModels.Shared;
+using System.Collections.Generic;
 
 namespace Hotel_Reservation_Manager.ViewModels.Users
 {

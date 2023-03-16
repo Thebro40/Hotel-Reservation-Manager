@@ -10,10 +10,6 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20230315123725_addrelationshipOneToOneRoomAndReservation.cs" />
     <Compile Remove="Data\Migrations\20230315123725_addrelationshipOneToOneRoomAndReservation.Designer.cs" />
-    <Compile Remove="Migrations\20230316145849_Initial.cs" />
-    <Compile Remove="Migrations\20230316145849_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20230316145939_Initial.cs" />
-    <Compile Remove="Migrations\20230316145939_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>
