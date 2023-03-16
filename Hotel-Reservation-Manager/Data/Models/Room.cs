@@ -1,9 +1,14 @@
 ﻿namespace Hotel_Reservation_Manager.Data.Models
 {
+    using System;
     public class Room
     {
         //TO-DO ADD DATA ANNOTATIONS
-        public int Id { get; set; }
+        public Room()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+        public string Id { get; set; }
         public int Capacity { get; set; }
         public RoomType RoomType { get; set; }
         public bool IsAvailable { get; set; }

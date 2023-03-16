@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Hotel_Reservation_Manager.Data.Models
+﻿namespace Hotel_Reservation_Manager.Data.Models
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Reservation
     {
         //TO-DO ADD DATA ANNOTATIONS
-        public int Id { get; set; }
+        public Reservation()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+        public string Id { get; set; }
         public virtual ICollection<Room> ReservedRooms { get; set; }
         public virtual User IssuingUser { get; set; }
         public virtual ICollection<Customer> PeopleStaying { get; set; }
