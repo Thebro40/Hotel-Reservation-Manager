@@ -4,7 +4,7 @@ namespace Hotel_Reservation_Manager.ViewModels.Rooms
 {
     public class RoomEditViewModel
     {
-        //public string Id { get; set; }
+        public string Id { get; set; }
         public int Capacity { get; set; }
         public RoomType RoomType { get; set; }
         public bool IsAvailable { get; set; }

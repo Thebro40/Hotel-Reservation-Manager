@@ -71,7 +71,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
             {
                 return new RoomEditViewModel()
                 {
-                    //Id = room.Id,
+                    Id = room.Id,
                     Capacity = room.Capacity,
                     IsAvailable = room.IsAvailable,
                     Number = room.Number,
@@ -86,7 +86,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
         {
             Room room = new Room()
             {
-                //Id = model.Id,
+                Id = model.Id,
                 Capacity = model.Capacity,
                 IsAvailable = model.IsAvailable,
                 Number = model.Number,
