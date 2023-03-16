@@ -1,7 +1,8 @@
-﻿namespace Hotel_Reservation_Manager.Data.Models
+﻿using System;
+using System.Collections.Generic;
+namespace Hotel_Reservation_Manager.Data.Models
 {
-    using System;
-    using System.Collections.Generic;
+
 
     public class Reservation
     {
@@ -12,6 +13,7 @@
         }
         public string Id { get; set; }
         public virtual ICollection<Room> ReservedRooms { get; set; }
+        public string UserId { get; set; }
         public virtual User IssuingUser { get; set; }
         public virtual ICollection<Customer> PeopleStaying { get; set; }
         public DateTime AccommodationDate { get; set; }

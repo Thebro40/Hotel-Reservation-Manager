@@ -1,7 +1,7 @@
-﻿namespace Hotel_Reservation_Manager.Data.Models
+﻿using Microsoft.AspNetCore.Identity;
+using System;
+namespace Hotel_Reservation_Manager.Data.Models
 {
-    using Microsoft.AspNetCore.Identity;
-    using System;
     //USER: IdentityUser
     public class User: IdentityUser<string>
     {

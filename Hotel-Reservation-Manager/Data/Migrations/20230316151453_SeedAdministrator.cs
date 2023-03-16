@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Hotel_Reservation_Manager.Data.Migrations
 {
-    public partial class FixRelationShipBetweenRoomsAndReservations : Migration
+    public partial class SeedAdministrator : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                 keyColumn: "Id",
                 keyValue: "8e445864-a24d-4543-a6c6-9443d048cdb9",
                 columns: new[] { "ConcurrencyStamp", "HireDate", "PasswordHash", "SecurityStamp" },
-                values: new object[] { "b4d6e927-be04-4162-99c4-73f7442abeed", new DateTime(2023, 3, 15, 19, 1, 28, 963, DateTimeKind.Local).AddTicks(1034), "AQAAAAEAACcQAAAAELw5UFjIL7VylW3dGeD9uFVz5LJFqUB39u/8EjxEjnrY3ixlDZyLzfylM5+tSh+vSQ==", "17480d38-f802-4fb2-b70e-e643051a1fce" });
+                values: new object[] { "49ae6324-b56e-4ac2-a884-a2857447d289", new DateTime(2023, 3, 16, 17, 14, 52, 609, DateTimeKind.Local).AddTicks(197), "AQAAAAEAACcQAAAAECEJlpwPFR+QQSDCw/yBxs2EQB/B1LOBnP3kvsRh+Iyw/iMzbN1tfxBQcZKzMTfF3Q==", "" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -22,7 +22,7 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                 keyColumn: "Id",
                 keyValue: "8e445864-a24d-4543-a6c6-9443d048cdb9",
                 columns: new[] { "ConcurrencyStamp", "HireDate", "PasswordHash", "SecurityStamp" },
-                values: new object[] { "7e7e2aa5-51ae-46ef-9893-8c3cecffa390", new DateTime(2023, 3, 15, 18, 58, 21, 370, DateTimeKind.Local).AddTicks(7113), "AQAAAAEAACcQAAAAECAh+koI/rgfSBkUS7Zu7QBGx6Nxo4sXHJR2ytbjXTJkyjf67BIIevTMpL/Gf/pKcw==", "993fd0a4-5781-4054-a215-1bb11acfe8a4" });
+                values: new object[] { "2abaefd8-040a-4618-adc3-6e2b01754b07", new DateTime(2023, 3, 16, 17, 12, 57, 594, DateTimeKind.Local).AddTicks(1449), "AQAAAAEAACcQAAAAEINOh0RF+WrMDJJEmHlEhyJ58lS3SxKg9p0IeLD3kF3X8fJ3Y26MdYFrVZofe12ouA==", null });
         }
     }
 }

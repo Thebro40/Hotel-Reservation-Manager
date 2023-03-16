@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Hotel_Reservation_Manager.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
+    public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string>
     {
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
@@ -40,21 +40,20 @@ namespace Hotel_Reservation_Manager.Data
             var password = new PasswordHasher<User>();
             User user = new User
             {
-
                 Id = "8e445864-a24d-4543-a6c6-9443d048cdb9",
                 UserName = "admin@abv.bg",
                 NormalizedUserName = "admin@abv.bg".ToUpper(),
-                //Password = "Password",
-                PasswordHash = password.HashPassword(null, "Pa$$w0rd"),
+                PasswordHash = password.HashPassword(null, "123456"),
                 Email = "admin@abv.bg",
-                NormalizedEmail = "ADMIN@ABV.BG",
+                NormalizedEmail = "admin@abv.bg".ToUpper(),
                 PhoneNumber = "1111111111",
-                FirstName = "ss",
-                MiddleName = "vv",
-                LastName = "s2s",
-                EGN = "12121",
+                FirstName = "John",
+                MiddleName = "Johnny",
+                LastName = "Johnson",
+                EGN = "8603129931",
                 HireDate = DateTime.Now,
                 IsActive = true,
+                SecurityStamp = string.Empty,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
             };

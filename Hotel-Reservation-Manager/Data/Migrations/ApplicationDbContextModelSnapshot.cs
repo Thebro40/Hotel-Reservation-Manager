@@ -39,8 +39,8 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ReservationId")
-                        .HasColumnType("int");
+                    b.Property<string>("ReservationId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -51,10 +51,8 @@ namespace Hotel_Reservation_Manager.Data.Migrations
 
             modelBuilder.Entity("Hotel_Reservation_Manager.Data.Models.Reservation", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("AccommodationDate")
                         .HasColumnType("datetime2");
@@ -65,28 +63,26 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                     b.Property<bool>("HasBreakfast")
                         .HasColumnType("bit");
 
-                    b.Property<string>("IssuingUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("LeaveDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IssuingUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("Hotel_Reservation_Manager.Data.Models.Room", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
@@ -103,8 +99,8 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                     b.Property<decimal>("PricePerBedChild")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("ReservationId")
-                        .HasColumnType("int");
+                    b.Property<string>("ReservationId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("RoomType")
                         .HasColumnType("int");
@@ -206,22 +202,22 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                         {
                             Id = "8e445864-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "87fae9ea-d3ce-4a7b-9163-ef700a4e68a5",
-                            EGN = "12121",
+                            ConcurrencyStamp = "49ae6324-b56e-4ac2-a884-a2857447d289",
+                            EGN = "8603129931",
                             Email = "admin@abv.bg",
                             EmailConfirmed = true,
-                            FirstName = "ss",
-                            HireDate = new DateTime(2023, 3, 15, 23, 11, 52, 421, DateTimeKind.Local).AddTicks(8804),
+                            FirstName = "John",
+                            HireDate = new DateTime(2023, 3, 16, 17, 14, 52, 609, DateTimeKind.Local).AddTicks(197),
                             IsActive = true,
-                            LastName = "s2s",
+                            LastName = "Johnson",
                             LockoutEnabled = false,
-                            MiddleName = "vv",
+                            MiddleName = "Johnny",
                             NormalizedEmail = "ADMIN@ABV.BG",
                             NormalizedUserName = "ADMIN@ABV.BG",
-                            PasswordHash = "AQAAAAEAACcQAAAAEF+dWSOfagARZ5pCiKpHyunSZD9MeB18XfKL/M8FtmWCnzejLSlFMC5phUtlXXTyDg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECEJlpwPFR+QQSDCw/yBxs2EQB/B1LOBnP3kvsRh+Iyw/iMzbN1tfxBQcZKzMTfF3Q==",
                             PhoneNumber = "1111111111",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "c42c42c6-d85e-4a96-917e-7e9cc8a71e68",
+                            SecurityStamp = "",
                             TwoFactorEnabled = false,
                             UserName = "admin@abv.bg"
                         });
@@ -373,7 +369,7 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                 {
                     b.HasOne("Hotel_Reservation_Manager.Data.Models.User", "IssuingUser")
                         .WithMany()
-                        .HasForeignKey("IssuingUserId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Hotel_Reservation_Manager.Data.Models.Room", b =>
