@@ -45,19 +45,23 @@ namespace Hotel_Reservation_Manager.Services.Customers
         }
         public async Task<CustomerDetailsViewModel> GetCustomerDetailsByIdAsync(string id)
         {
+            //TODO Dispaly info about reservation
             Customer customer = await this.context.Customers.FindAsync(id);
             if (customer != null)
             {
                 CustomerDetailsViewModel model = new CustomerDetailsViewModel()
                 {
                     Id = customer.Id,
-                    ReservationId = customer.Reservation.Id,
                     Email = customer.Email,
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,
                     IsAdult = customer.IsAdult,
                     PhoneNumber = customer.PhoneNumber,
                 };
+                if (customer.Reservation != null)
+                {
+                    model.ReservationId = customer.Reservation.Id;
+                }
                 return model;
             }
             return null;
@@ -98,7 +102,7 @@ namespace Hotel_Reservation_Manager.Services.Customers
             Customer customer = await this.context.Customers.FindAsync(id);
             if (customer != null)
             {
-                return new CustomerDetailsViewModel()
+                CustomerDetailsViewModel model = new CustomerDetailsViewModel()
                 {
                     Id = customer.Id,
                     Email = customer.Email,
@@ -107,6 +111,11 @@ namespace Hotel_Reservation_Manager.Services.Customers
                     IsAdult = customer.IsAdult,
                     PhoneNumber = customer.PhoneNumber,
                 };
+                if (customer.Reservation != null)
+                {
+                    model.ReservationId = customer.Reservation.Id;
+                }
+                return model;
             }
             return null;
         }
@@ -115,14 +124,13 @@ namespace Hotel_Reservation_Manager.Services.Customers
             Customer customer = await this.context.Customers.FindAsync(model.Id);
             if (customer != null)
             {
+                if (customer.Reservation!=null)
+                {
+                    customer.Reservation = null;
+                }
                 this.context.Customers.Remove(customer);
                 await this.context.SaveChangesAsync();
             }
         }
-
-
-
-
-
     }
 }
