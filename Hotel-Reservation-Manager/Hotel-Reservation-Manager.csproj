@@ -10,6 +10,8 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20230315123725_addrelationshipOneToOneRoomAndReservation.cs" />
     <Compile Remove="Data\Migrations\20230315123725_addrelationshipOneToOneRoomAndReservation.Designer.cs" />
+    <Compile Remove="Data\Migrations\20230317134757_initial.cs" />
+    <Compile Remove="Data\Migrations\20230317134757_initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Hotel_Reservation_Manager.Data.Models
 {
 
     public class Customer
     {
-        //TO-DO ADD DATA ANNOTATIONS
+        // TODO Require all fields except Reservation
         public Customer()
         {
             this.Id = Guid.NewGuid().ToString();
@@ -15,6 +17,10 @@ namespace Hotel_Reservation_Manager.Data.Models
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public bool IsAdult { get; set; }
+        public string ReservationId { get; set; }
+        [ForeignKey("ReservationId")]
+        public virtual Reservation Reservation { get; set; }
+
 
     }
 }

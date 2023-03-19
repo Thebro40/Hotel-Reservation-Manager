@@ -89,9 +89,13 @@ namespace Hotel_Reservation_Manager.Services
             //Add User to database and save
             await this.context.Users.AddAsync(user);
             await this.context.SaveChangesAsync();
+
+            //Add User to role if IsActive is true
+            if (model.IsActive == true)
+            {
+                await userManager.AddToRoleAsync(user, "User");
+            }
             
-            //Add User to role
-            await userManager.AddToRoleAsync(user, "User");
 
 
         }
@@ -105,7 +109,10 @@ namespace Hotel_Reservation_Manager.Services
                     Id = user.Id,
                     UserName = user.UserName,
                     PhoneNumber = user.PhoneNumber,
-                    Password = user.PasswordHash.ToString().Substring(0, 8),
+                    ///TO-DO
+                    ///When editing a user, password always changes
+                    //NewPassword = user.PasswordHash.ToString(),
+                    NewPassword = String.Empty,
                     FirstName = user.FirstName,
                     MiddleName = user.MiddleName,
                     LastName = user.LastName,
@@ -122,12 +129,13 @@ namespace Hotel_Reservation_Manager.Services
         public async Task UpdateUserAsync(UserEditViewModel model)
         {
             User user = await this.context.Users.FindAsync(model.Id);
+            ///TO-DO
+            ///When editing a user, change only edited properties?
             user.UserName = model.UserName;
             user.NormalizedUserName = model.UserName.ToUpper();
             user.Email = model.Email;
             user.NormalizedEmail = model.Email.ToUpper();
             user.PhoneNumber = model.PhoneNumber;
-            //user.PasswordHash = model.Password;
             user.FirstName = model.FirstName;
             user.MiddleName = model.MiddleName;
             user.LastName = model.LastName;
@@ -137,8 +145,18 @@ namespace Hotel_Reservation_Manager.Services
             user.FireDate = model.FireDate;
             user.SecurityStamp = Guid.NewGuid().ToString();
 
-            var hashedPassword = passwordHasher.HashPassword(user, model.Password);
-            user.PasswordHash = hashedPassword;
+            ///TO-DO
+            ///When editing a user, password always changes
+            /* 
+                var hashedPassword = passwordHasher.HashPassword(user, model.NewPassword);
+                user.PasswordHash = hashedPassword;
+            */
+            if (!String.IsNullOrWhiteSpace(model.NewPassword))
+            {
+                var hashedPassword = passwordHasher.HashPassword(user, model.NewPassword);
+                user.PasswordHash = hashedPassword;
+            }
+
             //Remove Role if IsActive isn't true
             if (model.IsActive == false)
             {

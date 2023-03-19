@@ -23,19 +23,17 @@ namespace Hotel_Reservation_Manager.Data
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseLazyLoadingProxies();
 
+            optionsBuilder.EnableSensitiveDataLogging();
+
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            /*
-             * builder.Entity<Tech>(
-                entity =>
-            {
-                entity.HasOne(x => x.User)
-                  .WithOne(x => x.Tech)
-                 .HasForeignKey<Tech>(x => x.UserId)
-                 .OnDelete(DeleteBehavior.Cascade);
-            });
-            */
+            //Configure one-to-one relationship between Room And Reservation
+            builder.Entity<Reservation>()
+           .HasOne(a => a.Room)
+           .WithOne(b => b.Reservation)
+           .HasForeignKey<Room>(b => b.ReservationId);
+
             base.OnModelCreating(builder);
 
             // Create user - administrator
@@ -84,7 +82,7 @@ namespace Hotel_Reservation_Manager.Data
             });
 
             //Add users
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 5; i++)
             {
                 User user = CreateUser($"user{i}@abv.bg");
 
@@ -96,14 +94,14 @@ namespace Hotel_Reservation_Manager.Data
                 });
             }
             //Add Customers
-            //{
-            //    for (int i = 0; i < 100; i++)
-            //    {
-            //        Customer customer = CreateCustomer($"customer{i}@abv.bg");
+            
+                for (int i = 0; i < 5; i++)
+                {
+                    Customer customer = CreateCustomer($"customer{i}@abv.bg");
 
-            //        builder.Entity<Customer>().HasData(customer);
-            //    }
-            //}
+                    builder.Entity<Customer>().HasData(customer);
+                }
+            
 
 
         }

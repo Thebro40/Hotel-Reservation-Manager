@@ -5,10 +5,6 @@ namespace Hotel_Reservation_Manager.Data.Models
     //USER: IdentityUser
     public class User: IdentityUser<string>
     {
-        //TO-DO ADD DATA ANNOTATIONS
-        //username,password,email and phonenumber will be inherited from IdentityUser
-
-        //public string Password { get; set; }
         public User()
         {
             this.Id = Guid.NewGuid().ToString();

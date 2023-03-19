@@ -1,0 +1,104 @@
+﻿@model ReservationDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayFor(model => model.Id)
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.RoomId)
+                @Html.DisplayFor(model => model.RoomId)
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.AccommodationDate)
+                @Html.DisplayFor(model => model.AccommodationDate)
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.LeaveDate)
+                @Html.DisplayFor(model => model.LeaveDate)
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.HasAllInclusive)
+                @Html.DisplayFor(model => model.HasAllInclusive)
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.HasBreakfast)
+                @Html.DisplayFor(model => model.HasBreakfast)
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayFor(model => model.Price)
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.CustomerId)
+                @Html.DisplayFor(model => model.CustomerId)
+            </div>
+            <div class="form-group">
+                <a asp-action="Edit" asp-route-id="@Model.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a asp-action="Delete" asp-route-id="@Model.Id"><i class="fa-solid fa-trash"></i></a>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4" >
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>IsAdult</th>
+                <th>Phone Number</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Customers)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsAdult)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        <a asp-controller="Customers" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -16,6 +16,7 @@
             <th>Email</th>
             <th>Hire Date</th>
             <th>Status</th>
+            <th></th>
         </tr>
     </thead>
     <a asp-controller="Users" asp-action="Create">Create User</a>
@@ -55,9 +56,9 @@
                 </td>
                 <td>
                     @*@if (this.User.IsInRole("Admin"))*@
-                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
-                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>                 
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>
         }

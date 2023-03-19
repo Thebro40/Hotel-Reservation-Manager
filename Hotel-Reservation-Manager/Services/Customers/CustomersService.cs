@@ -51,6 +51,7 @@ namespace Hotel_Reservation_Manager.Services.Customers
                 CustomerDetailsViewModel model = new CustomerDetailsViewModel()
                 {
                     Id = customer.Id,
+                    ReservationId = customer.Reservation.Id,
                     Email = customer.Email,
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,

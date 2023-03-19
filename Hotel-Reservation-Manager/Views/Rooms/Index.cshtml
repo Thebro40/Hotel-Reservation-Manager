@@ -13,12 +13,13 @@
             <th>PricePerBedAdult</th>
             <th>PricePerBedChild</th>
             <th>Availability</th>
+            <th></th>
         </tr>
     </thead>
     @if (this.User.IsInRole("Admin"))
-                {
-    <a asp-controller="Rooms" asp-action="Create">Create Room</a>
-                }
+    {
+        <a asp-controller="Rooms" asp-action="Create">Create Room</a>
+    }
     <tbody>
         @foreach (var item in Model.Rooms)
         {

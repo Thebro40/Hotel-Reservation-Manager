@@ -1,0 +1,54 @@
+﻿@model ReservationsIndexViewModel
+@{
+}
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>RoomId</th>
+            <th>HasAllInclusive</th>
+            <th>HasBreakfast</th>
+            <th>AccommodationDate</th>
+            <th>LeaveDate</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+    </thead>
+    <a asp-controller="Reservations" asp-action="Create">Create Reservation</a>
+    <tbody>
+        @foreach (var item in Model.Reservations)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HasAllInclusive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HasBreakfast)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccommodationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeaveDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
