@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Hotel_Reservation_Manager.Data.Models
+﻿namespace Hotel_Reservation_Manager.Data.Models
 {
-
+    using Hotel_Reservation_Manager.Data.Enums;
+    using System;
+    using System.ComponentModel.DataAnnotations.Schema;
     public class Room
     {
         //TO-DO ADD DATA ANNOTATIONS
@@ -23,15 +22,5 @@ namespace Hotel_Reservation_Manager.Data.Models
         [ForeignKey("ReservationId")]
         public virtual Reservation Reservation { get; set; }
 
-    }
-    public enum RoomType
-    {
-        TwoSingleBeds,
-        Apartment,
-        DoubleBed,
-        PentHouse,
-        Мaisonette
-
-        //две единични легла, апартамент, стая с двойно легло, пентхаус, мезонет
     }
 }

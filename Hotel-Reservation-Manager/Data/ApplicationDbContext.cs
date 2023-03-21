@@ -32,7 +32,7 @@ namespace Hotel_Reservation_Manager.Data
            .HasOne(a => a.Room)
            .WithOne(b => b.Reservation)
            .HasForeignKey<Room>(b => b.ReservationId);
-
+            
             base.OnModelCreating(builder);
 
             // Create user - administrator

@@ -1,9 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Hotel_Reservation_Manager.Data.Models
+﻿namespace Hotel_Reservation_Manager.Data.Models
 {
-
+    using System;
+    using System.ComponentModel.DataAnnotations.Schema;
     public class Customer
     {
         // TODO Require all fields except Reservation
