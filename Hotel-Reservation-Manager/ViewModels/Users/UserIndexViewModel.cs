@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace Hotel_Reservation_Manager.ViewModels
+﻿namespace Hotel_Reservation_Manager.ViewModels
 {
+    using System;
     public class UserIndexViewModel
     {
         public string Id { get; set; }

@@ -1,10 +1,12 @@
 ﻿@model RoomsIndexViewModel
 @{
+    ViewData["Title"] = "Rooms";
 }
 <h1>Index</h1>
 
-<table class="table">
-    <thead>
+<table class="table table-striped table-hover "
+       style="border-radius: 10px; overflow: hidden;">
+    <thead class="thead-dark">
         <tr>
             <th>Id</th>
             <th>Number</th>
@@ -18,7 +20,7 @@
     </thead>
     @if (this.User.IsInRole("Admin"))
     {
-        <a asp-controller="Rooms" asp-action="Create">Create Room</a>
+        <a asp-controller="Rooms" asp-action="Create" class="btn btn-primary" class="btn btn-primary" style="margin: 10px 0px 10px 0px">New Room <i class="fa-regular fa-square-plus"></i></a>
     }
     <tbody>
         @foreach (var item in Model.Rooms)
@@ -48,12 +50,17 @@
                 <td>
                     @if (this.User.IsInRole("Admin"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <p class="text-nowrap">
+                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+                        </p>
                     }
-                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
-                    @if (this.User.IsInRole("Admin"))
+                    else
                     {
-                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+                        <p class="text-nowrap">
+                            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                        </p>
                     }
                 </td>
             </tr>
