@@ -30,7 +30,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
                 .ToListAsync();
             return model;
         }
-        public async Task<RoomDetailsViewModel> GetRoomDetailsByIdAsync(int id)
+        public async Task<RoomDetailsViewModel> GetRoomDetailsByIdAsync(string id)
         {
             Room room = await this.context.Rooms.FindAsync(id);
             if (room != null)
@@ -53,7 +53,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
         {
             Room room = new Room()
             {
-                Id = model.Id,
+                //Id = model.Id,
                 Capacity = model.Capacity,
                 IsAvailable = model.IsAvailable,
                 Number = model.Number,
@@ -64,7 +64,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
             await this.context.Rooms.AddAsync(room);
             await this.context.SaveChangesAsync();
         }
-        public async Task<RoomEditViewModel> EditRoomByIdAsync(int id)
+        public async Task<RoomEditViewModel> EditRoomByIdAsync(string id)
         {
             Room room = await this.context.Rooms.FindAsync(id);
             if (room != null)
@@ -97,7 +97,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
             this.context.Update(room);
             await context.SaveChangesAsync();
         }
-        public async Task<RoomDetailsViewModel> DeleteRoomByIdAsync(int id)
+        public async Task<RoomDetailsViewModel> DeleteRoomByIdAsync(string id)
         {
             Room room = await this.context.Rooms.FindAsync(id);
             if (room != null)

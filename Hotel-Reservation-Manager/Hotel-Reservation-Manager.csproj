@@ -10,6 +10,8 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20230315123725_addrelationshipOneToOneRoomAndReservation.cs" />
     <Compile Remove="Data\Migrations\20230315123725_addrelationshipOneToOneRoomAndReservation.Designer.cs" />
+    <Compile Remove="Data\Migrations\20230317134757_initial.cs" />
+    <Compile Remove="Data\Migrations\20230317134757_initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +26,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.22" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="ViewModels\Shared\" />
   </ItemGroup>
 
 </Project>

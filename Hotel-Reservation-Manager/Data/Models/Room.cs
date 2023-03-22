@@ -1,26 +1,26 @@
 ﻿namespace Hotel_Reservation_Manager.Data.Models
 {
+    using Hotel_Reservation_Manager.Data.Enums;
+    using System;
+    using System.ComponentModel.DataAnnotations.Schema;
     public class Room
     {
         //TO-DO ADD DATA ANNOTATIONS
-        public int Id { get; set; }
+        public Room()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public int Number { get; set; }
         public int Capacity { get; set; }
         public RoomType RoomType { get; set; }
         public bool IsAvailable { get; set; }
         public decimal PricePerBedAdult { get; set; }
         public decimal PricePerBedChild { get; set; }
-        public int Number { get; set; }
-        public virtual Reservation Reservation { get; set; }
-        
-    }
-    public enum RoomType
-    {
-        TwoSingleBeds,
-        Apartment,
-        DoubleBed,
-        PentHouse,
-        Мaisonette
 
-        //две единични легла, апартамент, стая с двойно легло, пентхаус, мезонет
+        public string ReservationId { get; set; }
+        [ForeignKey("ReservationId")]
+        public virtual Reservation Reservation { get; set; }
+
     }
 }
