@@ -1,10 +1,12 @@
 ﻿using Hotel_Reservation_Manager.Data.Models;
 using Hotel_Reservation_Manager.Services.Customers;
 using Hotel_Reservation_Manager.Services.Reservations;
+using Hotel_Reservation_Manager.ViewModels;
 using Hotel_Reservation_Manager.ViewModels.Customers;
 using Hotel_Reservation_Manager.ViewModels.Reservations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -18,7 +20,7 @@ namespace Hotel_Reservation_Manager.Controllers
         private readonly ICustomersService customersService;
         public ReservationsController(IReservationsService reservationsService, ICustomersService customersService)
         {
-            this.customersService=customersService;
+            this.customersService = customersService;
             this.reservationsService = reservationsService;
         }
         public async Task<IActionResult> Index()
@@ -72,15 +74,27 @@ namespace Hotel_Reservation_Manager.Controllers
             return View(model);
         }
 
-        ///<summary>POST: ReservationController/Edit/5</summary>
+        ///<summary>POST: ReservationController/Edit/?(id)</summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ReservationEditViewModel model)
         {
-            //Gets current user's id
-            model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            await reservationsService.UpdateReservationAsync(model);
+            try
+            {
+                //Gets current user's id
+                model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                await reservationsService.UpdateReservationAsync(model);
+            }
+            catch (Exception ex)
+            {
+                //2 ways of handling exceptions:
+                //redirect user back to edit view and display error
+                model = await reservationsService.EditReservationByIdAsync(model.Id);
+                ModelState.AddModelError(nameof(model.RoomId), ex.Message);
+                //redirect user to error view and display error(doesn't work)
+                //return RedirectToAction("Error", "Home", new ErrorViewModel() { ErrorMessage = ex.Message });
+                return View(model);
+            }
             return RedirectToAction(nameof(Index));
         }
     }

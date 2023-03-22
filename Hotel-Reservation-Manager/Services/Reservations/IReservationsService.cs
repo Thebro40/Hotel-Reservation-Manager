@@ -1,4 +1,5 @@
-﻿using Hotel_Reservation_Manager.ViewModels.Reservations;
+﻿using Hotel_Reservation_Manager.Data.Models;
+using Hotel_Reservation_Manager.ViewModels.Reservations;
 using System.Threading.Tasks;
 
 namespace Hotel_Reservation_Manager.Services.Reservations

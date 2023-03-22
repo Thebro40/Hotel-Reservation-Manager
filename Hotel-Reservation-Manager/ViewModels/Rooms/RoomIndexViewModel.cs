@@ -1,7 +1,7 @@
-﻿using Hotel_Reservation_Manager.Data.Models;
-
+﻿
 namespace Hotel_Reservation_Manager.ViewModels.Rooms
 {
+using Data.Enums;
     public class RoomIndexViewModel
     {
         public string Id { get; set; }

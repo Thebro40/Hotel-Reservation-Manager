@@ -1,4 +1,5 @@
 ﻿using Hotel_Reservation_Manager.Data.Models;
+using Hotel_Reservation_Manager.ViewModels.Customers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Hotel_Reservation_Manager.ViewModels.Reservations
         public string CustomerToRemoveId { get; set; }
         public string CustomerToAddId { get; set; }
         public string RoomId { get; set; }
-        public ICollection<Customer> OutputCustomers { get; set; }
+        public IList<Customer> Customers { get; set; } = new List<Customer>();
         public DateTime AccommodationDate { get; set; }
         public DateTime LeaveDate { get; set; }
         public bool HasBreakfast { get; set; }
