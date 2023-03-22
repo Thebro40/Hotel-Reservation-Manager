@@ -7,5 +7,7 @@ namespace Hotel_Reservation_Manager.ViewModels
         public string RequestId { get; set; }
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
+        public string ErrorMessage { get; set; }
     }
 }
