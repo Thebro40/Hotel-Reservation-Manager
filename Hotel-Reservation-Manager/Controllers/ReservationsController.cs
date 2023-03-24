@@ -6,6 +6,7 @@ using Hotel_Reservation_Manager.ViewModels.Customers;
 using Hotel_Reservation_Manager.ViewModels.Reservations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -28,10 +29,14 @@ namespace Hotel_Reservation_Manager.Controllers
             var reservations = await reservationsService.GetReservationsAsync();
             return View(reservations);
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-
-            return View();
+            ReservationCreateViewModel model = new ReservationCreateViewModel()
+            {
+                Customers = await reservationsService.GetFreeCustomersAsListAsync(),
+                Rooms = new SelectList(await reservationsService.GetRoomsSelectListAsync(), "Id", "Number"),
+            };
+            return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

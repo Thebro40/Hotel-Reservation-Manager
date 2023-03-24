@@ -1,5 +1,8 @@
 ﻿using Hotel_Reservation_Manager.Data.Models;
+using Hotel_Reservation_Manager.ViewModels.Customers;
 using Hotel_Reservation_Manager.ViewModels.Reservations;
+using Hotel_Reservation_Manager.ViewModels.Rooms;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Hotel_Reservation_Manager.Services.Reservations
@@ -13,5 +16,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
         Task<ReservationsIndexViewModel> GetReservationsAsync();
         Task<ReservationEditViewModel> EditReservationByIdAsync(string id);
         Task UpdateReservationAsync(ReservationEditViewModel model);
+        Task<List<CustomerIndexViewModel>> GetFreeCustomersAsListAsync();
+        Task<List<RoomSelectListViewModel>> GetRoomsSelectListAsync();
     }
 }
