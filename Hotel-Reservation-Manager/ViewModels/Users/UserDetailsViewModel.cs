@@ -12,7 +12,7 @@ namespace Hotel_Reservation_Manager.ViewModels.Users
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
-        public string EGN { get; set; }
+        public string UCN { get; set; }
         public DateTime HireDate { get; set; }
         public bool IsActive { get; set; }
         public DateTime? FireDate { get; set; }

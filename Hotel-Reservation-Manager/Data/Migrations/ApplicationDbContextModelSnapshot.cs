@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Hotel_Reservation_Manager.data.migrations
+namespace Hotel_Reservation_Manager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -51,48 +51,48 @@ namespace Hotel_Reservation_Manager.data.migrations
                     b.HasData(
                         new
                         {
-                            Id = "480b301b-e461-48ab-9741-c2e11b1e2df2",
+                            Id = "9d76f617-5197-480e-a8b2-59bb73df934b",
                             Email = "customer0@abv.bg",
-                            FirstName = "John",
+                            FirstName = "Jane",
                             IsAdult = false,
                             LastName = "Johnson",
-                            PhoneNumber = "739296"
+                            PhoneNumber = "988418"
                         },
                         new
                         {
-                            Id = "0a825efc-5b41-4877-9f53-89c817683050",
+                            Id = "8d0685ff-894c-42bf-8371-82b3e7a51344",
                             Email = "customer1@abv.bg",
-                            FirstName = "Alex",
+                            FirstName = "Jack",
                             IsAdult = false,
                             LastName = "Johnson",
-                            PhoneNumber = "936085"
+                            PhoneNumber = "953794"
                         },
                         new
                         {
-                            Id = "fb5ee98f-bee2-4a8e-8bd8-5e75327f6e14",
+                            Id = "98abd15c-5bcc-46f3-96b7-00fb9de86194",
                             Email = "customer2@abv.bg",
-                            FirstName = "Jane",
-                            IsAdult = true,
-                            LastName = "Alexandrov",
-                            PhoneNumber = "754923"
-                        },
-                        new
-                        {
-                            Id = "94afd613-898b-4225-8e1f-5a5bce021517",
-                            Email = "customer3@abv.bg",
-                            FirstName = "Jane",
+                            FirstName = "Jack",
                             IsAdult = false,
-                            LastName = "Alexandrov",
-                            PhoneNumber = "467388"
+                            LastName = "Johnson",
+                            PhoneNumber = "447797"
                         },
                         new
                         {
-                            Id = "3196e2bf-e3e0-4daa-bf52-af12e22211ac",
+                            Id = "4a1cc43a-2e9e-4b10-95f8-2f53de9691f1",
+                            Email = "customer3@abv.bg",
+                            FirstName = "John",
+                            IsAdult = true,
+                            LastName = "Johnson",
+                            PhoneNumber = "209110"
+                        },
+                        new
+                        {
+                            Id = "f3e560ff-c5f0-4a98-9612-d5ff53f68fb9",
                             Email = "customer4@abv.bg",
                             FirstName = "Jack",
-                            IsAdult = true,
+                            IsAdult = false,
                             LastName = "Johnson",
-                            PhoneNumber = "787033"
+                            PhoneNumber = "525575"
                         });
                 });
 
@@ -254,18 +254,18 @@ namespace Hotel_Reservation_Manager.data.migrations
                         {
                             Id = "8e445864-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d780548b-d4ec-4844-86cf-d0889f52a49c",
+                            ConcurrencyStamp = "b3140740-1bca-4f51-a5ea-833fcb5eccbc",
                             Email = "admin@abv.bg",
                             EmailConfirmed = true,
                             FirstName = "John",
-                            HireDate = new DateTime(2023, 3, 24, 21, 10, 43, 69, DateTimeKind.Local).AddTicks(9824),
+                            HireDate = new DateTime(2023, 3, 25, 18, 29, 41, 20, DateTimeKind.Local).AddTicks(6698),
                             IsActive = true,
                             LastName = "Johnson",
                             LockoutEnabled = false,
                             MiddleName = "Johnny",
                             NormalizedEmail = "ADMIN@ABV.BG",
                             NormalizedUserName = "ADMIN@ABV.BG",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEMYQBVBAF7ROMVZXAIKs1XeGaXWu/FALq/CeRwWZasI19DYO1xLNn87WqLjhIKwHw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM4wCwlze62EoJsrcJwiclaxktm8ROCm8aVgy+R6pxJ2Z4rDSdFD36leZ40LxwalUA==",
                             PhoneNumber = "1111111111",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
@@ -275,117 +275,117 @@ namespace Hotel_Reservation_Manager.data.migrations
                         },
                         new
                         {
-                            Id = "af6d324c-f366-4c8e-8746-302aacfed1f3",
+                            Id = "2de9d5f0-1c53-4aaf-885a-e83c17ea4950",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "021272dd-9229-442c-bafc-5a77ecf9bd31",
+                            ConcurrencyStamp = "bb1f6f40-acf4-48e1-a22f-b2f389f9ced7",
                             Email = "user0@abv.bg",
                             EmailConfirmed = true,
-                            FirstName = "John",
-                            HireDate = new DateTime(2023, 3, 24, 21, 10, 43, 76, DateTimeKind.Local).AddTicks(5978),
+                            FirstName = "Alex",
+                            HireDate = new DateTime(2023, 3, 25, 18, 29, 41, 26, DateTimeKind.Local).AddTicks(6630),
                             IsActive = true,
-                            LastName = "Johnson",
+                            LastName = "Alexandrov",
                             LockoutEnabled = false,
-                            MiddleName = "Jack",
+                            MiddleName = "Jane",
                             NormalizedEmail = "user0@abv.bg",
                             NormalizedUserName = "user0@abv.bg",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJssXhmbYrfE0sF1CaMyzRc6BAVodPgdZ+TQY0ShE3lnMT8IkbzrF7ltPuXpEuM4jA==",
-                            PhoneNumber = "001715",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIq7A4h2D44yR8KIV0yIHkyOznjjkb87+0+4B/Yb3MIbpVyKWligVmiewfJcMp3+QA==",
+                            PhoneNumber = "005783",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UCN = "006204",
+                            UCN = "006695",
                             UserName = "user0@abv.bg"
                         },
                         new
                         {
-                            Id = "b7ba7229-d592-4b02-9d1d-37db54511f4d",
+                            Id = "0eebc067-bed8-41aa-8505-3e09dcbaace4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "33f24356-f09c-4e0b-bd3d-2f5b234b2bf8",
+                            ConcurrencyStamp = "9a10f496-5501-400e-b6f0-350c9c9b8785",
                             Email = "user1@abv.bg",
                             EmailConfirmed = true,
-                            FirstName = "Alex",
-                            HireDate = new DateTime(2023, 3, 24, 21, 10, 43, 85, DateTimeKind.Local).AddTicks(1905),
+                            FirstName = "Jane",
+                            HireDate = new DateTime(2023, 3, 25, 18, 29, 41, 36, DateTimeKind.Local).AddTicks(483),
                             IsActive = true,
-                            LastName = "Johnson",
+                            LastName = "Alexandrov",
                             LockoutEnabled = false,
                             MiddleName = "Alex",
                             NormalizedEmail = "user1@abv.bg",
                             NormalizedUserName = "user1@abv.bg",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGi0Dj3N58qVnUaGmCeaAOgBaZ+dPLnBhCLRMpgJjfwZYcs2qXO2Keznw16QHQXR+Q==",
-                            PhoneNumber = "009673",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDFZE53NVDrcFoDXqdo95MDHplw0vOSXLQVSWwQjsFPTOLWjyyOTOxb2mxA37N0w6A==",
+                            PhoneNumber = "000315",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UCN = "009695",
+                            UCN = "008982",
                             UserName = "user1@abv.bg"
                         },
                         new
                         {
-                            Id = "1cdde740-25f6-41df-9d01-c00278f24c35",
+                            Id = "7531416f-579f-4c1b-bc20-1a014f071f6d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fcac4dc9-4aea-42dc-9ca2-47e77504c699",
+                            ConcurrencyStamp = "260e9a22-0d47-48a2-9cd1-40c832b213d9",
                             Email = "user2@abv.bg",
                             EmailConfirmed = true,
-                            FirstName = "Alex",
-                            HireDate = new DateTime(2023, 3, 24, 21, 10, 43, 93, DateTimeKind.Local).AddTicks(1260),
+                            FirstName = "Jane",
+                            HireDate = new DateTime(2023, 3, 25, 18, 29, 41, 44, DateTimeKind.Local).AddTicks(9280),
                             IsActive = true,
                             LastName = "Alexandrov",
                             LockoutEnabled = false,
-                            MiddleName = "Jack",
+                            MiddleName = "John",
                             NormalizedEmail = "user2@abv.bg",
                             NormalizedUserName = "user2@abv.bg",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMev3JIBsJ4qinSoOuSIX2iUDz4d9yxgOECivMNRBK0BQYeqU86DTz0iwyFEr2PTeg==",
-                            PhoneNumber = "004502",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMhTNaW2SEXQykkqdM7KrnX4oug1g1gQRMWNYV2dL4eEjek9Z6C1dXdAsJnyQxBoUg==",
+                            PhoneNumber = "002967",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UCN = "005371",
+                            UCN = "005612",
                             UserName = "user2@abv.bg"
                         },
                         new
                         {
-                            Id = "68d93d33-181e-4313-bc4d-6c264cce77d1",
+                            Id = "7cdcf7d4-0b82-4916-82e8-a669796ee3c2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0b696888-c46f-4e6b-9c32-5019bd4b63d1",
+                            ConcurrencyStamp = "f94044fe-4247-496c-b38d-e626ed7ba8eb",
                             Email = "user3@abv.bg",
                             EmailConfirmed = true,
-                            FirstName = "Jack",
-                            HireDate = new DateTime(2023, 3, 24, 21, 10, 43, 101, DateTimeKind.Local).AddTicks(3137),
+                            FirstName = "Alex",
+                            HireDate = new DateTime(2023, 3, 25, 18, 29, 41, 62, DateTimeKind.Local).AddTicks(3142),
                             IsActive = true,
-                            LastName = "Johnson",
+                            LastName = "Alexandrov",
                             LockoutEnabled = false,
                             MiddleName = "John",
                             NormalizedEmail = "user3@abv.bg",
                             NormalizedUserName = "user3@abv.bg",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAsGMO/V0fTHWMcHevm2aP6VhtYSJZd3bk0zfboERQ/BOHU7TQsAtTK/DaqeNd7x9Q==",
-                            PhoneNumber = "002768",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDyM6nTVy5JMhfwjT6n9wEBalMm8FlBQydpdWJ3XaeL5RgpyWZiDZO6Co/M+M2do5Q==",
+                            PhoneNumber = "003009",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UCN = "001100",
+                            UCN = "007130",
                             UserName = "user3@abv.bg"
                         },
                         new
                         {
-                            Id = "92f2783e-baa7-46fa-8a0b-565ffb70b3d9",
+                            Id = "d43f19f8-6f5d-4a29-a1fe-0505e250ac14",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f758585f-e6b4-4d79-baff-2c05725fae95",
+                            ConcurrencyStamp = "b41bd786-2b91-4e83-aafc-c9b1d16d4567",
                             Email = "user4@abv.bg",
                             EmailConfirmed = true,
-                            FirstName = "Alex",
-                            HireDate = new DateTime(2023, 3, 24, 21, 10, 43, 109, DateTimeKind.Local).AddTicks(4019),
+                            FirstName = "Jack",
+                            HireDate = new DateTime(2023, 3, 25, 18, 29, 41, 70, DateTimeKind.Local).AddTicks(5196),
                             IsActive = true,
-                            LastName = "Johnson",
+                            LastName = "Alexandrov",
                             LockoutEnabled = false,
-                            MiddleName = "Alex",
+                            MiddleName = "John",
                             NormalizedEmail = "user4@abv.bg",
                             NormalizedUserName = "user4@abv.bg",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIatIzkBnMV+XiMd8mVVsTiDPPGnsCzoB8AebOHbJjzmKXT3hWWLAwKSqXmYqfcS4g==",
-                            PhoneNumber = "003676",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEzTzkVnmupsibjpYstr63PaXp+5IJHO+fmjNLoJLzD9/HAm67vKXQw2achrQCTXXg==",
+                            PhoneNumber = "007354",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UCN = "002372",
+                            UCN = "008862",
                             UserName = "user4@abv.bg"
                         });
                 });
@@ -419,15 +419,15 @@ namespace Hotel_Reservation_Manager.data.migrations
                     b.HasData(
                         new
                         {
-                            Id = "735c9bdf-7979-4891-a8c7-57b20039f54c",
-                            ConcurrencyStamp = "87c141d7-6260-4dd6-8293-31184ddd94ea",
+                            Id = "66f8c581-f6f0-406c-9af0-35e7d2567b09",
+                            ConcurrencyStamp = "04d4e941-0686-4e51-89de-003129cfe1a0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "bf5ef909-e344-4383-a563-b09f259928a6",
-                            ConcurrencyStamp = "b2a00ea8-5050-4d43-94ff-c84120c39705",
+                            Id = "f40d8b19-06cc-4554-b6cb-67414611c0df",
+                            ConcurrencyStamp = "88ae0370-cfdb-49ed-b1ae-d9a3aa9ad35f",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -523,32 +523,32 @@ namespace Hotel_Reservation_Manager.data.migrations
                         new
                         {
                             UserId = "8e445864-a24d-4543-a6c6-9443d048cdb9",
-                            RoleId = "735c9bdf-7979-4891-a8c7-57b20039f54c"
+                            RoleId = "66f8c581-f6f0-406c-9af0-35e7d2567b09"
                         },
                         new
                         {
-                            UserId = "af6d324c-f366-4c8e-8746-302aacfed1f3",
-                            RoleId = "bf5ef909-e344-4383-a563-b09f259928a6"
+                            UserId = "2de9d5f0-1c53-4aaf-885a-e83c17ea4950",
+                            RoleId = "f40d8b19-06cc-4554-b6cb-67414611c0df"
                         },
                         new
                         {
-                            UserId = "b7ba7229-d592-4b02-9d1d-37db54511f4d",
-                            RoleId = "bf5ef909-e344-4383-a563-b09f259928a6"
+                            UserId = "0eebc067-bed8-41aa-8505-3e09dcbaace4",
+                            RoleId = "f40d8b19-06cc-4554-b6cb-67414611c0df"
                         },
                         new
                         {
-                            UserId = "1cdde740-25f6-41df-9d01-c00278f24c35",
-                            RoleId = "bf5ef909-e344-4383-a563-b09f259928a6"
+                            UserId = "7531416f-579f-4c1b-bc20-1a014f071f6d",
+                            RoleId = "f40d8b19-06cc-4554-b6cb-67414611c0df"
                         },
                         new
                         {
-                            UserId = "68d93d33-181e-4313-bc4d-6c264cce77d1",
-                            RoleId = "bf5ef909-e344-4383-a563-b09f259928a6"
+                            UserId = "7cdcf7d4-0b82-4916-82e8-a669796ee3c2",
+                            RoleId = "f40d8b19-06cc-4554-b6cb-67414611c0df"
                         },
                         new
                         {
-                            UserId = "92f2783e-baa7-46fa-8a0b-565ffb70b3d9",
-                            RoleId = "bf5ef909-e344-4383-a563-b09f259928a6"
+                            UserId = "d43f19f8-6f5d-4a29-a1fe-0505e250ac14",
+                            RoleId = "f40d8b19-06cc-4554-b6cb-67414611c0df"
                         });
                 });
 
