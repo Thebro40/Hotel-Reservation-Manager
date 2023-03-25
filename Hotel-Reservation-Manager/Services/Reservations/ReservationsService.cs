@@ -76,10 +76,6 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                             {
                                 await AddCustomerToReservationAsync(customer, reservation);
                             }
-                            else
-                            {
-                                throw new InvalidOperationException("Reserved Room does not have enough capacity to add more people");
-                            }
                         }
                     }
                 }
@@ -171,18 +167,9 @@ namespace Hotel_Reservation_Manager.Services.Reservations
 
             if (room.Id != reservation.RoomId)
             {
-                if (!RoomHasCapacity(reservation, room))
-                {
-                    throw new InvalidOperationException("Selected Room does not have enough capacity");
-                }
-                //if (RoomIsAvailable(room))
 
+                AddReservationRoom(room, reservation);
 
-                else
-                {
-                    AddReservationRoom(room, reservation);
-                    throw new InvalidOperationException("Selected Room isn't available");
-                }
             }
 
             reservation.AccommodationDate = editmodel.AccommodationDate;
@@ -389,6 +376,11 @@ namespace Hotel_Reservation_Manager.Services.Reservations
 
             context.Reservations.Attach(reservation);
             await this.context.SaveChangesAsync();
+        }
+        public async Task<int> GetRoomCapacityAsync(string id)
+        {
+            Room room = await context.Rooms.FindAsync(id);
+            return room.Capacity;
         }
 
 

@@ -1,14 +1,10 @@
-﻿using Hotel_Reservation_Manager.Data.Models;
-using Hotel_Reservation_Manager.Services.Customers;
+﻿using Hotel_Reservation_Manager.Services.Customers;
 using Hotel_Reservation_Manager.Services.Reservations;
-using Hotel_Reservation_Manager.ViewModels;
-using Hotel_Reservation_Manager.ViewModels.Customers;
 using Hotel_Reservation_Manager.ViewModels.Reservations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -18,10 +14,8 @@ namespace Hotel_Reservation_Manager.Controllers
     public class ReservationsController : Controller
     {
         private readonly IReservationsService reservationsService;
-        private readonly ICustomersService customersService;
-        public ReservationsController(IReservationsService reservationsService, ICustomersService customersService)
+        public ReservationsController(IReservationsService reservationsService)
         {
-            this.customersService = customersService;
             this.reservationsService = reservationsService;
         }
         public async Task<IActionResult> Index()
@@ -47,7 +41,25 @@ namespace Hotel_Reservation_Manager.Controllers
                 //Gets current user's id
                 model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+                //Checks Accommodation and Leave date if they are sensible
+                if (model.LeaveDate < model.AccommodationDate)
+                {
+                    ModelState.AddModelError(nameof(model.LeaveDate), "Leave date can't be before Accommodation Date");
+                    ModelState.AddModelError(nameof(model.AccommodationDate), "Accommodation Date can't be after Leave Date");
+                    return View(model);
+                }
+                int roomCap = await reservationsService.GetRoomCapacityAsync(model.RoomId);
+                if (roomCap < model.Customers.Count)
+                {
+                    ModelState.AddModelError(nameof(model.Customers), "Number of people exceeds Room Capacity");
+
+                    model.Rooms = new SelectList(await reservationsService.GetRoomsSelectListAsync(), "Id", "Number");
+                    model.Customers = await reservationsService.GetFreeCustomersAsListAsync();
+                    return View(model);
+                }
+
                 await reservationsService.CreateReservationAsync(model);
+
                 return RedirectToAction(nameof(Index));
             }
             return View(model);

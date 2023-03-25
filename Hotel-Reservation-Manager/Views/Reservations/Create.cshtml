@@ -55,24 +55,35 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => Model.Customers[i].LastName)
                                 </td>
-                                <td>                                   
+                                <td>
                                     @Html.CheckBoxFor(model => Model.Customers[i].HasReservation)
-                                    @Html.HiddenFor(model => Model.Customers[i].Id)
+                                   @* @Html.HiddenFor(model => Model.Customers[i].Id)*@
                                 </td>
                             </tr>
                         }
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>
+                                <span asp-validation-for="Customers" class="text-danger"></span>
+                            </td>                      
+                        </tr>
+                    </tfoot>
                 </table>
-                <a asp-controller="Customers" asp-action="Create" class="btn btn-primary" style="margin: 10px 0px 10px 0px">New Customer <i class="fa-regular fa-square-plus"></i></a>
-
-
+                <a asp-controller="Customers" asp-action="Create" class="btn btn-outline-primary" style="margin: 10px 0px 10px 0px;">New Customer <i class="fa-regular fa-square-plus"></i></a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <div>
+                        <a asp-controller="Rooms" asp-action="Create" class="btn btn-outline-primary " style="margin: 10px 0px 10px 0px;">New Room <i class="fa-regular fa-square-plus"></i></a>
+                    </div>
+                }
                 <div class="form-group">
                     <label asp-for="RoomId" class="control-label">Room</label>
                     <select asp-for="RoomId" asp-items="@Model.Rooms"></select>
                     <span asp-validation-for="RoomId" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group text-center">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
             </form>

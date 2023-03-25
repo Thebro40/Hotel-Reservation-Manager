@@ -70,10 +70,7 @@ namespace Hotel_Reservation_Manager.Services.Customers
                     ResLeaveDate = x.ResLeaveDate,
                     ResRoomNumber = x.ResRoomNumber
                 }).ToListAsync();
-                foreach (var item in history)
-                {
-                    model.History.Add(item);
-                }
+                model.History = history;
                 return model;
             }
             return null;
@@ -136,7 +133,7 @@ namespace Hotel_Reservation_Manager.Services.Customers
             Customer customer = await this.context.Customers.FindAsync(model.Id);
             if (customer != null)
             {
-                if (customer.Reservation!=null)
+                if (customer.Reservation != null)
                 {
                     customer.Reservation = null;
                 }
