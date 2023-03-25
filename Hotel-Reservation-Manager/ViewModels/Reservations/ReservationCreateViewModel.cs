@@ -11,7 +11,6 @@ namespace Hotel_Reservation_Manager.ViewModels.Reservations
     public class ReservationCreateViewModel
     {
         public string UserId { get; set; }
-        public string CustomerId { get; set; }
         public IList<CustomerIndexViewModel> Customers { get; set; } = new List<CustomerIndexViewModel>();
         //public CustomersIndexViewModel Customers { get; set; } = new CustomersIndexViewModel();
         public string RoomId { get; set; }
@@ -34,7 +33,5 @@ namespace Hotel_Reservation_Manager.ViewModels.Reservations
 
         [DisplayName("Allinclusive")]
         public bool HasAllInclusive { get; set; }
-        [Required]
-        public decimal Price { get; set; }
     }
 }

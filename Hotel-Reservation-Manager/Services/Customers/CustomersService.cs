@@ -1,7 +1,9 @@
 ﻿using Hotel_Reservation_Manager.Data;
 using Hotel_Reservation_Manager.Data.Models;
+using Hotel_Reservation_Manager.ViewModels.CustomerHistory;
 using Hotel_Reservation_Manager.ViewModels.Customers;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -58,9 +60,19 @@ namespace Hotel_Reservation_Manager.Services.Customers
                     IsAdult = customer.IsAdult,
                     PhoneNumber = customer.PhoneNumber,
                 };
-                if (customer.Reservation != null)
+
+                List<CustomerHistoryViewModel> history = await context.CustomerHistory.Where(x => x.CustomerId == customer.Id).Select(x => new CustomerHistoryViewModel()
                 {
-                    model.ReservationId = customer.Reservation.Id;
+                    CustomerId = x.CustomerId,
+                    ResPrice = x.ResPrice,
+                    Customer = x.Customer,
+                    ResAccomDate = x.ResAccomDate,
+                    ResLeaveDate = x.ResLeaveDate,
+                    ResRoomNumber = x.ResRoomNumber
+                }).ToListAsync();
+                foreach (var item in history)
+                {
+                    model.History.Add(item);
                 }
                 return model;
             }

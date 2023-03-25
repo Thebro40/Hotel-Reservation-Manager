@@ -24,6 +24,15 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             User user = await context.Users.FindAsync(model.UserId);
             Room room = await context.Rooms.FindAsync(model.RoomId);
 
+
+
+
+            List<Customer> SelectedCustomers = model.Customers.Where(x => x.HasReservation == true)
+                .Select(x => new Customer
+                {
+                    Id = x.Id,
+                }).ToList();
+
             //Create Reservation
             Reservation reservation = new Reservation()
             {
@@ -32,16 +41,19 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                 LeaveDate = model.LeaveDate,
                 HasAllInclusive = model.HasAllInclusive,
                 HasBreakfast = model.HasBreakfast,
-                Price = model.Price,
             };
-
-
             reservation.Customers = new List<Customer>();
+
+            reservation.Price = await CalculatePrice(model, room, SelectedCustomers);
+
+
+
+
 
             if (room.Id != reservation.RoomId)
             {
                 Reservation roomres = await context.Reservations.FirstOrDefaultAsync(x => x.RoomId == room.Id);
-                if (roomres == null && room.IsAvailable ==true)
+                if (roomres == null && room.IsAvailable == true)
                 {
                     AddReservationRoom(room, reservation);
                 }
@@ -50,13 +62,6 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             //Add Reservation to database and save
             await this.context.Reservations.AddAsync(reservation);
             await this.context.SaveChangesAsync();
-
-
-            List<Customer> SelectedCustomers = model.Customers.Where(x => x.HasReservation == true)
-                .Select(x => new Customer
-                {
-                    Id = x.Id,
-                }).ToList();
 
             foreach (var cust in SelectedCustomers)
             {
@@ -171,8 +176,8 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                     throw new InvalidOperationException("Selected Room does not have enough capacity");
                 }
                 //if (RoomIsAvailable(room))
-                
-                
+
+
                 else
                 {
                     AddReservationRoom(room, reservation);
@@ -286,7 +291,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             if (reservation.Room != null)
             {
                 reservation.Room.IsAvailable = true;
-                reservation.Room.Reservation =null;
+                reservation.Room.Reservation = null;
             }
             reservation.RoomId = room.Id;
             room.ReservationId = reservation.Id;
@@ -299,6 +304,32 @@ namespace Hotel_Reservation_Manager.Services.Reservations
         {
             return reservation.LeaveDate < roomres.AccommodationDate ||
                 reservation.AccommodationDate > roomres.AccommodationDate;
+        }
+        private async Task<decimal> CalculatePrice(ReservationCreateViewModel model, Room room, List<Customer> SelectedCustomers)
+        {
+            decimal price = new decimal();
+            if (model.HasBreakfast)
+            {
+                price = +150;
+            }
+            if (model.HasAllInclusive)
+            {
+                price += 300;
+            }
+            foreach (var cust in SelectedCustomers)
+            {
+                Customer dbc = await context.Customers.FindAsync(cust.Id);
+                if (dbc.IsAdult)
+                {
+                    price += room.PricePerBedAdult;
+                }
+                if (!dbc.IsAdult)
+                {
+                    price += room.PricePerBedChild;
+                }
+            }
+
+            return price;
         }
         public async Task<List<CustomerIndexViewModel>> GetFreeCustomersAsListAsync()
         {
@@ -313,9 +344,10 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             })
                 .ToListAsync();
         }
+
         public async Task<List<RoomSelectListViewModel>> GetRoomsSelectListAsync()
         {
-            List<RoomSelectListViewModel> SelectList = await this.context.Rooms.Where(x=>x.Reservation==null).Select(x => new RoomSelectListViewModel()
+            List<RoomSelectListViewModel> SelectList = await this.context.Rooms.Where(x => x.Reservation == null).Select(x => new RoomSelectListViewModel()
             {
                 Id = x.Id,
                 Capacity = x.Capacity,
@@ -338,10 +370,22 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             context.Update(dbCustomer);
             await context.SaveChangesAsync();
         }
+
         private async Task AddCustomerToReservationAsync(Customer dbCustomer,
             Reservation reservation)
         {
             dbCustomer.Reservation = reservation;
+
+            CustomerHistory ch = new CustomerHistory()
+            {
+                Customer = dbCustomer,
+                ResAccomDate = reservation.AccommodationDate,
+                ResLeaveDate = reservation.LeaveDate,
+                ResPrice = reservation.Price,
+                ResRoomNumber = reservation.Room.Number,
+            };
+
+            context.CustomerHistory.Add(ch);
 
             context.Reservations.Attach(reservation);
             await this.context.SaveChangesAsync();

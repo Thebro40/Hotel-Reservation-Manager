@@ -11,6 +11,7 @@ namespace Hotel_Reservation_Manager.Data
     public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string>
     {
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<CustomerHistory> CustomerHistory { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
