@@ -41,7 +41,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             if (room.Id != reservation.RoomId)
             {
                 Reservation roomres = await context.Reservations.FirstOrDefaultAsync(x => x.RoomId == room.Id);
-                if (roomres == null && room.IsAvailable ==true)
+                if (roomres == null && room.IsAvailable == true)
                 {
                     AddReservationRoom(room, reservation);
                 }
@@ -171,8 +171,8 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                     throw new InvalidOperationException("Selected Room does not have enough capacity");
                 }
                 //if (RoomIsAvailable(room))
-                
-                
+
+
                 else
                 {
                     AddReservationRoom(room, reservation);
@@ -286,7 +286,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             if (reservation.Room != null)
             {
                 reservation.Room.IsAvailable = true;
-                reservation.Room.Reservation =null;
+                reservation.Room.Reservation = null;
             }
             reservation.RoomId = room.Id;
             room.ReservationId = reservation.Id;
@@ -315,7 +315,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
         }
         public async Task<List<RoomSelectListViewModel>> GetRoomsSelectListAsync()
         {
-            List<RoomSelectListViewModel> SelectList = await this.context.Rooms.Where(x=>x.Reservation==null).Select(x => new RoomSelectListViewModel()
+            List<RoomSelectListViewModel> SelectList = await this.context.Rooms.Where(x => x.Reservation == null).Select(x => new RoomSelectListViewModel()
             {
                 Id = x.Id,
                 Capacity = x.Capacity,
@@ -344,6 +344,14 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             dbCustomer.Reservation = reservation;
 
             context.Reservations.Attach(reservation);
+            CustomerHistory ch = new CustomerHistory()
+            {
+                CustomerId = dbCustomer.Id,
+                ReservationId = reservation.Id,
+                AccommodationDate= reservation.AccommodationDate,
+                LeaveDate=reservation.LeaveDate,
+            };
+            context.CustomerHistory.Add(ch);
             await this.context.SaveChangesAsync();
         }
 
