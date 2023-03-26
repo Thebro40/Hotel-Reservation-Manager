@@ -57,6 +57,7 @@
                                 </td>
                                 <td>
                                     @Html.CheckBoxFor(model => Model.Customers[i].HasReservation)
+                                    
                                    @* @Html.HiddenFor(model => Model.Customers[i].Id)*@
                                 </td>
                             </tr>
@@ -71,6 +72,9 @@
                     </tfoot>
                 </table>
                 <a asp-controller="Customers" asp-action="Create" class="btn btn-outline-primary" style="margin: 10px 0px 10px 0px;">New Customer <i class="fa-regular fa-square-plus"></i></a>
+
+                @Html.ListBoxFor(model => Model.SelectedCustomers,Model.CustomersList)
+
                 @if (User.IsInRole("Admin"))
                 {
                     <div>

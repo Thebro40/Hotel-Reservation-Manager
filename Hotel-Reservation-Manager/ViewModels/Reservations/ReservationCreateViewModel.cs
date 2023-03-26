@@ -12,6 +12,11 @@ namespace Hotel_Reservation_Manager.ViewModels.Reservations
     {
         public string UserId { get; set; }
         public IList<CustomerIndexViewModel> Customers { get; set; } = new List<CustomerIndexViewModel>();
+
+        [DisplayName ("Customers")]
+        public IList<string> SelectedCustomers { get; set; }
+        public IList<SelectListItem> CustomersList { get; set; } = new List<SelectListItem>();
+
         //public CustomersIndexViewModel Customers { get; set; } = new CustomersIndexViewModel();
         [Required]
         public string RoomId { get; set; }

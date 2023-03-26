@@ -331,7 +331,28 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             })
                 .ToListAsync();
         }
-
+        public async Task<ReservationCreateViewModel> GetFreeCustomersAsync(ReservationCreateViewModel model)
+        {
+            
+            model.CustomersList = await context.Customers.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = $"{x.FirstName} {x.LastName}|{BooleanToString(x.IsAdult)}|{x.PhoneNumber}",
+            })
+                .ToListAsync();
+            return model;
+        }
+        private static string BooleanToString(bool isAdult)
+        {
+            if (isAdult == true)
+            {
+                return ">18";
+            }
+            else
+            {
+                return "<18";
+            }
+        }
         public async Task<List<RoomSelectListViewModel>> GetRoomsSelectListAsync()
         {
             List<RoomSelectListViewModel> SelectList = await this.context.Rooms.Where(x => x.Reservation == null).Select(x => new RoomSelectListViewModel()

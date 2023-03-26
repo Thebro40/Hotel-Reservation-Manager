@@ -19,5 +19,6 @@ namespace Hotel_Reservation_Manager.Services.Reservations
         Task<List<CustomerIndexViewModel>> GetFreeCustomersAsListAsync();
         Task<List<RoomSelectListViewModel>> GetRoomsSelectListAsync();
         Task<int> GetRoomCapacityAsync(string id);
+        Task<ReservationCreateViewModel> GetFreeCustomersAsync(ReservationCreateViewModel model);
     }
 }

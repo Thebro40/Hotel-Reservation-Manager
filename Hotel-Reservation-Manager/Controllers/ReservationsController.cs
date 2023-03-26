@@ -30,6 +30,7 @@ namespace Hotel_Reservation_Manager.Controllers
                 Customers = await reservationsService.GetFreeCustomersAsListAsync(),
                 Rooms = new SelectList(await reservationsService.GetRoomsSelectListAsync(), "Id", "Number"),
             };
+            await reservationsService.GetFreeCustomersAsync(model);
             return View(model);
         }
         [HttpPost]
