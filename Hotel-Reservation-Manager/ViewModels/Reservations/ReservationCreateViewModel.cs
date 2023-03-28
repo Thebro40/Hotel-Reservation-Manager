@@ -11,14 +11,10 @@ namespace Hotel_Reservation_Manager.ViewModels.Reservations
     public class ReservationCreateViewModel
     {
         public string UserId { get; set; }
-        public IList<CustomerIndexViewModel> Customers { get; set; } = new List<CustomerIndexViewModel>();
-
-        [DisplayName ("Customers")]
-        public IList<string> SelectedCustomers { get; set; }
-        public IList<SelectListItem> CustomersList { get; set; } = new List<SelectListItem>();
-
-        //public CustomersIndexViewModel Customers { get; set; } = new CustomersIndexViewModel();
-        [Required]
+        public IList<CustomerCreateViewModel> Customers { get; set; } = 
+            new List<CustomerCreateViewModel>();
+        public int SelectedRoomCap { get; set; }
+        [Required(ErrorMessage = "Please select and submit a room")]
         public string RoomId { get; set; }
         public SelectList Rooms { get; set; }
 

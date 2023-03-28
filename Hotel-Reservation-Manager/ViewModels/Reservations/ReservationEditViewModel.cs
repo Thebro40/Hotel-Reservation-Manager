@@ -13,11 +13,13 @@ namespace Hotel_Reservation_Manager.ViewModels.Reservations
         public string CustomerToRemoveId { get; set; }
         public string CustomerToAddId { get; set; }
         public string RoomId { get; set; }
+        public SelectList Rooms { get; set; }
         public IList<Customer> Customers { get; set; } = new List<Customer>();
+        public int SelectedRoomCap { get; set; }
         public DateTime AccommodationDate { get; set; }
         public DateTime LeaveDate { get; set; }
         public bool HasBreakfast { get; set; }
         public bool HasAllInclusive { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
     }
 }

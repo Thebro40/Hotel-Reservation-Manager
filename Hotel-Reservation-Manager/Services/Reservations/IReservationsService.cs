@@ -16,9 +16,9 @@ namespace Hotel_Reservation_Manager.Services.Reservations
         Task<ReservationsIndexViewModel> GetReservationsAsync();
         Task<ReservationEditViewModel> EditReservationByIdAsync(string id);
         Task UpdateReservationAsync(ReservationEditViewModel model);
-        Task<List<CustomerIndexViewModel>> GetFreeCustomersAsListAsync();
-        Task<List<RoomSelectListViewModel>> GetRoomsSelectListAsync();
+        Task<List<RoomSelectListViewModel>> GetFreeRoomsSelectListAsync();
         Task<int> GetRoomCapacityAsync(string id);
-        Task<ReservationCreateViewModel> GetFreeCustomersAsync(ReservationCreateViewModel model);
+        Task<Customer> FindCustomerAsync(Customer cust);
+        Task<List<RoomSelectListViewModel>> GetAllRoomsSelectListAsync(ReservationEditViewModel model);
     }
 }

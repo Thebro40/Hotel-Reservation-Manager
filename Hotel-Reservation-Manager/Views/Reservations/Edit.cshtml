@@ -41,7 +41,6 @@
                                     @Html.DisplayFor(modelItem => item.LastName)
                                 </td>
                                 <td>
-                                    
                                 </td>
                             </tr>
                         }
@@ -50,6 +49,9 @@
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id" />
+                <label asp-for="RoomId" class="control-label">Select Room:</label>
+                <select asp-for="RoomId" asp-items="@Model.Rooms"></select>
+                <span asp-validation-for="RoomId" class="text-danger" style="display:block"></span>
                 <div class="form-group">
                     <label asp-for="AccommodationDate" class="control-label"></label>
                     <input asp-for="AccommodationDate" class="form-control" />
@@ -80,16 +82,6 @@
                     <label asp-for="CustomerToRemoveId" class="control-label"></label>
                     <input asp-for="CustomerToRemoveId" class="form-control" />
                     <span asp-validation-for="CustomerToRemoveId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="RoomId" class="control-label"></label>
-                    <input asp-for="RoomId" class="form-control" />
-                    <span asp-validation-for="RoomId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" class="form-control" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
