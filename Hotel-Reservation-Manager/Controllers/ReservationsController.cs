@@ -49,6 +49,13 @@ namespace Hotel_Reservation_Manager.Controllers
             //Remove temporary empty Customer objects
             model.Customers = model.Customers.Where(x => x.FirstName != null && x.LastName != null && x.PhoneNumber != null).ToList();
 
+            // Check if user submitted a roomid
+            if (model.RoomId==null)
+            {
+                ModelState.AddModelError(nameof(model.RoomId), "Please select and submit a room");
+                await ConfigureCreateVM(model, model.RoomId);
+                return View(model);
+            }
             //Checks Accommodation and Leave date if they are sensible
             if (CheckDurationOfDates(model))
             {
@@ -77,7 +84,7 @@ namespace Hotel_Reservation_Manager.Controllers
                 LastName = x.LastName,
                 PhoneNumber = x.PhoneNumber,
             }).ToList();
-            //chek every inputted User if he exists in database
+            //chek every inputted User if he exists in database and if he already has a reservation
             foreach (var cust in inputCustomers)
             {
                 Customer customer = await reservationsService.FindCustomerAsync(cust);
