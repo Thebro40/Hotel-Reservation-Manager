@@ -57,7 +57,7 @@ namespace Hotel_Reservation_Manager.Controllers
                 return View(model);
             }
             //Checks Accommodation and Leave date if they are sensible
-            if (CheckDurationOfDates(model))
+            if (CheckDurationOfDates(model.LeaveDate,model.AccommodationDate))
             {
                 ModelState.AddModelError(nameof(model.LeaveDate), "Leave date can't be before Accommodation Date");
                 ModelState.AddModelError(nameof(model.AccommodationDate), "Accommodation Date can't be after Leave Date");
@@ -130,12 +130,11 @@ namespace Hotel_Reservation_Manager.Controllers
             }
             return View(model);
         }
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string id,int CustomerCount)
         {
             ReservationEditViewModel model = await reservationsService.EditReservationByIdAsync(id);
             return View(model);
         }
-
         ///<summary>POST: ReservationController/Edit/?(id)</summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -143,17 +142,58 @@ namespace Hotel_Reservation_Manager.Controllers
         {
             //Gets current user's id
             model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            //Remove temporary empty Customer objects
+            model.CustomersToAdd = model.CustomersToAdd.Where(x => x.FirstName != null && x.LastName != null && x.PhoneNumber != null).ToList();
+            model.CustomersToRemove = model.CustomersToRemove.Where(x=>x.RemoveFromRes).ToList();
+
+            // Check if user submitted a roomid
+            if (model.RoomId == null)
+            {
+                ModelState.AddModelError(nameof(model.RoomId), "Please select and submit a room");
+                return View(await reservationsService.EditReservationByIdAsync(model.Id));
+            }
             //Checks Accommodation and Leave date if they are sensible
-            if (CheckDurationOfDates(model))
+            if (CheckDurationOfDates(model.LeaveDate, model.AccommodationDate))
             {
                 ModelState.AddModelError(nameof(model.LeaveDate), "Leave date can't be before Accommodation Date");
                 ModelState.AddModelError(nameof(model.AccommodationDate), "Accommodation Date can't be after Leave Date");
                 return View(await reservationsService.EditReservationByIdAsync(model.Id));
             }
+            //Check if nubmer of people is more than room capacity
+            if (await reservationsService.GetRoomCapacityAsync(model.RoomId) < model.CustomersToAdd.Count)
+            {
+                ModelState.AddModelError(nameof(model.CustomersToAdd), "Number of people exceeds Room Capacity");
+                return View(await reservationsService.EditReservationByIdAsync(model.Id));
+            }
+            List<Customer> inputCustomers = model.CustomersToAdd.Select(x => new Customer()
+            {
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                PhoneNumber = x.PhoneNumber,
+            }).ToList();
+            //chek every inputted User if he exists in database and if he already has a reservation
+            foreach (var cust in inputCustomers)
+            {
+                Customer customer = await reservationsService.FindCustomerAsync(cust);
+                if (customer == null)
+                {
+                    ModelState.AddModelError(nameof(model.CustomersToAdd), $"{cust.FirstName} {cust.LastName} isn't found in the database. You have to first add him/her");
+                    return View(await reservationsService.EditReservationByIdAsync(model.Id));
+                }
+                if (customer.Reservation != null)
+                {
+                    ModelState.AddModelError(nameof(model.CustomersToAdd), $"{cust.FirstName} {cust.LastName} has already been asigned to a Reservation");
+                    return View(await reservationsService.EditReservationByIdAsync(model.Id));
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                await reservationsService.UpdateReservationAsync(model);
 
-            await reservationsService.UpdateReservationAsync(model);
-
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            return View(await reservationsService.EditReservationByIdAsync(model.Id));
         }
         private async Task ConfigureCreateVM(ReservationCreateViewModel model, string roomId)
         {
@@ -168,13 +208,9 @@ namespace Hotel_Reservation_Manager.Controllers
                 model.Customers.Add(new CustomerCreateViewModel());
             }
         }
-        private static bool CheckDurationOfDates(ReservationCreateViewModel model)
+        private static bool CheckDurationOfDates(DateTime LeaveDate, DateTime AccommodationDate)
         {
-            return model.LeaveDate < model.AccommodationDate;
-        }
-        private static bool CheckDurationOfDates(ReservationEditViewModel model)
-        {
-            return model.LeaveDate < model.AccommodationDate;
+            return LeaveDate < AccommodationDate;
         }
     }
 }
