@@ -1,0 +1,74 @@
+﻿@model RoomsIndexViewModel
+@{
+    ViewData["Title"] = "Rooms";
+}
+<h1>Index</h1>
+
+<table class="table table-striped table-hover "
+       style="border-radius: 10px; overflow: hidden;">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Number</th>
+            <th>Room Type</th>
+            <th>Capacity</th>
+            <th>PricePerBedAdult</th>
+            <th>PricePerBedChild</th>
+            <th>Availability</th>
+            <th></th>
+        </tr>
+    </thead>
+    @if (this.User.IsInRole("Admin"))
+    {
+        <a asp-controller="Rooms" asp-action="Create" class="btn btn-primary" class="btn btn-primary" style="margin: 10px 0px 10px 0px">New Room <i class="fa-regular fa-square-plus"></i></a>
+    }
+    <tbody>
+        @foreach (var item in Model.Rooms)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Capacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PricePerBedAdult)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PricePerBedChild)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsAvailable)
+                </td>
+                <td>
+                    @if (this.User.IsInRole("Admin"))
+                    {
+                        <p class="text-nowrap">
+                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="text-nowrap">
+                            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                        </p>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

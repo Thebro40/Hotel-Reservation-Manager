@@ -1,0 +1,68 @@
+﻿@model UserDetailsViewModel
+
+@{
+    ViewData["Title"] = "Delete User";
+}
+
+<div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-lg-8 col-xl-6">
+        <h1 class="text-center">Are you sure you want to delete this user?</h1>
+        <div class="card rounded-3" style="background-color:#F0F2F5">
+            <div class="card-body p-4 p-md-5">
+                <form asp-action="Delete">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        @Html.DisplayNameFor(model => model.UserName)
+                        @Html.DisplayFor(model => model.UserName)
+                    </div>
+                    <div class="form-group">
+                        @Html.DisplayNameFor(model => model.Email)
+                        @Html.DisplayFor(model => model.Email)
+                    </div>
+                    <div class="form-group">
+                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                        @Html.DisplayFor(model => model.PhoneNumber)
+                    </div>
+                    <div class="form-group">
+                        @Html.DisplayNameFor(model => model.FirstName)
+                        @Html.DisplayFor(model => model.FirstName)
+                    </div>
+                    <div class="form-group">
+                        @Html.DisplayNameFor(model => model.MiddleName)
+                        @Html.DisplayFor(model => model.MiddleName)
+                    </div>
+                    <div class="form-group">
+                        @Html.DisplayNameFor(model => model.LastName)
+                        @Html.DisplayFor(model => model.LastName)
+                    </div>
+                    <div class="form-group">
+                        @Html.DisplayNameFor(model => model.UCN)
+                        @Html.DisplayFor(model => model.UCN)
+                    </div>
+                    <div class="form-group">
+                        @Html.DisplayNameFor(model => model.HireDate)
+                        @Html.DisplayFor(model => model.HireDate)
+                    </div>
+                    <div class="form-group">
+                        @Html.DisplayNameFor(model => model.IsActive)
+                        @Html.DisplayFor(model => model.IsActive)
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Delete" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
