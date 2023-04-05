@@ -9599,11 +9599,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\it kariera\\Module 13\\HotelReservationManager\\Hotel-Reservation-Manager-Overhaul1\\Hotel-Reservation-Manager\\Hotel-Reservation-Manager.csproj",
+      "projectUniqueName": "D:\\it kariera\\Module 13\\Hotel-Reservation-Manager\\Hotel-Reservation-Manager\\Hotel-Reservation-Manager.csproj",
       "projectName": "Hotel-Reservation-Manager",
-      "projectPath": "D:\\it kariera\\Module 13\\HotelReservationManager\\Hotel-Reservation-Manager-Overhaul1\\Hotel-Reservation-Manager\\Hotel-Reservation-Manager.csproj",
+      "projectPath": "D:\\it kariera\\Module 13\\Hotel-Reservation-Manager\\Hotel-Reservation-Manager\\Hotel-Reservation-Manager.csproj",
       "packagesPath": "C:\\Users\\Yordan\\.nuget\\packages\\",
-      "outputPath": "D:\\it kariera\\Module 13\\HotelReservationManager\\Hotel-Reservation-Manager-Overhaul1\\Hotel-Reservation-Manager\\obj\\",
+      "outputPath": "D:\\it kariera\\Module 13\\Hotel-Reservation-Manager\\Hotel-Reservation-Manager\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Yordan\\AppData\\Roaming\\NuGet\\NuGet.Config",
