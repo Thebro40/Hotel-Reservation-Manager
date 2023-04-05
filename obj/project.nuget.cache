@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ATGqZB8lYJ3bQ142Flhdee2eDzU+7aupDk7pR34hlDqmHOTQ6TtgR5+ZZfeiiAfvtICtDUfuEzrt9Qq1JlwaEQ==",
+  "dgSpecHash": "MahvV43MlRjoU8fufUEmCihfvTjVuNZrKHLzhmN4hSk2xCXHWyrI8eIHv0QhU5AqzXS+mscWGXKeQSuIWvxCUA==",
   "success": true,
-  "projectFilePath": "D:\\it kariera\\Module 13\\HotelReservationManager\\Hotel-Reservation-Manager-Overhaul1\\Hotel-Reservation-Manager\\Hotel-Reservation-Manager.csproj",
+  "projectFilePath": "D:\\it kariera\\Module 13\\Hotel-Reservation-Manager\\Hotel-Reservation-Manager\\Hotel-Reservation-Manager.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Yordan\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
     "C:\\Users\\Yordan\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.32\\microsoft.aspnetcore.cryptography.internal.3.1.32.nupkg.sha512",
