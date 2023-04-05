@@ -1,0 +1,103 @@
+﻿@model ReservationEditViewModel
+
+@{
+    ViewData["Title"] = "Edit Reservation";
+}
+
+
+<div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="card rounded-3" style="background-color:#F0F2F5">
+        <h1 class="text-center">Edit Reservation</h1>
+        <div class="card-body p-4 p-md-5">
+            <form asp-action="Edit">
+                <h4>
+                    Customers:
+                </h4>
+                <table class="table table-striped table-hover "
+                       style="border-radius: 10px; overflow: hidden;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Customers.Count(); i++)
+                        {
+                            @Html.HiddenFor(model => Model.Customers[i].Id)
+                        }
+                        @foreach (var item in Model.Customers)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LastName)
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <label asp-for="RoomId" class="control-label">Select Room:</label>
+                <select asp-for="RoomId" asp-items="@Model.Rooms"></select>
+                <span asp-validation-for="RoomId" class="text-danger" style="display:block"></span>
+                <div class="form-group">
+                    <label asp-for="AccommodationDate" class="control-label"></label>
+                    <input asp-for="AccommodationDate" class="form-control" />
+                    <span asp-validation-for="AccommodationDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LeaveDate" class="control-label"></label>
+                    <input asp-for="LeaveDate" class="form-control" />
+                    <span asp-validation-for="LeaveDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HasAllInclusive" class="control-label"></label>
+                    <input asp-for="HasAllInclusive" class="form-control" />
+                    <span asp-validation-for="HasAllInclusive" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HasBreakfast" class="control-label"></label>
+                    <input asp-for="HasBreakfast" class="form-control" />
+                    <span asp-validation-for="HasBreakfast" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CustomerToAddId" class="control-label"></label>
+                    <input asp-for="CustomerToAddId" class="form-control" />
+                    <span asp-validation-for="CustomerToAddId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustomerToRemoveId" class="control-label"></label>
+                    <input asp-for="CustomerToRemoveId" class="form-control" />
+                    <span asp-validation-for="CustomerToRemoveId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

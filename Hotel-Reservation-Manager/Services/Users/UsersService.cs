@@ -32,7 +32,7 @@ namespace Hotel_Reservation_Manager.Services
                     Id = user.Id,
                     UserName = user.UserName,
                     Email = user.Email,
-                    EGN = user.EGN,
+                    UCN = user.UCN,
                     PhoneNumber = user.PhoneNumber,
                     FirstName = user.FirstName,
                     MiddleName = user.MiddleName,
@@ -51,7 +51,7 @@ namespace Hotel_Reservation_Manager.Services
                 Id = x.Id,
                 UserName = x.UserName,
                 Email = x.Email,
-                EGN = x.EGN,
+                UCN = x.UCN,
                 PhoneNumber = x.PhoneNumber,
                 FirstName = x.FirstName,
                 MiddleName = x.MiddleName,
@@ -76,7 +76,7 @@ namespace Hotel_Reservation_Manager.Services
                 FirstName = model.FirstName,
                 MiddleName = model.MiddleName,
                 LastName = model.LastName,
-                EGN = model.EGN,
+                UCN = model.UCN,
                 HireDate = model.HireDate,
                 IsActive = model.IsActive,
                 FireDate = model.FireDate,
@@ -116,7 +116,7 @@ namespace Hotel_Reservation_Manager.Services
                     FirstName = user.FirstName,
                     MiddleName = user.MiddleName,
                     LastName = user.LastName,
-                    EGN = user.EGN,
+                    UCN = user.UCN,
                     Email = user.Email,
                     HireDate = user.HireDate,
                     IsActive = user.IsActive,
@@ -139,7 +139,7 @@ namespace Hotel_Reservation_Manager.Services
             user.FirstName = model.FirstName;
             user.MiddleName = model.MiddleName;
             user.LastName = model.LastName;
-            user.EGN = model.EGN;
+            user.UCN = model.UCN;
             user.HireDate = model.HireDate;
             user.IsActive = model.IsActive;
             user.FireDate = model.FireDate;
@@ -189,7 +189,7 @@ namespace Hotel_Reservation_Manager.Services
                     FirstName = user.FirstName,
                     MiddleName = user.MiddleName,
                     LastName = user.LastName,
-                    EGN = user.EGN,
+                    UCN = user.UCN,
                     Email = user.Email,
                     HireDate = user.HireDate,
                     IsActive = user.IsActive,
