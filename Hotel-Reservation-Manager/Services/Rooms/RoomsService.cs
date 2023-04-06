@@ -14,20 +14,23 @@ namespace Hotel_Reservation_Manager.Services.Rooms
         {
             this.context = context;
         }
-        public async Task<RoomsIndexViewModel> GetRoomsAsync()
+        public async Task<RoomsIndexViewModel> GetRoomsAsync(RoomsIndexViewModel model)
         {
-            RoomsIndexViewModel model = new RoomsIndexViewModel();
-            model.Rooms = await this.context.Rooms.Select(x => new RoomIndexViewModel()
-            {
-                Id = x.Id,
-                Capacity = x.Capacity,
-                RoomType = x.RoomType,
-                IsAvailable = x.IsAvailable,
-                PricePerBedAdult = x.PricePerBedAdult,
-                PricePerBedChild = x.PricePerBedChild,
-                Number = x.Number,
-            })
+            model.Rooms = await this.context.Rooms
+                .Skip((model.Page - 1) * model.ItemsPerPage)
+                .Take(model.ItemsPerPage)
+                .Select(x => new RoomIndexViewModel()
+                {
+                    Id = x.Id,
+                    Capacity = x.Capacity,
+                    RoomType = x.RoomType,
+                    IsAvailable = x.IsAvailable,
+                    PricePerBedAdult = x.PricePerBedAdult,
+                    PricePerBedChild = x.PricePerBedChild,
+                    Number = x.Number,
+                })
                 .ToListAsync();
+            model.ElementsCount = await this.context.Customers.CountAsync();
             return model;
         }
         public async Task<RoomDetailsViewModel> GetRoomDetailsByIdAsync(string id)
@@ -49,11 +52,26 @@ namespace Hotel_Reservation_Manager.Services.Rooms
             }
             return null;
         }
+        public async Task<bool> DoesRoomNumberExist(int modelNumber,string roomId=null)
+        {
+            var roomx = context.Rooms.Where(x=>x.Number==modelNumber).Select(x => new Room()
+            {
+                Id=x.Id,
+                Number = x.Number,
+            });
+            foreach (var room in roomx)
+            {
+                if (room.Id!=roomId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public async Task CreateRoomAsync(RoomCreateViewModel model)
         {
             Room room = new Room()
             {
-                //Id = model.Id,
                 Capacity = model.Capacity,
                 IsAvailable = model.IsAvailable,
                 Number = model.Number,
@@ -94,7 +112,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
                 PricePerBedChild = model.PricePerBedChild,
                 RoomType = model.RoomType,
             };
-            this.context.Update(room);
+            context.Update(room);
             await context.SaveChangesAsync();
         }
         public async Task<RoomDetailsViewModel> DeleteRoomByIdAsync(string id)
@@ -104,13 +122,13 @@ namespace Hotel_Reservation_Manager.Services.Rooms
             {
                 return new RoomDetailsViewModel()
                 {
-                    Capacity= room.Capacity,
-                    Id= room.Id,
-                    IsAvailable= room.IsAvailable,
-                    Number=room.Number,
-                    PricePerBedAdult= room.PricePerBedAdult,
-                    PricePerBedChild= room.PricePerBedChild,
-                    RoomType= room.RoomType,
+                    Capacity = room.Capacity,
+                    Id = room.Id,
+                    IsAvailable = room.IsAvailable,
+                    Number = room.Number,
+                    PricePerBedAdult = room.PricePerBedAdult,
+                    PricePerBedChild = room.PricePerBedChild,
+                    RoomType = room.RoomType,
                 };
             }
             return null;

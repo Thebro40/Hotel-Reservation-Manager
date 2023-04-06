@@ -10,7 +10,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
         Task<ReservationDeleteViewModel> GetReservationToDeleteAsync(string id);
         Task DeleteReservationAsync(ReservationDeleteViewModel model);
         Task<ReservationDetailsViewModel> GetReservationDetailsAsync(string id);
-        Task<ReservationsIndexViewModel> GetReservationsAsync();
+        Task<ReservationsIndexViewModel> GetReservationsAsync(ReservationsIndexViewModel model);
         Task<ReservationEditViewModel> EditReservationByIdAsync(string id);
         Task UpdateReservationAsync(ReservationEditViewModel model);
     }

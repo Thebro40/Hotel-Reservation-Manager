@@ -8,13 +8,12 @@
        style="border-radius: 10px; overflow: hidden;">
     <thead class="thead-dark">
         <tr>
-            <th>Id</th>
             <th>Number</th>
-            <th>Room Type</th>
+            <th>Room type</th>
             <th>Capacity</th>
-            <th>PricePerBedAdult</th>
-            <th>PricePerBedChild</th>
-            <th>Availability</th>
+            <th>Price for adult</th>
+            <th>Price for child</th>
+            <th>Available</th>
             <th></th>
         </tr>
     </thead>
@@ -26,9 +25,6 @@
         @foreach (var item in Model.Rooms)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Number)
                 </td>
@@ -72,3 +68,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+<partial name="_PagingPartial" />

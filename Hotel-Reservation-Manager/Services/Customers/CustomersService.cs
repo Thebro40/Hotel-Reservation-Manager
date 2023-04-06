@@ -15,10 +15,12 @@ namespace Hotel_Reservation_Manager.Services.Customers
             this.context = context;
         }
 
-        public async Task<CustomersIndexViewModel> GetCustomersAsync()
+        public async Task<CustomersIndexViewModel> GetCustomersAsync(CustomersIndexViewModel model)
         {
-            CustomersIndexViewModel model = new CustomersIndexViewModel();
-            model.Customers = await this.context.Customers.Select(x => new CustomerIndexViewModel()
+            model.Customers = await this.context.Customers
+                .Skip((model.Page - 1) * model.ItemsPerPage)
+                .Take(model.ItemsPerPage)
+                .Select(x => new CustomerIndexViewModel()
             {
                 Id = x.Id,
                 Email = x.Email,
@@ -28,6 +30,7 @@ namespace Hotel_Reservation_Manager.Services.Customers
                 PhoneNumber = x.PhoneNumber,
             })
                 .ToListAsync();
+            model.ElementsCount = await this.context.Customers.CountAsync();
             return model;
         }
         public async Task CreateCustomerAsync(CustomerCreateViewModel model)
@@ -45,7 +48,6 @@ namespace Hotel_Reservation_Manager.Services.Customers
         }
         public async Task<CustomerDetailsViewModel> GetCustomerDetailsByIdAsync(string id)
         {
-            //TODO Dispaly info about reservation
             Customer customer = await this.context.Customers.FindAsync(id);
             if (customer != null)
             {
@@ -94,7 +96,7 @@ namespace Hotel_Reservation_Manager.Services.Customers
                 IsAdult = model.IsAdult,
                 PhoneNumber = model.PhoneNumber,
             };
-            this.context.Update(customer);
+            context.Update(customer);
             await context.SaveChangesAsync();
         }
         public async Task<CustomerDetailsViewModel> DeleteCustomerByIdAsync(string id)
