@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Hotel_Reservation_Manager.Data.Migrations
+namespace Hotel_Reservation_Manager.data.migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,7 +43,7 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     MiddleName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    UCN = table.Column<string>(nullable: true),
+                    EGN = table.Column<string>(nullable: true),
                     HireDate = table.Column<DateTime>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
                     FireDate = table.Column<DateTime>(nullable: true)
@@ -166,11 +166,12 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     RoomId = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
+                    CustomerId = table.Column<string>(nullable: true),
                     AccommodationDate = table.Column<DateTime>(nullable: false),
                     LeaveDate = table.Column<DateTime>(nullable: false),
                     HasBreakfast = table.Column<bool>(nullable: false),
                     HasAllInclusive = table.Column<bool>(nullable: false),
-                    Price = table.Column<decimal>(type: "money", nullable: false)
+                    Price = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -215,8 +216,8 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                     Capacity = table.Column<int>(nullable: false),
                     RoomType = table.Column<int>(nullable: false),
                     IsAvailable = table.Column<bool>(nullable: false),
-                    PricePerBedAdult = table.Column<decimal>(type: "money", nullable: false),
-                    PricePerBedChild = table.Column<decimal>(type: "money", nullable: false),
+                    PricePerBedAdult = table.Column<decimal>(nullable: false),
+                    PricePerBedChild = table.Column<decimal>(nullable: false),
                     ReservationId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -235,21 +236,21 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "66f8c581-f6f0-406c-9af0-35e7d2567b09", "04d4e941-0686-4e51-89de-003129cfe1a0", "Admin", "ADMIN" },
-                    { "f40d8b19-06cc-4554-b6cb-67414611c0df", "88ae0370-cfdb-49ed-b1ae-d9a3aa9ad35f", "User", "USER" }
+                    { "391a393f-0c18-47f8-b416-58e402ed674a", "c7d3bffe-3598-4fda-9294-cfc009968b4c", "Admin", "ADMIN" },
+                    { "5c937bab-1742-4952-9945-cf9d65468516", "540e7470-7b0d-4883-b218-ca81e22a50d0", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FireDate", "FirstName", "HireDate", "IsActive", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UCN", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "EGN", "Email", "EmailConfirmed", "FireDate", "FirstName", "HireDate", "IsActive", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "8e445864-a24d-4543-a6c6-9443d048cdb9", 0, "b3140740-1bca-4f51-a5ea-833fcb5eccbc", "admin@abv.bg", true, null, "John", new DateTime(2023, 3, 25, 18, 29, 41, 20, DateTimeKind.Local).AddTicks(6698), true, "Johnson", false, null, "Johnny", "ADMIN@ABV.BG", "ADMIN@ABV.BG", "AQAAAAEAACcQAAAAEM4wCwlze62EoJsrcJwiclaxktm8ROCm8aVgy+R6pxJ2Z4rDSdFD36leZ40LxwalUA==", "1111111111", true, "", false, "8603129931", "admin@abv.bg" },
-                    { "2de9d5f0-1c53-4aaf-885a-e83c17ea4950", 0, "bb1f6f40-acf4-48e1-a22f-b2f389f9ced7", "user0@abv.bg", true, null, "Alex", new DateTime(2023, 3, 25, 18, 29, 41, 26, DateTimeKind.Local).AddTicks(6630), true, "Alexandrov", false, null, "Jane", "user0@abv.bg", "user0@abv.bg", "AQAAAAEAACcQAAAAEIq7A4h2D44yR8KIV0yIHkyOznjjkb87+0+4B/Yb3MIbpVyKWligVmiewfJcMp3+QA==", "005783", true, "", false, "006695", "user0@abv.bg" },
-                    { "0eebc067-bed8-41aa-8505-3e09dcbaace4", 0, "9a10f496-5501-400e-b6f0-350c9c9b8785", "user1@abv.bg", true, null, "Jane", new DateTime(2023, 3, 25, 18, 29, 41, 36, DateTimeKind.Local).AddTicks(483), true, "Alexandrov", false, null, "Alex", "user1@abv.bg", "user1@abv.bg", "AQAAAAEAACcQAAAAEDFZE53NVDrcFoDXqdo95MDHplw0vOSXLQVSWwQjsFPTOLWjyyOTOxb2mxA37N0w6A==", "000315", true, "", false, "008982", "user1@abv.bg" },
-                    { "7531416f-579f-4c1b-bc20-1a014f071f6d", 0, "260e9a22-0d47-48a2-9cd1-40c832b213d9", "user2@abv.bg", true, null, "Jane", new DateTime(2023, 3, 25, 18, 29, 41, 44, DateTimeKind.Local).AddTicks(9280), true, "Alexandrov", false, null, "John", "user2@abv.bg", "user2@abv.bg", "AQAAAAEAACcQAAAAEMhTNaW2SEXQykkqdM7KrnX4oug1g1gQRMWNYV2dL4eEjek9Z6C1dXdAsJnyQxBoUg==", "002967", true, "", false, "005612", "user2@abv.bg" },
-                    { "7cdcf7d4-0b82-4916-82e8-a669796ee3c2", 0, "f94044fe-4247-496c-b38d-e626ed7ba8eb", "user3@abv.bg", true, null, "Alex", new DateTime(2023, 3, 25, 18, 29, 41, 62, DateTimeKind.Local).AddTicks(3142), true, "Alexandrov", false, null, "John", "user3@abv.bg", "user3@abv.bg", "AQAAAAEAACcQAAAAEDyM6nTVy5JMhfwjT6n9wEBalMm8FlBQydpdWJ3XaeL5RgpyWZiDZO6Co/M+M2do5Q==", "003009", true, "", false, "007130", "user3@abv.bg" },
-                    { "d43f19f8-6f5d-4a29-a1fe-0505e250ac14", 0, "b41bd786-2b91-4e83-aafc-c9b1d16d4567", "user4@abv.bg", true, null, "Jack", new DateTime(2023, 3, 25, 18, 29, 41, 70, DateTimeKind.Local).AddTicks(5196), true, "Alexandrov", false, null, "John", "user4@abv.bg", "user4@abv.bg", "AQAAAAEAACcQAAAAEEzTzkVnmupsibjpYstr63PaXp+5IJHO+fmjNLoJLzD9/HAm67vKXQw2achrQCTXXg==", "007354", true, "", false, "008862", "user4@abv.bg" }
+                    { "8e445864-a24d-4543-a6c6-9443d048cdb9", 0, "7c1411fc-f4da-42b4-8678-f248c834d3ea", "8603129931", "admin@abv.bg", true, null, "John", new DateTime(2023, 3, 17, 15, 51, 13, 33, DateTimeKind.Local).AddTicks(7277), true, "Johnson", false, null, "Johnny", "ADMIN@ABV.BG", "ADMIN@ABV.BG", "AQAAAAEAACcQAAAAEOE7RenII98uzt4fjU4lamxI3hRNUCUsO7BrgbL5UmOWuP7o5Y46CQIe++Vtti0Hxw==", "1111111111", true, "", false, "admin@abv.bg" },
+                    { "8197ce90-61be-49e9-9828-1d055021a4ce", 0, "b8bc7dfd-599e-46b4-9011-98859e9dea8d", "001945", "user0@abv.bg", true, null, "Jane", new DateTime(2023, 3, 17, 15, 51, 13, 43, DateTimeKind.Local).AddTicks(7211), true, "Alexandrov", false, null, "Jane", "user0@abv.bg", "user0@abv.bg", "AQAAAAEAACcQAAAAELsQNuShGZ0hryGsd8AasG0C36yIgrlHxwX7xl386KQIp6P1mq5HPcdz+yDk6Rxpqg==", "006192", true, "", false, "user0@abv.bg" },
+                    { "27d87402-e834-4fc7-b22c-941f1e759cf4", 0, "a94a3b6d-0c67-484e-9a47-adeedda6a1a3", "007059", "user1@abv.bg", true, null, "Alex", new DateTime(2023, 3, 17, 15, 51, 13, 52, DateTimeKind.Local).AddTicks(9040), true, "Johnson", false, null, "John", "user1@abv.bg", "user1@abv.bg", "AQAAAAEAACcQAAAAEO8In8pqrfiqR0HKNXLqcMjySnYwfQZxoVUuCdUgDke7LCi84mGv7w50zhMSQf7YnQ==", "000927", true, "", false, "user1@abv.bg" },
+                    { "7c627bc7-5238-4739-857e-03abf066d1d0", 0, "8071aabf-b95c-4f72-b692-6c17b435dd48", "003896", "user2@abv.bg", true, null, "John", new DateTime(2023, 3, 17, 15, 51, 13, 68, DateTimeKind.Local).AddTicks(4209), true, "Alexandrov", false, null, "John", "user2@abv.bg", "user2@abv.bg", "AQAAAAEAACcQAAAAEBg2GK/EUAxJNcsFQEeiAofPJy9Zmk+OfzLzCrJ8dtb6VMRnNF+56ocSu0gcONjh2Q==", "002986", true, "", false, "user2@abv.bg" },
+                    { "037a0d7e-f4c0-4c24-bc94-008a4a5075c2", 0, "c60c6687-4273-4eba-be9a-7b382fd02a89", "000910", "user3@abv.bg", true, null, "John", new DateTime(2023, 3, 17, 15, 51, 13, 81, DateTimeKind.Local).AddTicks(1999), true, "Johnson", false, null, "Jane", "user3@abv.bg", "user3@abv.bg", "AQAAAAEAACcQAAAAEMM+4OMhb4+xK9USbejIf1NKNYbJakfX03JxyT09it0p01IJXtuzApXFT76WNA4mgw==", "001293", true, "", false, "user3@abv.bg" },
+                    { "7024306a-7151-45e7-b257-03ff8fc9f404", 0, "4bec8b24-ae41-4e2c-ae46-97298db007cf", "007670", "user4@abv.bg", true, null, "John", new DateTime(2023, 3, 17, 15, 51, 13, 95, DateTimeKind.Local).AddTicks(3219), true, "Alexandrov", false, null, "John", "user4@abv.bg", "user4@abv.bg", "AQAAAAEAACcQAAAAEMrym8oGqMXcXeX7ixTPD0m/1RQoBs8rB0oEAF+GTRGeotcvagO8aZd4J5ohN84bGw==", "004551", true, "", false, "user4@abv.bg" }
                 });
 
             migrationBuilder.InsertData(
@@ -257,11 +258,11 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                 columns: new[] { "Id", "Email", "FirstName", "IsAdult", "LastName", "PhoneNumber", "ReservationId" },
                 values: new object[,]
                 {
-                    { "9d76f617-5197-480e-a8b2-59bb73df934b", "customer0@abv.bg", "Jane", false, "Johnson", "988418", null },
-                    { "8d0685ff-894c-42bf-8371-82b3e7a51344", "customer1@abv.bg", "Jack", false, "Johnson", "953794", null },
-                    { "98abd15c-5bcc-46f3-96b7-00fb9de86194", "customer2@abv.bg", "Jack", false, "Johnson", "447797", null },
-                    { "4a1cc43a-2e9e-4b10-95f8-2f53de9691f1", "customer3@abv.bg", "John", true, "Johnson", "209110", null },
-                    { "f3e560ff-c5f0-4a98-9612-d5ff53f68fb9", "customer4@abv.bg", "Jack", false, "Johnson", "525575", null }
+                    { "baa21250-809e-4965-aae2-99dbe3a9868d", "customer0@abv.bg", "Alex", false, "Alexandrov", "721151", null },
+                    { "a4241003-0d1a-40b1-b67d-5f5348336ee2", "customer1@abv.bg", "Jane", false, "Alexandrov", "615801", null },
+                    { "370d863f-99d0-4639-902d-8fa790290961", "customer2@abv.bg", "Alex", true, "Alexandrov", "581427", null },
+                    { "79e42517-cf67-4b24-9c54-7eeef9febf22", "customer3@abv.bg", "Alex", true, "Alexandrov", "923112", null },
+                    { "7711cf8c-a28c-4a4f-9407-3db0a755077c", "customer4@abv.bg", "John", false, "Johnson", "237991", null }
                 });
 
             migrationBuilder.InsertData(
@@ -269,12 +270,12 @@ namespace Hotel_Reservation_Manager.Data.Migrations
                 columns: new[] { "UserId", "RoleId" },
                 values: new object[,]
                 {
-                    { "8e445864-a24d-4543-a6c6-9443d048cdb9", "66f8c581-f6f0-406c-9af0-35e7d2567b09" },
-                    { "2de9d5f0-1c53-4aaf-885a-e83c17ea4950", "f40d8b19-06cc-4554-b6cb-67414611c0df" },
-                    { "0eebc067-bed8-41aa-8505-3e09dcbaace4", "f40d8b19-06cc-4554-b6cb-67414611c0df" },
-                    { "7531416f-579f-4c1b-bc20-1a014f071f6d", "f40d8b19-06cc-4554-b6cb-67414611c0df" },
-                    { "7cdcf7d4-0b82-4916-82e8-a669796ee3c2", "f40d8b19-06cc-4554-b6cb-67414611c0df" },
-                    { "d43f19f8-6f5d-4a29-a1fe-0505e250ac14", "f40d8b19-06cc-4554-b6cb-67414611c0df" }
+                    { "8e445864-a24d-4543-a6c6-9443d048cdb9", "391a393f-0c18-47f8-b416-58e402ed674a" },
+                    { "8197ce90-61be-49e9-9828-1d055021a4ce", "5c937bab-1742-4952-9945-cf9d65468516" },
+                    { "27d87402-e834-4fc7-b22c-941f1e759cf4", "5c937bab-1742-4952-9945-cf9d65468516" },
+                    { "7c627bc7-5238-4739-857e-03abf066d1d0", "5c937bab-1742-4952-9945-cf9d65468516" },
+                    { "037a0d7e-f4c0-4c24-bc94-008a4a5075c2", "5c937bab-1742-4952-9945-cf9d65468516" },
+                    { "7024306a-7151-45e7-b257-03ff8fc9f404", "5c937bab-1742-4952-9945-cf9d65468516" }
                 });
 
             migrationBuilder.CreateIndex(

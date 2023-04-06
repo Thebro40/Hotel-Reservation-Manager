@@ -31,7 +31,7 @@ namespace Hotel_Reservation_Manager.Services
                     Id = user.Id,
                     UserName = user.UserName,
                     Email = user.Email,
-                    UCN = user.UCN,
+                    EGN = user.EGN,
                     PhoneNumber = user.PhoneNumber,
                     FirstName = user.FirstName,
                     MiddleName = user.MiddleName,
@@ -52,7 +52,7 @@ namespace Hotel_Reservation_Manager.Services
                 Id = x.Id,
                 UserName = x.UserName,
                 Email = x.Email,
-                UCN = x.UCN,
+                EGN = x.EGN,
                 PhoneNumber = x.PhoneNumber,
                 FirstName = x.FirstName,
                 MiddleName = x.MiddleName,
@@ -77,7 +77,7 @@ namespace Hotel_Reservation_Manager.Services
                 FirstName = model.FirstName,
                 MiddleName = model.MiddleName,
                 LastName = model.LastName,
-                UCN = model.UCN,
+                EGN = model.EGN,
                 HireDate = model.HireDate,
                 IsActive = model.IsActive,
             };
@@ -110,7 +110,7 @@ namespace Hotel_Reservation_Manager.Services
                     FirstName = user.FirstName,
                     MiddleName = user.MiddleName,
                     LastName = user.LastName,
-                    UCN = user.UCN,
+                    EGN = user.EGN,
                     Email = user.Email,
                     HireDate = user.HireDate,
                     IsActive = user.IsActive,
@@ -131,7 +131,7 @@ namespace Hotel_Reservation_Manager.Services
             user.FirstName = model.FirstName;
             user.MiddleName = model.MiddleName;
             user.LastName = model.LastName;
-            user.UCN = model.UCN;
+            user.EGN = model.EGN;
             user.HireDate = model.HireDate;
 
             if (!model.IsActive && model.IsActive != user.IsActive)
@@ -176,7 +176,7 @@ namespace Hotel_Reservation_Manager.Services
                     FirstName = user.FirstName,
                     MiddleName = user.MiddleName,
                     LastName = user.LastName,
-                    UCN = user.UCN,
+                    EGN = user.EGN,
                     Email = user.Email,
                     HireDate = user.HireDate,
                     IsActive = user.IsActive,

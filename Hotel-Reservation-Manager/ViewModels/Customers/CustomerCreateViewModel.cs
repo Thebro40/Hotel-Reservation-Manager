@@ -1,6 +1,5 @@
 ﻿namespace Hotel_Reservation_Manager.ViewModels.Customers
 {
-    using System.ComponentModel.DataAnnotations;
     public class CustomerCreateViewModel
     {
         public string FirstName { get; set; }
