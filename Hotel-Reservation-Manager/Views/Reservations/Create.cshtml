@@ -3,56 +3,99 @@
 @{
     ViewData["Title"] = "Create Reservation";
 }
+<div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="card rounded-3" style="background-color:#F0F2F5">
+        <h1 class="text-center">Create Reservation</h1>
+        <div class="card-body p-4 p-md-5">
+            <form asp-controller="Reservations" asp-action="Create" method="get">
+                <label asp-for="RoomId" class="control-label">Select Room:</label>
+                <select asp-for="RoomId" asp-items="@Model.Rooms"></select>
+                <input type="submit" />
+                <span asp-validation-for="RoomId" class="text-danger" style="display:block"></span>
+            </form>
+            @if (Model.RoomId!=null)
+            {
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="RoomId" class="form-control" />
+                    <div class="form-group">
+                        <label asp-for="AccommodationDate" class="control-label"></label>
+                        <input asp-for="AccommodationDate" min="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" />
+                        <span asp-validation-for="AccommodationDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LeaveDate" class="control-label"></label>
+                        <input asp-for="LeaveDate" min="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" />
+                        <span asp-validation-for="LeaveDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="HasAllInclusive" class="control-label"></label>
+                        <input asp-for="HasAllInclusive" class="form-control" />
+                        <span asp-validation-for="HasAllInclusive" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="HasBreakfast" class="control-label"></label>
+                        <input asp-for="HasBreakfast" class="form-control" />
+                        <span asp-validation-for="HasBreakfast" class="text-danger"></span>
+                    </div>
+                    @if (Model.SelectedRoomCap > 0)
+                    {
+                        <h4>
+                            Input Customers Data:
+                        </h4>
+                        <small>(leave blank if needed)</small>
+                        <div class="justify-content-center" style="margin:10px 0px 10px 0px">
+                            <span asp-validation-for="Customers" class="text-danger text-center" >
+                            </span>
+                        </div>
+                        <table class="table table-responsive table-hover "
+                       style="border-radius: 10px; overflow: hidden;">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>PhoneNumber</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.SelectedRoomCap; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            <label asp-for="Customers[i].FirstName" class="control-label"></label>
+                                            <input asp-for="Customers[i].FirstName" class="form-control" />
+                                            <span asp-validation-for="Customers[i].FirstName" class="text-danger"></span>
+                                        </td>
+                                        <td>
+                                            <label asp-for="Customers[i].LastName" class="control-label"></label>
+                                            <input asp-for="Customers[i].LastName" class="form-control" />
+                                            <span asp-validation-for="Customers[i].LastName" class="text-danger"></span>
+                                        </td>
+                                        <td>
+                                            <label asp-for="Customers[i].PhoneNumber" class="control-label"></label>
+                                            <input asp-for="Customers[i].PhoneNumber" class="form-control" />
+                                            <span asp-validation-for="Customers[i].PhoneNumber" class="text-danger"></span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
 
-<h1>Create</h1>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="AccommodationDate" class="control-label"></label>
-                <input asp-for="AccommodationDate" class="form-control" />
-                <span asp-validation-for="AccommodationDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LeaveDate" class="control-label"></label>
-                <input asp-for="LeaveDate" class="form-control" />
-                <span asp-validation-for="LeaveDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HasAllInclusive" class="control-label"></label>
-                <input asp-for="HasAllInclusive" class="form-control" />
-                <span asp-validation-for="HasAllInclusive" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HasBreakfast" class="control-label"></label>
-                <input asp-for="HasBreakfast" class="form-control" />
-                <span asp-validation-for="HasBreakfast" class="text-danger"></span>
-            </div>
 
-
-            <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <input asp-for="CustomerId" class="form-control" />
-                <span asp-validation-for="CustomerId" class="text-danger"></span>
-            </div>
-
-
-            <div class="form-group">
-                <label asp-for="RoomId" class="control-label"></label>
-                <input asp-for="RoomId" class="form-control" />
-                <span asp-validation-for="RoomId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                    <a asp-controller="Customers" asp-action="Create" class="btn btn-outline-primary " style="margin: 10px 0px 10px 0px;">New Customer <i class="fa-regular fa-square-plus"></i></a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div>
+                            <a asp-controller="Rooms" asp-action="Create" class="btn btn-outline-primary " style="margin: 10px 0px 10px 0px;">New Room <i class="fa-regular fa-square-plus"></i></a>
+                    </div>
+                }
+                <div class="form-group text-center">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+            }
+        </div>
     </div>
 
 </div>
