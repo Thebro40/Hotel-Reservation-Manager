@@ -3,6 +3,7 @@ using Hotel_Reservation_Manager.Data.Models;
 using Hotel_Reservation_Manager.ViewModels.CustomerHistory;
 using Hotel_Reservation_Manager.ViewModels.Customers;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,6 +43,9 @@ namespace Hotel_Reservation_Manager.Services.Customers
                 IsAdult = model.IsAdult,
                 PhoneNumber = model.PhoneNumber,
             };
+            //Fixes bug where ef core can't find the customer's id
+            customer.Id = Guid.NewGuid().ToString();
+
             await this.context.Customers.AddAsync(customer);
             await this.context.SaveChangesAsync();
         }

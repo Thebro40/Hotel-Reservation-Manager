@@ -16,10 +16,10 @@ namespace Hotel_Reservation_Manager.Controllers
             this.roomsService = roomsService;
         }
         // GET: RoomsController
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(RoomsIndexViewModel model)
         {
-            var rooms = await roomsService.GetRoomsAsync();
-            return View(rooms);
+            model = await this.roomsService.GetRoomsAsync(model);
+            return View(model);
         }
 
         // GET: RoomsController/Details/5

@@ -5,7 +5,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
 {
     public interface IRoomsService
     {
-        Task<RoomsIndexViewModel> GetRoomsAsync();
+        Task<RoomsIndexViewModel> GetRoomsAsync(RoomsIndexViewModel model);
         Task<RoomDetailsViewModel> GetRoomDetailsByIdAsync(string id);
         Task CreateRoomAsync(RoomCreateViewModel model);
         Task<RoomEditViewModel> EditRoomByIdAsync(string id);

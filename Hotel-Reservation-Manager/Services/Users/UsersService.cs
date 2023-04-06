@@ -95,9 +95,6 @@ namespace Hotel_Reservation_Manager.Services
             {
                 await userManager.AddToRoleAsync(user, "User");
             }
-            
-
-
         }
         public async Task<UserEditViewModel> EditUserByIdAsync(string id)
         {
