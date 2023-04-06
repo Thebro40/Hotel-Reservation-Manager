@@ -11,9 +11,9 @@ namespace Hotel_Reservation_Manager.Data
     public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string>
     {
         public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<CustomerHistory> CustomerHistory { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
+        //TO-DO Implement proper raltionships between tables
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -22,6 +22,8 @@ namespace Hotel_Reservation_Manager.Data
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseLazyLoadingProxies();
+
+
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -30,7 +32,7 @@ namespace Hotel_Reservation_Manager.Data
            .HasOne(a => a.Room)
            .WithOne(b => b.Reservation)
            .HasForeignKey<Room>(b => b.ReservationId);
-
+            
             base.OnModelCreating(builder);
 
             // Create user - administrator
@@ -47,7 +49,7 @@ namespace Hotel_Reservation_Manager.Data
                 FirstName = "John",
                 MiddleName = "Johnny",
                 LastName = "Johnson",
-                UCN = "8603129931",
+                EGN = "8603129931",
                 HireDate = DateTime.Now,
                 IsActive = true,
                 SecurityStamp = string.Empty,
@@ -91,14 +93,14 @@ namespace Hotel_Reservation_Manager.Data
                 });
             }
             //Add Customers
+            
+                for (int i = 0; i < 5; i++)
+                {
+                    Customer customer = CreateCustomer($"customer{i}@abv.bg");
 
-            for (int i = 0; i < 5; i++)
-            {
-                Customer customer = CreateCustomer($"customer{i}@abv.bg");
-
-                builder.Entity<Customer>().HasData(customer);
-            }
-
+                    builder.Entity<Customer>().HasData(customer);
+                }
+            
 
 
         }
@@ -120,7 +122,7 @@ namespace Hotel_Reservation_Manager.Data
                 MiddleName = firstName[random.Next(0, firstName.Count)],
                 LastName = lastName[random.Next(0, lastName.Count)],
                 PhoneNumber = random.Next(0, 10000).ToString("D6"),
-                UCN = random.Next(0, 10000).ToString("D6"),
+                EGN = random.Next(0, 10000).ToString("D6") ,
                 HireDate = DateTime.Now,
                 IsActive = true,
                 SecurityStamp = string.Empty,
@@ -131,7 +133,7 @@ namespace Hotel_Reservation_Manager.Data
                 Email = email,
                 NormalizedEmail = email,
                 PasswordHash = hasher.HashPassword(null, password),
-
+                
             };
             return user;
         }

@@ -2,7 +2,6 @@
 using Hotel_Reservation_Manager.Data.Models;
 using Hotel_Reservation_Manager.ViewModels.Customers;
 using Hotel_Reservation_Manager.ViewModels.Reservations;
-using Hotel_Reservation_Manager.ViewModels.Rooms;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,13 +23,8 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             User user = await context.Users.FindAsync(model.UserId);
             Room room = await context.Rooms.FindAsync(model.RoomId);
 
-            List<Customer> SelectedCustomers = model.Customers
-                .Select(x => new Customer
-                {
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    PhoneNumber = x.PhoneNumber,
-                }).ToList();
+            // TODO Find Better way of handling input many Customers
+            List<string> ids = model.CustomerId.Split(',').ToList();
 
             //Create Reservation
             Reservation reservation = new Reservation()
@@ -40,34 +34,34 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                 LeaveDate = model.LeaveDate,
                 HasAllInclusive = model.HasAllInclusive,
                 HasBreakfast = model.HasBreakfast,
+                Price = model.Price,
             };
-            reservation.Customers = new List<Customer>();
-
-            reservation.Price = CalculateInitialPrice(model.HasBreakfast, model.HasAllInclusive);
-
+            //Adds Room to Reservation And Changes Status to false
             if (room.Id != reservation.RoomId)
             {
-                Reservation roomres = await context.Reservations.FirstOrDefaultAsync(x => x.RoomId == room.Id);
-                if (roomres == null && room.IsAvailable)
-                {
-                    ReserveRoom(room, reservation);
-                }
+                AddReservationRoom(room, reservation);
             }
-
             //Add Reservation to database and save
             await this.context.Reservations.AddAsync(reservation);
             await this.context.SaveChangesAsync();
 
-            foreach (var cust in SelectedCustomers)
+            //Add Reservation into each object Customer and Attach Reservation 
+            foreach (var id in ids)
             {
-                Customer customer = await FindCustomerAsync(cust);
-                if (customer.Reservation == null && room.Capacity > reservation.Customers.Count)
+                if (RoomHasCapacity(reservation, room))
                 {
-                    await AddCustomerToReservationAsync(customer, reservation);
-                    reservation.Price += CalculatePrice(model.LeaveDate, model.AccommodationDate, room, customer);
+                    Customer customer = await context.Customers.FindAsync(id);
+                    if (customer != null)
+                    {
+                        //Add Reservation to Customer 
+                        customer.Reservation = reservation;
+                    }
+                    else
+                    {
+                        // TODO Create Customer if he doesn't exist when creating Reservation
+                    }
                 }
             }
-
             //Attach instance of Reservation
             context.Reservations.Attach(reservation);
             await this.context.SaveChangesAsync();
@@ -138,31 +132,9 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                     LeaveDate = reservation.LeaveDate,
                     HasAllInclusive = reservation.HasAllInclusive,
                     HasBreakfast = reservation.HasBreakfast,
+                    Price = (int)reservation.Price,
                 };
-
-                model.CustomersToRemove = reservation.Customers.Select(x => new CustomerEditViewModel()
-                {
-                    Id = x.Id,
-                    Email = x.Email,
-                    FirstName = x.FirstName,
-                    IsAdult = x.IsAdult,
-                    LastName = x.LastName,
-                    PhoneNumber = x.PhoneNumber,
-                }).ToList();
-
-                SelectList selectList = new SelectList(await GetAllRoomsSelectListAsync(model), "Id", "Number");
-                model.Rooms = selectList;
-
-                if (!String.IsNullOrEmpty(model.RoomId) && await GetRoomCapacityAsync(model.RoomId) > 0)
-                {
-                    model.SelectedRoomCap = await GetRoomCapacityAsync(model.RoomId);
-
-                    for (int i = 0; i < model.SelectedRoomCap - reservation.Customers.Count; i++)
-                    {
-                        model.CustomersToAdd.Add(new CustomerEditViewModel());
-                    }
-
-                }
+                model.Customers = reservation.Customers.ToList();
                 return model;
             }
             return null;
@@ -177,7 +149,18 @@ namespace Hotel_Reservation_Manager.Services.Reservations
 
             if (room.Id != reservation.RoomId)
             {
-                ReserveRoom(room, reservation);
+                if (!RoomHasCapacity(reservation, room))
+                {
+                    throw new InvalidOperationException("Selected Room does not have enough capacity");
+                }
+                if (RoomIsAvailable(room))
+                {
+                    AddReservationRoom(room, reservation);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Selected Room isn't available");
+                }
             }
 
             reservation.AccommodationDate = editmodel.AccommodationDate;
@@ -186,53 +169,45 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             reservation.HasAllInclusive = editmodel.HasAllInclusive;
             reservation.HasBreakfast = editmodel.HasBreakfast;
 
-            reservation.Price = CalculateInitialPrice(editmodel.HasBreakfast, editmodel.HasAllInclusive);
+            reservation.Price = editmodel.Price;
 
-            List<Customer> CustomersToAdd = editmodel.CustomersToAdd
-            .Select(x => new Customer
-            {
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                PhoneNumber = x.PhoneNumber,
-            }).ToList();
 
-            foreach (var cust in CustomersToAdd)
+
+            List<string> cusIdsToDel = new List<string>();
+
+            if (!string.IsNullOrEmpty(editmodel.CustomerToRemoveId))
             {
-                Customer customer = await FindCustomerAsync(cust);
-                if (customer != null && customer.ReservationId != reservation.Id)
-                {
-                    await AddCustomerToReservationAsync(customer, reservation);
-                }
+                cusIdsToDel = editmodel.CustomerToRemoveId.Split(',').ToList();
             }
-
-            foreach (var cust in editmodel.CustomersToRemove)
+            foreach (var id in cusIdsToDel)
             {
-                Customer customer = await context.Customers.FindAsync(cust.Id);
-                if (customer != null && customer.ReservationId == reservation.Id)
+                Customer cust = await context.Customers.FindAsync(id);
+                if (cust != null)
                 {
-                    await RemoveCustomerReservationAsync(customer, reservation);
+                    if (cust.ReservationId == reservation.Id)
+                    {
+                        await RemoveCustomerReservationAsync(cust, reservation);
+                    }
                 }
             }
 
 
-            foreach (var item in reservation.Customers)
+            List<string> cusIdsToAdd = new List<string>();
+            if (!string.IsNullOrEmpty(editmodel.CustomerToAddId))
             {
-                reservation.Price += CalculatePrice(editmodel.LeaveDate, editmodel.AccommodationDate, room, item);
+                cusIdsToAdd = editmodel.CustomerToAddId.Split(',').ToList();
             }
-
-
-
+            foreach (var id in cusIdsToAdd)
+            {
+                await AddCustomerToReservationAsync(id, reservation,
+                "DynamicEmail", "DynamicFName", "DynamicLName", "DynamicPhone", false, room);
+            }
 
             context.Update(reservation);
             await context.SaveChangesAsync();
             if (!reservation.Customers.Any())
             {
                 context.Remove(reservation);
-                if (reservation.Room != null)
-                {
-                    reservation.Room.IsAvailable = true;
-                    reservation.Room.Reservation = null;
-                }
                 await context.SaveChangesAsync();
             }
         }
@@ -282,53 +257,11 @@ namespace Hotel_Reservation_Manager.Services.Reservations
 
                 if (r.Room != null)
                 {
-                    r.Room.IsAvailable = true;
                     r.Room.Reservation = null;
                 }
                 this.context.Reservations.Remove(r);
                 await this.context.SaveChangesAsync();
             }
-        }
-        private static void ReserveRoom(Room room, Reservation reservation)
-        {
-            room.IsAvailable = false;
-            if (reservation.Room != null)
-            {
-                reservation.Room.IsAvailable = true;
-                reservation.Room.Reservation = null;
-            }
-            reservation.RoomId = room.Id;
-            room.ReservationId = reservation.Id;
-        }
-        public async Task<List<RoomSelectListViewModel>> GetFreeRoomsSelectListAsync()
-        {
-            List<RoomSelectListViewModel> SelectList = await this.context.Rooms.Where(x => x.Reservation == null).Select(x => new RoomSelectListViewModel()
-            {
-                Id = x.Id,
-                Capacity = x.Capacity,
-                RoomType = x.RoomType,
-                PricePerBedAdult = x.PricePerBedAdult,
-                PricePerBedChild = x.PricePerBedChild,
-                Number = x.Number,
-            })
-                .ToListAsync();
-            return SelectList;
-        }
-        public async Task<List<RoomSelectListViewModel>> GetAllRoomsSelectListAsync(ReservationEditViewModel model)
-        {
-            List<RoomSelectListViewModel> SelectList = await GetFreeRoomsSelectListAsync();
-            Room room = await context.Rooms.FirstOrDefaultAsync(x => x.Id == model.RoomId);
-            RoomSelectListViewModel vm = new RoomSelectListViewModel()
-            {
-                Id = room.Id,
-                Capacity = room.Capacity,
-                RoomType = room.RoomType,
-                Number = room.Number,
-                PricePerBedAdult = room.PricePerBedAdult,
-                PricePerBedChild = room.PricePerBedChild,
-            };
-            SelectList.Add(vm);
-            return SelectList;
         }
         private async Task RemoveCustomerReservationAsync(Customer dbCustomer, Reservation res)
         {
@@ -341,77 +274,72 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             context.Update(dbCustomer);
             await context.SaveChangesAsync();
         }
-        private async Task AddCustomerToReservationAsync(Customer dbCustomer,
-            Reservation reservation)
+        private async Task AddCustomerToReservationAsync(string CustomerToAddId, Reservation reservation,
+            string email, string firstname, string lastname, string phone, bool isadult, Room dbroom)
         {
-            dbCustomer.Reservation = reservation;
+            Customer dbCustomer = await context.Customers.FindAsync(CustomerToAddId);
 
-            CustomerHistory ch = new CustomerHistory()
+            if (dbCustomer == null)
             {
-                Customer = dbCustomer,
-                ResAccomDate = reservation.AccommodationDate,
-                ResLeaveDate = reservation.LeaveDate,
-                ResPrice = reservation.Price,
-                ResRoomNumber = reservation.Room.Number,
-            };
+                //Create new customer if == null
+                var existingReservation = context.Reservations.Local.SingleOrDefault(o => o.Id == reservation.Id);
+                if (existingReservation != null)
+                    context.Entry(existingReservation).State = EntityState.Modified;
 
-            context.CustomerHistory.Add(ch);
+                if (RoomHasCapacity(reservation, dbroom))
+                {
+                    Customer newCustomer = new Customer
+                    {
+                        Email = email,
+                        FirstName = firstname,
+                        LastName = lastname,
+                        IsAdult = isadult,
+                        PhoneNumber = phone,
+                    };
+                    newCustomer.Reservation = reservation;
+                    newCustomer.ReservationId = reservation.Id;
 
-            context.Reservations.Attach(reservation);
-            await this.context.SaveChangesAsync();
-        }
-        public async Task<int> GetRoomCapacityAsync(string id)
-        {
-            Room room = await context.Rooms.FindAsync(id);
-            return room.Capacity;
-        }
-        public async Task<Customer> FindCustomerAsync(Customer cust)
-        {
-            Customer customer = await context.Customers.FirstOrDefaultAsync(x => x.FirstName == cust.FirstName &&
-x.LastName == cust.LastName && x.PhoneNumber == cust.PhoneNumber /*&& x.IsAdult == cust.IsAdult*/);
-            if (customer != null)
-            {
-                return customer;
+                    context.Add(newCustomer);
+                    await context.SaveChangesAsync();
+                }
+                else
+                {
+                    throw new InvalidOperationException("Reserved Room does not have enough capacity to add more people");
+                }
             }
             else
             {
-                return null;
-            }
-        }
-        private decimal CalculateInitialPrice(Boolean HasBreakfast, Boolean HasAllInclusive)
-        {
-            decimal price = new decimal();
-            if (HasBreakfast)
-            {
-                price += 150;
-            }
-            if (HasAllInclusive)
-            {
-                price += 300;
-            }
-            return price;
-        }
-        private decimal CalculatePrice(DateTime leaveDate, DateTime accomdate, Room room,
-    Customer cust)
-        {
+                if (RoomHasCapacity(reservation, dbroom))
+                {
+                    var existingReservation = context.Reservations.Local.SingleOrDefault(o => o.Id == reservation.Id);
+                    if (existingReservation != null)
+                        context.Entry(existingReservation).State = EntityState.Modified;
 
-            TimeSpan duration = leaveDate - accomdate;
-            if (leaveDate == accomdate)
-            {
-                duration = TimeSpan.FromDays(1);
-            }
-            decimal price = new decimal();
+                    //Adds customer if he exists
+                    dbCustomer.Reservation = reservation;
+                    dbCustomer.ReservationId = reservation.Id;
 
-            Customer dbc = context.Customers.Find(cust.Id);
-            if (dbc.IsAdult)
-            {
-                price += room.PricePerBedAdult * (decimal)duration.TotalDays;
+                    context.Add(dbCustomer);
+                    await context.SaveChangesAsync();
+                }
             }
-            if (!dbc.IsAdult)
-            {
-                price += room.PricePerBedChild * (decimal)duration.TotalDays;
-            }
-            return price;
         }
+        private static void AddReservationRoom(Room room, Reservation reservation)
+        {
+            room.IsAvailable = false;
+            reservation.Room.IsAvailable = true;
+            reservation.RoomId = room.Id;
+            room.ReservationId = reservation.Id;
+        }
+        public static bool RoomHasCapacity(Reservation res, Room room)
+        {
+            return room.Capacity > res.Customers.Count();
+        }
+        public static bool RoomIsAvailable(Room room)
+        {
+            return room.IsAvailable;
+        }
+
+
     }
 }

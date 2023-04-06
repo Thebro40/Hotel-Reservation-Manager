@@ -1,8 +1,4 @@
-﻿using Hotel_Reservation_Manager.Data.Models;
-using Hotel_Reservation_Manager.ViewModels.CustomerHistory;
-using System.Collections.Generic;
-
-namespace Hotel_Reservation_Manager.ViewModels.Customers
+﻿namespace Hotel_Reservation_Manager.ViewModels.Customers
 {
     public class CustomerDetailsViewModel
     {
@@ -12,8 +8,6 @@ namespace Hotel_Reservation_Manager.ViewModels.Customers
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public bool IsAdult { get; set; }   
-
-        public IList<CustomerHistoryViewModel> History { get; set; }=new List<CustomerHistoryViewModel>();
+        public bool IsAdult { get; set; }
     }
 }

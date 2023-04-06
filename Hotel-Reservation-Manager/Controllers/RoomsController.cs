@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hotel_Reservation_Manager.Controllers
 {
-    [Authorize(Roles = "Admin,User")]
+    [Authorize]
     public class RoomsController : Controller
     {
         public IRoomsService roomsService { get; set; }
