@@ -16,10 +16,10 @@ namespace Hotel_Reservation_Manager.Controllers
             this.roomsService = roomsService;
         }
         // GET: RoomsController
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(RoomsIndexViewModel model)
         {
-            var rooms = await roomsService.GetRoomsAsync();
-            return View(rooms);
+            model = await roomsService.GetRoomsAsync(model);
+            return View(model);
         }
 
         // GET: RoomsController/Details/5
@@ -42,6 +42,11 @@ namespace Hotel_Reservation_Manager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RoomCreateViewModel model)
         {
+            if (await roomsService.DoesRoomNumberExist(model.Number))
+            {
+                ModelState.AddModelError(nameof(model.Number), "There is already a room with this number");
+                return View(model);
+            }
             await roomsService.CreateRoomAsync(model);
             return RedirectToAction(nameof(Index));
         }
@@ -59,7 +64,12 @@ namespace Hotel_Reservation_Manager.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(RoomEditViewModel model)
-        {
+        {         
+            if (await roomsService.DoesRoomNumberExist(model.Number,model.Id))
+            {
+                ModelState.AddModelError(nameof(model.Number), "There is already a room with this number");
+                return View(model);
+            }
             await roomsService.UpdateRoomAsync(model);
             return RedirectToAction(nameof(Index));
         }

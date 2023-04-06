@@ -16,7 +16,8 @@
             <th>UCN</th>
             <th>Email</th>
             <th>Hire Date</th>
-            <th>Status</th>
+            <th>Activity</th>
+            <th>Fire Date</th>
             <th></th>
         </tr>
     </thead>
@@ -53,6 +54,9 @@
                     @Html.DisplayFor(modelItem => item.IsActive)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.FireDate)
+                </td>
+                <td>
                     <p class="text-nowrap">
                         <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
@@ -68,3 +72,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+<partial name="_PagingPartial" />

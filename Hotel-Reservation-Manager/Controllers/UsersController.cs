@@ -1,10 +1,7 @@
-﻿using Hotel_Reservation_Manager.Data.Models;
-using Hotel_Reservation_Manager.Services;
+﻿using Hotel_Reservation_Manager.Services;
 using Hotel_Reservation_Manager.ViewModels.Users;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Hotel_Reservation_Manager.Controllers
@@ -18,10 +15,10 @@ namespace Hotel_Reservation_Manager.Controllers
         {
             this.usersService = usersService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(UsersIndexViewModel model)
         {
-            var users = await usersService.GetUsersAsync();
-            return View(users);
+            model = await usersService.GetUsersAsync(model);
+            return View(model);
         }
 
         // GET: Users/Create

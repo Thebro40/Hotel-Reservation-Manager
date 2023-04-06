@@ -4,6 +4,10 @@
     using System.ComponentModel.DataAnnotations.Schema;
     public class Customer
     {
+        public Customer()
+        {
+            this.Id= Guid.NewGuid().ToString();
+        }
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

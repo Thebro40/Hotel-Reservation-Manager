@@ -72,10 +72,12 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             context.Reservations.Attach(reservation);
             await this.context.SaveChangesAsync();
         }
-        public async Task<ReservationsIndexViewModel> GetReservationsAsync()
+        public async Task<ReservationsIndexViewModel> GetReservationsAsync(ReservationsIndexViewModel model)
         {
-            ReservationsIndexViewModel model = new ReservationsIndexViewModel();
-            model.Reservations = await context.Reservations.Select(x => new ReservationIndexViewModel()
+            model.Reservations = await context.Reservations
+                .Skip((model.Page - 1) * model.ItemsPerPage)
+                .Take(model.ItemsPerPage)
+                .Select(x => new ReservationIndexViewModel()
             {
                 Id = x.Id,
                 UserId = x.UserId,
@@ -87,6 +89,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                 Price = x.Price,
             })
                 .ToListAsync();
+            model.ElementsCount = await this.context.Customers.CountAsync();
             return model;
         }
         public async Task<ReservationDetailsViewModel> GetReservationDetailsAsync(string id)
@@ -318,7 +321,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
         {
             List<RoomSelectListViewModel> SelectList = await GetFreeRoomsSelectListAsync();
             Room room = await context.Rooms.FirstOrDefaultAsync(x => x.Id == model.RoomId);
-            RoomSelectListViewModel vm = new RoomSelectListViewModel()
+            RoomSelectListViewModel rsvm = new RoomSelectListViewModel()
             {
                 Id = room.Id,
                 Capacity = room.Capacity,
@@ -327,7 +330,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                 PricePerBedAdult = room.PricePerBedAdult,
                 PricePerBedChild = room.PricePerBedChild,
             };
-            SelectList.Add(vm);
+            SelectList.Add(rsvm);
             return SelectList;
         }
         private async Task RemoveCustomerReservationAsync(Customer dbCustomer, Reservation res)

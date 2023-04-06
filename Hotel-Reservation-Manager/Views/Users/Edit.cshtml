@@ -53,8 +53,8 @@
                         <span asp-validation-for="UCN" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="HireDate" class="control-label"></label>
-                        <input asp-for="HireDate" class="form-control" />
+                        <label asp-for="HireDate"  class="control-label"></label>
+                        <input asp-for="HireDate" min="@Model.HireDate.ToString("yyyy-MM-dd")" class="form-control" />
                         <span asp-validation-for="HireDate" class="text-danger"></span>
                     </div>
                     <div class="form-group">
