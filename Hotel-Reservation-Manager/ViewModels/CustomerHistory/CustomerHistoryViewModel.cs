@@ -19,6 +19,9 @@ namespace Hotel_Reservation_Manager.ViewModels.CustomerHistory
         [DataType(DataType.Date)]
         [DisplayName("Leave date")]
         public DateTime ResLeaveDate { get; set; }
+
+        [Display(Name = "Total price")]
+        [DataType(DataType.Currency)]
         public decimal ResPrice { get; set; }
     }
 }

@@ -6,5 +6,6 @@ namespace Hotel_Reservation_Manager.ViewModels.Rooms
     public class RoomsIndexViewModel:PagingViewModel
     {
         public ICollection<RoomIndexViewModel> Rooms { get; set; }
+        public RoomFilterViewModel Filter { get; set; } = new RoomFilterViewModel();
     }
 }

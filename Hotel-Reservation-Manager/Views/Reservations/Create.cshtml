@@ -10,8 +10,8 @@
             <form asp-controller="Reservations" asp-action="Create" method="get">
                 <label asp-for="RoomId" class="control-label">Select Room:</label>
                 <select asp-for="RoomId" asp-items="@Model.Rooms"></select>
-                <input type="submit" />
                 <span asp-validation-for="RoomId" class="text-danger" style="display:block"></span>
+                <input type="submit" id="loginSubmit"/>
             </form>
             @if (Model.RoomId!=null)
             {
@@ -40,8 +40,9 @@
                     </div>
                     @if (Model.SelectedRoomCap > 0)
                     {
+                        <div class="form-group">
                         <h4>
-                            Input Customers Data:
+                            Input existing customer Data:
                         </h4>
                         <small>(leave blank if needed)</small>
                         <div class="justify-content-center" style="margin:10px 0px 10px 0px">
@@ -80,6 +81,7 @@
                                 }
                             </tbody>
                         </table>
+                        </div>
                     }
 
 

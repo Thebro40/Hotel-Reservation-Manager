@@ -1,19 +1,35 @@
 ﻿using Hotel_Reservation_Manager.Data.Models;
 using Hotel_Reservation_Manager.ViewModels.CustomerHistory;
+using Hotel_Reservation_Manager.ViewModels.Shared;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hotel_Reservation_Manager.ViewModels.Customers
 {
-    public class CustomerDetailsViewModel
+    public class CustomerDetailsViewModel : PagingViewModel
     {
+        public CustomerDetailsViewModel()
+        {
+            Action = "Details";
+            RouteId = Id;
+        }
         public string Id { get; set; }
-        public string ReservationId { get; set; }
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public bool IsAdult { get; set; }   
 
-        public IList<CustomerHistoryViewModel> History { get; set; }=new List<CustomerHistoryViewModel>();
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Phone number")]
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Display(Name = "Adult")]
+        public bool IsAdult { get; set; }
+
+        public ICollection<CustomerHistoryViewModel> History { get; set; }
     }
 }

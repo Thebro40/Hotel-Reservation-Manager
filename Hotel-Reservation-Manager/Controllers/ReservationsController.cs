@@ -112,16 +112,22 @@ namespace Hotel_Reservation_Manager.Controllers
         public async Task<IActionResult> Details(string id)
         {
             ReservationDetailsViewModel model = await reservationsService.GetReservationDetailsAsync(id);
+            if (reservationsService.HasReservationPassed(model.LeaveDate))
+            {
+                await reservationsService.DeleteReservationAsync(await reservationsService.GetReservationToDeleteAsync(id));
+                return RedirectToAction("Error", "Home", new ErrorViewModel()
+                { ErrorMessage = "Reservation has already passed and will be deleted" });
+            }
             return View(model);
         }
         public async Task<IActionResult> Delete(string id)
         {
-            ReservationDeleteViewModel model = await reservationsService.GetReservationToDeleteAsync(id);
+            ReservationDetailsViewModel model = await reservationsService.GetReservationToDeleteAsync(id);
             return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(ReservationDeleteViewModel model)
+        public async Task<IActionResult> Delete(ReservationDetailsViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -133,6 +139,12 @@ namespace Hotel_Reservation_Manager.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             ReservationEditViewModel model = await reservationsService.EditReservationByIdAsync(id);
+            if (reservationsService.HasReservationPassed(model.LeaveDate))
+            {
+                await reservationsService.DeleteReservationAsync(await reservationsService.GetReservationToDeleteAsync(id));
+                return RedirectToAction("Error", "Home", new ErrorViewModel() 
+                { ErrorMessage = "Reservation has already passed and will be deleted" });
+            }
             return View(model);
         }
         ///<summary>POST: ReservationController/Edit/?(id)</summary>
@@ -205,7 +217,7 @@ namespace Hotel_Reservation_Manager.Controllers
             }
             for (int i = 0; i < model.SelectedRoomCap; i++)
             {
-                model.Customers.Add(new CustomerCreateViewModel());
+                model.Customers.Add(new Customer());
             }
         }
         private static bool CheckDurationOfDates(DateTime LeaveDate, DateTime AccommodationDate)

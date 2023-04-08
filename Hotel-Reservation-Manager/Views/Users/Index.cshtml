@@ -4,6 +4,33 @@
 }
 <h1>Users</h1>
 
+<form asp-action="Index" method="get">
+    <div>
+        <h4>Filter by:</h4>
+        <div>
+            <label asp-for="Filter.FirstName"></label>
+            <input type="text" asp-for="Filter.FirstName" />
+        </div>
+        <div>
+            <label asp-for="Filter.MiddleName"></label>
+            <input type="text" asp-for="Filter.MiddleName" />
+        </div>
+        <div>
+            <label asp-for="Filter.LastName"></label>
+            <input type="text" asp-for="Filter.LastName" />
+        </div>
+        <div>
+            <label asp-for="Filter.UserName"></label>
+            <input type="text" asp-for="Filter.UserName" />
+        </div>
+        <div>
+            <label asp-for="Filter.Email"></label>
+            <input type="text" asp-for="Filter.Email" />
+        </div>
+        <input type="submit" class="btn btn-info" />
+    </div>
+</form>
+
 <table class="table table-striped table-hover "
        style="border-radius: 10px; overflow: hidden;">
     <thead class="thead-dark">

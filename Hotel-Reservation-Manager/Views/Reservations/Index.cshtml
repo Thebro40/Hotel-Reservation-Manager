@@ -8,11 +8,11 @@
        style="border-radius: 10px; overflow: hidden;">
     <thead class="thead-dark">
         <tr>
-            <th>RoomId</th>
-            <th>HasAllInclusive</th>
-            <th>HasBreakfast</th>
-            <th>AccommodationDate</th>
-            <th>LeaveDate</th>
+            <th>Reserved Room</th>
+            <th>AllInclusive</th>
+            <th>Breakfast</th>
+            <th>Accommodation Date</th>
+            <th>Leave Date</th>
             <th>Price</th>
             <th></th>
         </tr>
@@ -23,7 +23,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RoomId)
+                    @Html.DisplayFor(modelItem => item.Room.Number)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.HasAllInclusive)

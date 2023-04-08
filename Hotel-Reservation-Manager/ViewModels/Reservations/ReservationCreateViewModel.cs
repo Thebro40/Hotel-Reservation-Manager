@@ -11,8 +11,8 @@ namespace Hotel_Reservation_Manager.ViewModels.Reservations
     public class ReservationCreateViewModel
     {
         public string UserId { get; set; }
-        public IList<CustomerCreateViewModel> Customers { get; set; } = 
-            new List<CustomerCreateViewModel>();
+        public IList<Customer> Customers { get; set; } = 
+            new List<Customer>();
         public int SelectedRoomCap { get; set; }
         [Required(ErrorMessage = "Please select and submit a room")]
         public string RoomId { get; set; }

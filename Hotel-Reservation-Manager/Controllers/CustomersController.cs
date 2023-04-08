@@ -36,9 +36,9 @@ namespace Hotel_Reservation_Manager.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string id, CustomerDetailsViewModel model)
         {
-            CustomerDetailsViewModel model = await customersService.GetCustomerDetailsByIdAsync(id);
+            model = await customersService.GetCustomerDetailsByIdAsync(id);
             return View(model);
         }
 

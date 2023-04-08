@@ -23,14 +23,14 @@ namespace Hotel_Reservation_Manager.Services.Customers
                 .Skip((model.Page - 1) * model.ItemsPerPage)
                 .Take(model.ItemsPerPage)
                 .Select(x => new CustomerIndexViewModel()
-            {
-                Id = x.Id,
-                Email = x.Email,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                IsAdult = x.IsAdult,
-                PhoneNumber = x.PhoneNumber,
-            })
+                {
+                    Id = x.Id,
+                    Email = x.Email,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    IsAdult = x.IsAdult,
+                    PhoneNumber = x.PhoneNumber,
+                })
                 .ToListAsync();
             model.ElementsCount = await this.context.Customers.CountAsync();
             return model;
@@ -63,16 +63,23 @@ namespace Hotel_Reservation_Manager.Services.Customers
                     PhoneNumber = customer.PhoneNumber,
                 };
 
-                List<CustomerHistoryViewModel> history = await context.CustomerHistory.Where(x => x.CustomerId == customer.Id).Select(x => new CustomerHistoryViewModel()
-                {
-                    CustomerId = x.CustomerId,
-                    ResPrice = x.ResPrice,
-                    Customer = x.Customer,
-                    ResAccomDate = x.ResAccomDate,
-                    ResLeaveDate = x.ResLeaveDate,
-                    ResRoomNumber = x.ResRoomNumber
-                }).ToListAsync();
-                model.History = history;
+                model.History = await context.CustomerHistory
+                   .Where(x => x.CustomerId == customer.Id)
+                   .Skip((model.Page - 1) * model.ItemsPerPage)
+                   .Take(model.ItemsPerPage)
+                   .Select(x => new CustomerHistoryViewModel()
+                   {
+                       CustomerId = x.CustomerId,
+                       ResPrice = x.ResPrice,
+                       Customer = x.Customer,
+                       ResAccomDate = x.ResAccomDate,
+                       ResLeaveDate = x.ResLeaveDate,
+                       ResRoomNumber = x.ResRoomNumber,
+                   })
+                    .ToListAsync();
+
+                model.ElementsCount = context.CustomerHistory.Where(x => x.CustomerId == customer.Id).Count();
+
                 return model;
             }
             return null;
@@ -122,10 +129,6 @@ namespace Hotel_Reservation_Manager.Services.Customers
                     IsAdult = customer.IsAdult,
                     PhoneNumber = customer.PhoneNumber,
                 };
-                if (customer.Reservation != null)
-                {
-                    model.ReservationId = customer.Reservation.Id;
-                }
                 return model;
             }
             return null;

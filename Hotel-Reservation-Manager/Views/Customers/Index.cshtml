@@ -8,7 +8,6 @@
        style="border-radius: 10px; overflow: hidden;">
     <thead class="thead-dark">
         <tr>
-            <th>Id</th>
             <th>Email</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -22,9 +21,6 @@
         @foreach (var item in Model.Customers)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
