@@ -302,7 +302,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
         }
         public async Task<List<RoomSelectListViewModel>> GetFreeRoomsSelectListAsync()
         {
-            List<RoomSelectListViewModel> SelectList = await this.context.Rooms.Where(x => x.Reservation == null).Select(x => new RoomSelectListViewModel()
+            List<RoomSelectListViewModel> SelectList = await this.context.Rooms.Where(x => x.Reservation == null && x.IsAvailable==true).Select(x => new RoomSelectListViewModel()
             {
                 Id = x.Id,
                 Capacity = x.Capacity,
