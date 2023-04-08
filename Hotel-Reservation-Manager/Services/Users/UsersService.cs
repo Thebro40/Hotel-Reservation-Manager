@@ -45,6 +45,11 @@ namespace Hotel_Reservation_Manager.Services
         public async Task<UsersIndexViewModel> GetUsersAsync(UsersIndexViewModel model)
         {
             model.Users = await context.Users
+                .Where(x => model.Filter.FirstName != null ? (x.FirstName.StartsWith(model.Filter.FirstName)) : x.Id != null)
+                .Where(x => model.Filter.MiddleName != null ? (x.MiddleName.StartsWith(model.Filter.MiddleName)) : x.Id != null)
+                .Where(x => model.Filter.LastName != null ? (x.LastName.StartsWith(model.Filter.LastName)) : x.Id != null)
+                .Where(x => model.Filter.UserName != null ? (x.UserName.StartsWith(model.Filter.UserName)) : x.Id != null)
+                .Where(x => model.Filter.Email != null ? (x.Email.StartsWith(model.Filter.Email)) : x.Id != null)
                 .Skip((model.Page - 1) * model.ItemsPerPage)
                 .Take(model.ItemsPerPage)
                 .Select(x => new UserIndexViewModel()
@@ -62,6 +67,7 @@ namespace Hotel_Reservation_Manager.Services
                 FireDate = x.FireDate,
             })
                 .ToListAsync();
+            model.ElementsCount = await this.context.Users.CountAsync();
             return model;
         }
         public async Task CreateUserAsync(UserCreateViewModel model)

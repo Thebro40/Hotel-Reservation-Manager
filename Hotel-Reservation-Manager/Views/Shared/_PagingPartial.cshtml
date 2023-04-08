@@ -17,7 +17,6 @@
         <li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text> }">
             <a class="page-link" asp-action="@Model.Action" asp-route-page="@Model.PreviousPageNumber" asp-route-itemsPerPage="@Model.ItemsPerPage">
                 <i class="fas fa-step-backward"></i>
-
             </a>
         </li>
         @for (int i = Model.Page - 2; i < Model.Page; i++)

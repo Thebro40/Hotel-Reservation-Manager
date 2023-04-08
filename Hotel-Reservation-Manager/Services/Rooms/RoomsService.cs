@@ -1,7 +1,9 @@
 ﻿using Hotel_Reservation_Manager.Data;
+using Hotel_Reservation_Manager.Data.Enums;
 using Hotel_Reservation_Manager.Data.Models;
 using Hotel_Reservation_Manager.ViewModels.Rooms;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,6 +19,9 @@ namespace Hotel_Reservation_Manager.Services.Rooms
         public async Task<RoomsIndexViewModel> GetRoomsAsync(RoomsIndexViewModel model)
         {
             model.Rooms = await this.context.Rooms
+                .Where(x => x.Capacity >= model.Filter.Capacity )
+                .Where(x => model.Filter.Type != null ? x.RoomType == Enum.Parse<RoomType>(model.Filter.Type) : x.Id != null)
+                .Where(x => x.IsAvailable == model.Filter.IsAvailable)
                 .Skip((model.Page - 1) * model.ItemsPerPage)
                 .Take(model.ItemsPerPage)
                 .Select(x => new RoomIndexViewModel()
