@@ -9,11 +9,9 @@
         <div class="card-body p-4 p-md-5">
             <form asp-controller="Reservations" asp-action="Create" method="get">
                 <label asp-for="RoomId" class="control-label">Select Room:</label>
-                <select asp-for="RoomId" asp-items="@Model.Rooms" onchange="changeItemsPerPage();">
-                     <option selected></option>
-                </select>
-                <input type="submit" id="loginSubmit" style="visibility:hidden"/>
+                <select asp-for="RoomId" asp-items="@Model.Rooms"></select>
                 <span asp-validation-for="RoomId" class="text-danger" style="display:block"></span>
+                <input type="submit" id="loginSubmit"/>
             </form>
             @if (Model.RoomId!=null)
             {
@@ -113,11 +111,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-<script type="text/javascript">
-    function changeItemsPerPage() {
-
-        console.log('Items per page changed!')
-
-        document.getElementById('loginSubmit').click();
-    }
-</script>
