@@ -9,8 +9,10 @@
         <div class="card-body p-4 p-md-5">
             <form asp-controller="Reservations" asp-action="Create" method="get">
                 <label asp-for="RoomId" class="control-label">Select Room:</label>
-                <select asp-for="RoomId" asp-items="@Model.Rooms"></select>
-                <input type="submit" />
+                <select asp-for="RoomId" asp-items="@Model.Rooms" onchange="changeItemsPerPage();">
+                     <option selected></option>
+                </select>
+                <input type="submit" id="loginSubmit" style="visibility:hidden"/>
                 <span asp-validation-for="RoomId" class="text-danger" style="display:block"></span>
             </form>
             @if (Model.RoomId!=null)
@@ -40,8 +42,9 @@
                     </div>
                     @if (Model.SelectedRoomCap > 0)
                     {
+                        <div class="form-group">
                         <h4>
-                            Input Customers Data:
+                            Input existing customer Data:
                         </h4>
                         <small>(leave blank if needed)</small>
                         <div class="justify-content-center" style="margin:10px 0px 10px 0px">
@@ -80,6 +83,7 @@
                                 }
                             </tbody>
                         </table>
+                        </div>
                     }
 
 
@@ -109,3 +113,11 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+<script type="text/javascript">
+    function changeItemsPerPage() {
+
+        console.log('Items per page changed!')
+
+        document.getElementById('loginSubmit').click();
+    }
+</script>

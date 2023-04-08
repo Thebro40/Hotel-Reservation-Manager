@@ -3,21 +3,26 @@ using Hotel_Reservation_Manager.ViewModels.Customers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hotel_Reservation_Manager.ViewModels.Reservations
 {
-    public class ReservationEditViewModel
+    public class ReservationEditViewModel: ReservationCreateViewModel
     {
         public string Id { get; set; }
-        public string UserId { get; set; }
-        public string RoomId { get; set; }
-        public IList<CustomerEditViewModel> CustomersToAdd { get; set; } = new List<CustomerEditViewModel>();
-        public IList<CustomerEditViewModel> CustomersToRemove { get; set; } = new List<CustomerEditViewModel>();
-        public SelectList Rooms { get; set; }
-        public int SelectedRoomCap { get; set; }
-        public DateTime AccommodationDate { get; set; }
-        public DateTime LeaveDate { get; set; }
-        public bool HasBreakfast { get; set; }
-        public bool HasAllInclusive { get; set; }
+        [Required]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
+        [DisplayName("Accomodation date")]
+        public new DateTime AccommodationDate { get; set; }
+
+        [Required]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
+        [DisplayName("Leave date")]
+        public new DateTime LeaveDate { get; set; }
+        public IList<Customer> CustomersToAdd { get; set; } = new List<Customer>();
+        public IList<CustomerIndexViewModel> CustomersToRemove { get; set; } = new List<CustomerIndexViewModel>();
     }
 }

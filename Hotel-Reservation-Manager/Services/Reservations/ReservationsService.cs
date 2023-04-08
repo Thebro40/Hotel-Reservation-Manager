@@ -81,7 +81,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             {
                 Id = x.Id,
                 UserId = x.UserId,
-                RoomId = x.RoomId,
+                Room = context.Rooms.FirstOrDefault(y=>y.Id==x.RoomId),
                 AccommodationDate = x.AccommodationDate,
                 LeaveDate = x.LeaveDate,
                 HasAllInclusive = x.HasAllInclusive,
@@ -102,7 +102,6 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                 {
                     Id = reservation.Id,
                     UserId = reservation.UserId,
-                    RoomId = reservation.RoomId,
                     AccommodationDate = reservation.AccommodationDate,
                     LeaveDate = reservation.LeaveDate,
                     HasAllInclusive = reservation.HasAllInclusive,
@@ -142,8 +141,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                     HasAllInclusive = reservation.HasAllInclusive,
                     HasBreakfast = reservation.HasBreakfast,
                 };
-
-                model.CustomersToRemove = reservation.Customers.Select(x => new CustomerEditViewModel()
+                model.CustomersToRemove = reservation.Customers.Select(x => new CustomerIndexViewModel()
                 {
                     Id = x.Id,
                     Email = x.Email,
@@ -162,7 +160,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
 
                     for (int i = 0; i < model.SelectedRoomCap - reservation.Customers.Count; i++)
                     {
-                        model.CustomersToAdd.Add(new CustomerEditViewModel());
+                        model.CustomersToAdd.Add(new Customer());
                     }
 
                 }
@@ -239,18 +237,17 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                 await context.SaveChangesAsync();
             }
         }
-        public async Task<ReservationDeleteViewModel> GetReservationToDeleteAsync(string id)
+        public async Task<ReservationDetailsViewModel> GetReservationToDeleteAsync(string id)
         {
             Reservation reservation = await this.context.Reservations.FindAsync(id);
             if (reservation != null)
             {
-                ReservationDeleteViewModel model = new ReservationDeleteViewModel()
+                ReservationDetailsViewModel model = new ReservationDetailsViewModel()
                 {
                     Id = reservation.Id,
                     AccommodationDate = reservation.AccommodationDate,
                     LeaveDate = reservation.LeaveDate,
                     UserId = reservation.UserId,
-                    RoomId = reservation.RoomId,
                     HasAllInclusive = reservation.HasAllInclusive,
                     HasBreakfast = reservation.HasBreakfast,
                     Price = reservation.Price,
@@ -273,7 +270,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             }
             return null;
         }
-        public async Task DeleteReservationAsync(ReservationDeleteViewModel model)
+        public async Task DeleteReservationAsync(ReservationDetailsViewModel model)
         {
             Reservation r = await this.context.Reservations.FindAsync(model.Id);
             if (r != null)
@@ -415,6 +412,14 @@ x.LastName == cust.LastName && x.PhoneNumber == cust.PhoneNumber /*&& x.IsAdult 
                 price += room.PricePerBedChild * (decimal)duration.TotalDays;
             }
             return price;
+        }
+        public bool HasReservationPassed(DateTime LeaveDate)
+        {
+            if (LeaveDate <= DateTime.Now)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
