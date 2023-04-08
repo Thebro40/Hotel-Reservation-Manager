@@ -1,6 +1,7 @@
 ﻿using Hotel_Reservation_Manager.Data;
 using Hotel_Reservation_Manager.Data.Models;
 using Hotel_Reservation_Manager.ViewModels;
+using Hotel_Reservation_Manager.ViewModels.Rooms;
 using Hotel_Reservation_Manager.ViewModels.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -43,23 +44,27 @@ namespace Hotel_Reservation_Manager.Services
             }
             return null;
         }
-        public async Task<UsersIndexViewModel> GetUsersAsync()
+        public async Task<UsersIndexViewModel> GetUsersAsync(UsersIndexViewModel model)
         {
-            UsersIndexViewModel model = new UsersIndexViewModel();
-            model.Users = await context.Users.Select(x => new UserIndexViewModel()
-            {
-                Id = x.Id,
-                UserName = x.UserName,
-                Email = x.Email,
-                UCN = x.UCN,
-                PhoneNumber = x.PhoneNumber,
-                FirstName = x.FirstName,
-                MiddleName = x.MiddleName,
-                LastName = x.LastName,
-                HireDate = x.HireDate,
-                IsActive = x.IsActive,
-            })
+            model.Users = await this.context.Users
+                .Skip((model.Page - 1) * model.ItemsPerPage)
+                .Take(model.ItemsPerPage)
+                .Select(x => new UserIndexViewModel()
+                {
+                    Id = x.Id,
+                    UserName = x.UserName,
+                    Email = x.Email,
+                    UCN = x.UCN,
+                    PhoneNumber = x.PhoneNumber,
+                    FirstName = x.FirstName,
+                    MiddleName = x.MiddleName,
+                    LastName = x.LastName,
+                    HireDate = x.HireDate,
+                    IsActive = x.IsActive,
+                })
                 .ToListAsync();
+
+            model.ElementsCount = await this.context.Users.CountAsync();
             return model;
         }
         public async Task CreateUserAsync(UserCreateViewModel model)

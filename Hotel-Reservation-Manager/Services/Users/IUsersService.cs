@@ -6,7 +6,7 @@ namespace Hotel_Reservation_Manager.Services
 {
     public interface IUsersService
     {
-        Task<UsersIndexViewModel> GetUsersAsync();
+        Task<UsersIndexViewModel> GetUsersAsync(UsersIndexViewModel model);
         Task<UserDetailsViewModel> GetUserDetailsByIdAsync(string id);
         Task CreateUserAsync(UserCreateViewModel user);
         Task<UserEditViewModel> EditUserByIdAsync(string id);

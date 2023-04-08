@@ -1,5 +1,6 @@
 ﻿using Hotel_Reservation_Manager.Data;
 using Hotel_Reservation_Manager.Data.Models;
+using Hotel_Reservation_Manager.ViewModels;
 using Hotel_Reservation_Manager.ViewModels.CustomerHistory;
 using Hotel_Reservation_Manager.ViewModels.Customers;
 using Microsoft.EntityFrameworkCore;
@@ -18,19 +19,23 @@ namespace Hotel_Reservation_Manager.Services.Customers
             this.context = context;
         }
 
-        public async Task<CustomersIndexViewModel> GetCustomersAsync()
+        public async Task<CustomersIndexViewModel> GetCustomersAsync(CustomersIndexViewModel model)
         {
-            CustomersIndexViewModel model = new CustomersIndexViewModel();
-            model.Customers = await this.context.Customers.Select(x => new CustomerIndexViewModel()
-            {
-                Id = x.Id,
-                Email = x.Email,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                IsAdult = x.IsAdult,
-                PhoneNumber = x.PhoneNumber,
-            })
+            model.Customers = await this.context.Customers
+                .Skip((model.Page - 1) * model.ItemsPerPage)
+                .Take(model.ItemsPerPage)
+                .Select(x => new CustomerIndexViewModel()
+                {
+                    Id = x.Id,
+                    Email = x.Email,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    IsAdult = x.IsAdult,
+                    PhoneNumber = x.PhoneNumber,
+                })
                 .ToListAsync();
+
+            model.ElementsCount = await this.context.Customers.CountAsync();
             return model;
         }
         public async Task CreateCustomerAsync(CustomerCreateViewModel model)
