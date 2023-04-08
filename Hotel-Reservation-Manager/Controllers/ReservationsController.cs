@@ -23,10 +23,11 @@ namespace Hotel_Reservation_Manager.Controllers
         {
             this.reservationsService = reservationsService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ReservationsIndexViewModel model)
         {
-            var reservations = await reservationsService.GetReservationsAsync();
-            return View(reservations);
+            model = await reservationsService.GetReservationsAsync(model);
+            return View(model);
+
         }
         public async Task<IActionResult> Create(string roomId)
         {

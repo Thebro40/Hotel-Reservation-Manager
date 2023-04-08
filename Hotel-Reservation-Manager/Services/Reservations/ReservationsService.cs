@@ -1,5 +1,6 @@
 ﻿using Hotel_Reservation_Manager.Data;
 using Hotel_Reservation_Manager.Data.Models;
+using Hotel_Reservation_Manager.ViewModels;
 using Hotel_Reservation_Manager.ViewModels.Customers;
 using Hotel_Reservation_Manager.ViewModels.Reservations;
 using Hotel_Reservation_Manager.ViewModels.Rooms;
@@ -72,21 +73,26 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             context.Reservations.Attach(reservation);
             await this.context.SaveChangesAsync();
         }
-        public async Task<ReservationsIndexViewModel> GetReservationsAsync()
+        public async Task<ReservationsIndexViewModel> GetReservationsAsync(ReservationsIndexViewModel model)
         {
-            ReservationsIndexViewModel model = new ReservationsIndexViewModel();
-            model.Reservations = await context.Reservations.Select(x => new ReservationIndexViewModel()
-            {
-                Id = x.Id,
-                UserId = x.UserId,
-                RoomId = x.RoomId,
-                AccommodationDate = x.AccommodationDate,
-                LeaveDate = x.LeaveDate,
-                HasAllInclusive = x.HasAllInclusive,
-                HasBreakfast = x.HasBreakfast,
-                Price = x.Price,
-            })
+            model.Reservations = await this.context.Reservations
+                .Skip((model.Page - 1) * model.ItemsPerPage)
+                .Take(model.ItemsPerPage)
+                .Select(x => new ReservationIndexViewModel()
+                {
+                    Id = x.Id,
+                    UserId = x.UserId,
+                    RoomId = x.RoomId,
+                    AccommodationDate = x.AccommodationDate,
+                    LeaveDate = x.LeaveDate,
+                    HasAllInclusive = x.HasAllInclusive,
+                    HasBreakfast = x.HasBreakfast,
+                    Price = x.Price,
+                })
                 .ToListAsync();
+
+            model.ElementsCount = await this.context.Reservations.CountAsync();
+
             return model;
         }
         public async Task<ReservationDetailsViewModel> GetReservationDetailsAsync(string id)

@@ -1,5 +1,6 @@
 ﻿using Hotel_Reservation_Manager.Data;
 using Hotel_Reservation_Manager.Data.Models;
+using Hotel_Reservation_Manager.ViewModels;
 using Hotel_Reservation_Manager.ViewModels.Rooms;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -14,20 +15,24 @@ namespace Hotel_Reservation_Manager.Services.Rooms
         {
             this.context = context;
         }
-        public async Task<RoomsIndexViewModel> GetRoomsAsync()
+        public async Task<RoomsIndexViewModel> GetRoomsAsync(RoomsIndexViewModel model)
         {
-            RoomsIndexViewModel model = new RoomsIndexViewModel();
-            model.Rooms = await this.context.Rooms.Select(x => new RoomIndexViewModel()
-            {
-                Id = x.Id,
-                Capacity = x.Capacity,
-                RoomType = x.RoomType,
-                IsAvailable = x.IsAvailable,
-                PricePerBedAdult = x.PricePerBedAdult,
-                PricePerBedChild = x.PricePerBedChild,
-                Number = x.Number,
-            })
+            model.Rooms = await this.context.Rooms
+                .Skip((model.Page - 1) * model.ItemsPerPage)
+                .Take(model.ItemsPerPage)
+                .Select(x => new RoomIndexViewModel()
+                {
+                    Id = x.Id,
+                    Capacity = x.Capacity,
+                    RoomType = x.RoomType,
+                    IsAvailable = x.IsAvailable,
+                    PricePerBedAdult = x.PricePerBedAdult,
+                    PricePerBedChild = x.PricePerBedChild,
+                    Number = x.Number,
+                })
                 .ToListAsync();
+
+            model.ElementsCount = await this.context.Rooms.CountAsync();
             return model;
         }
         public async Task<RoomDetailsViewModel> GetRoomDetailsByIdAsync(string id)

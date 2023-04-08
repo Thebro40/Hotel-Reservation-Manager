@@ -14,9 +14,9 @@ namespace Hotel_Reservation_Manager.Controllers
         {
             this.customersService = customersService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CustomersIndexViewModel model)
         {
-            var model = await customersService.GetCustomersAsync();
+            model = await customersService.GetCustomersAsync(model);
             return View(model);
         }
 

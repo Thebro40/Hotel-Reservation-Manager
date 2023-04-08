@@ -18,10 +18,10 @@ namespace Hotel_Reservation_Manager.Controllers
         {
             this.usersService = usersService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(UsersIndexViewModel model)
         {
-            var users = await usersService.GetUsersAsync();
-            return View(users);
+            model = await usersService.GetUsersAsync(model);
+            return View(model);
         }
 
         // GET: Users/Create
