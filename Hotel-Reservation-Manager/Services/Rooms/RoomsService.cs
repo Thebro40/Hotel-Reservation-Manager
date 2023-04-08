@@ -80,8 +80,8 @@ namespace Hotel_Reservation_Manager.Services.Rooms
                 Capacity = model.Capacity,
                 IsAvailable = model.IsAvailable,
                 Number = model.Number,
-                PricePerBedAdult = model.PricePerBedAdult,
-                PricePerBedChild = model.PricePerBedChild,
+                PricePerBedAdult = Decimal.Parse(model.PricePerBedAdult),
+                PricePerBedChild = Decimal.Parse(model.PricePerBedChild),
                 RoomType = model.RoomType,
             };
             await this.context.Rooms.AddAsync(room);
@@ -98,8 +98,8 @@ namespace Hotel_Reservation_Manager.Services.Rooms
                     Capacity = room.Capacity,
                     IsAvailable = room.IsAvailable,
                     Number = room.Number,
-                    PricePerBedAdult = room.PricePerBedAdult,
-                    PricePerBedChild = room.PricePerBedChild,
+                    PricePerBedAdult = room.PricePerBedAdult.ToString("0.00"),
+                    PricePerBedChild = room.PricePerBedChild.ToString("0.00"),
                     RoomType = room.RoomType,
                 };
             }
@@ -113,8 +113,8 @@ namespace Hotel_Reservation_Manager.Services.Rooms
                 Capacity = model.Capacity,
                 IsAvailable = model.IsAvailable,
                 Number = model.Number,
-                PricePerBedAdult = model.PricePerBedAdult,
-                PricePerBedChild = model.PricePerBedChild,
+                PricePerBedAdult = Decimal.Parse(model.PricePerBedAdult),
+                PricePerBedChild = Decimal.Parse(model.PricePerBedChild),
                 RoomType = model.RoomType,
             };
             context.Update(room);
