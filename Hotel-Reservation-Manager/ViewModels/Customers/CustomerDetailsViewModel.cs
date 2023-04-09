@@ -11,7 +11,6 @@ namespace Hotel_Reservation_Manager.ViewModels.Customers
         public CustomerDetailsViewModel()
         {
             Action = "Details";
-            RouteId = Id;
         }
         public string Id { get; set; }
         [Display(Name = "First name")]
