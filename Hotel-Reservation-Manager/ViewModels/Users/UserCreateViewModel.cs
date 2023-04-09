@@ -33,7 +33,7 @@ namespace Hotel_Reservation_Manager.ViewModels.Users
         [DisplayName("Last name")]
         [StringLength(15)]
         public string LastName { get; set; }
-
+        [Required]
         [DataType(DataType.Password)]
         [StringLength(25)]
         [MinLength(6, ErrorMessage = "Password must be at least 6 characters")]
