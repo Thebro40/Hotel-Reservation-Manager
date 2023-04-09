@@ -42,7 +42,7 @@ namespace Hotel_Reservation_Manager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RoomCreateViewModel model)
         {
-            if (await roomsService.DoesRoomNumberExist(model.Number))
+            if (roomsService.DoesRoomNumberExist(model.Number))
             {
                 ModelState.AddModelError(nameof(model.Number), "There is already a room with this number");
                 return View(model);
@@ -65,7 +65,7 @@ namespace Hotel_Reservation_Manager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(RoomEditViewModel model)
         {         
-            if (await roomsService.DoesRoomNumberExist(model.Number,model.Id))
+            if (roomsService.DoesRoomNumberExist(model.Number,model.Id))
             {
                 ModelState.AddModelError(nameof(model.Number), "There is already a room with this number");
                 return View(model);

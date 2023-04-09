@@ -13,6 +13,6 @@ namespace Hotel_Reservation_Manager.Services.Rooms
         Task UpdateRoomAsync(RoomEditViewModel model);
         Task DeleteConfirmRoomAsync(RoomDetailsViewModel model);
         Task<RoomDetailsViewModel> DeleteRoomByIdAsync(string id);
-        Task<bool> DoesRoomNumberExist(int modelNumber,string roomId= null);
+        bool DoesRoomNumberExist(int modelNumber,string roomId= null);
     }
 }

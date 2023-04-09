@@ -89,7 +89,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                 Price = x.Price,
             })
                 .ToListAsync();
-            model.ElementsCount = await this.context.Customers.CountAsync();
+            model.ElementsCount = await this.context.Reservations.CountAsync();
             return model;
         }
         public async Task<ReservationDetailsViewModel> GetReservationDetailsAsync(string id)
@@ -302,7 +302,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
         }
         public async Task<List<RoomSelectListViewModel>> GetFreeRoomsSelectListAsync()
         {
-            List<RoomSelectListViewModel> SelectList = await this.context.Rooms.Where(x => x.Reservation == null && x.IsAvailable==true).Select(x => new RoomSelectListViewModel()
+            List<RoomSelectListViewModel> SelectList = await this.context.Rooms.Where(x => x.Reservation == null && x.IsAvailable).Select(x => new RoomSelectListViewModel()
             {
                 Id = x.Id,
                 Capacity = x.Capacity,

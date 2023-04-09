@@ -21,7 +21,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
             model.Rooms = await this.context.Rooms
                 .Where(x => x.Capacity >= model.Filter.Capacity )
                 .Where(x => model.Filter.Type != null ? x.RoomType == Enum.Parse<RoomType>(model.Filter.Type) : x.Id != null)
-                .Where(x => x.IsAvailable == model.Filter.IsAvailable)
+                .Where(x => model.Filter.IsAvailable !=null ? x.IsAvailable == Convert.ToBoolean(model.Filter.IsAvailable) : x.Id != null)
                 .Skip((model.Page - 1) * model.ItemsPerPage)
                 .Take(model.ItemsPerPage)
                 .Select(x => new RoomIndexViewModel()
@@ -57,7 +57,7 @@ namespace Hotel_Reservation_Manager.Services.Rooms
             }
             return null;
         }
-        public async Task<bool> DoesRoomNumberExist(int modelNumber,string roomId=null)
+        public bool DoesRoomNumberExist(int modelNumber,string roomId=null)
         {
             var roomx = context.Rooms.Where(x=>x.Number==modelNumber).Select(x => new Room()
             {

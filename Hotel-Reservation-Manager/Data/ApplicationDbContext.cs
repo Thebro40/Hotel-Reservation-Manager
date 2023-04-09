@@ -1,4 +1,5 @@
-﻿using Hotel_Reservation_Manager.Data.Models;
+﻿using Hotel_Reservation_Manager.Data.Enums;
+using Hotel_Reservation_Manager.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,16 @@ namespace Hotel_Reservation_Manager.Data
            .HasOne(a => a.Room)
            .WithOne(b => b.Reservation)
            .HasForeignKey<Room>(b => b.ReservationId);
+
+            builder.Entity<Customer>()
+                .HasOne(a => a.Reservation)
+                .WithMany(a => a.Customers)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Customer>()
+    .HasMany(a => a.ReservationsHistory)
+    .WithOne(a => a.Customer)
+    .OnDelete(DeleteBehavior.SetNull);
 
             base.OnModelCreating(builder);
 
@@ -79,7 +90,7 @@ namespace Hotel_Reservation_Manager.Data
             });
 
             //Add users
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 100; i++)
             {
                 User user = CreateUser($"user{i}@abv.bg");
 
@@ -92,15 +103,19 @@ namespace Hotel_Reservation_Manager.Data
             }
             //Add Customers
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 100; i++)
             {
                 Customer customer = CreateCustomer($"customer{i}@abv.bg");
 
                 builder.Entity<Customer>().HasData(customer);
             }
 
-
-
+            //Add rooms
+            for (int i = 0; i < 15; i++)
+            {
+                Room room = CreateRoom(i+100);
+                builder.Entity<Room>().HasData(room);
+            }
         }
         private static IdentityRole CreateRole(string roleName)
         {
@@ -108,8 +123,8 @@ namespace Hotel_Reservation_Manager.Data
         }
         private User CreateUser(string email, string password = "123456")
         {
-            List<string> firstName = new List<string>() { "John", "Alex", "Jane", "Jack" };
-            List<string> lastName = new List<string>() { "Johnson", "Alexandrov" };
+            List<string> firstName = new List<string>() { "John", "Alex", "Jane", "Jack", "Michael", "William" };
+            List<string> lastName = new List<string>() { "Johnson", "Alexandrov", "Brown", "Martinez" };
             Random random = new Random();
             var hasher = new PasswordHasher<IdentityUser>();
             //Create user
@@ -119,8 +134,8 @@ namespace Hotel_Reservation_Manager.Data
                 FirstName = firstName[random.Next(0, firstName.Count)],
                 MiddleName = firstName[random.Next(0, firstName.Count)],
                 LastName = lastName[random.Next(0, lastName.Count)],
-                PhoneNumber = random.Next(0, 10000).ToString("D10"),
-                UCN = random.Next(0, 10000).ToString("D10"),
+            PhoneNumber = random.Next(100000000, 999999999).ToString("D10"),
+                UCN = random.Next(0, 1000000000).ToString("D10"),
                 HireDate = DateTime.Now,
                 IsActive = true,
                 SecurityStamp = string.Empty,
@@ -135,12 +150,12 @@ namespace Hotel_Reservation_Manager.Data
             };
             return user;
         }
-        private Customer CreateCustomer(string email, string password = "123456")
+        private Customer CreateCustomer(string email)
         {
-            List<string> firstName = new List<string>() { "John", "Alex", "Jane", "Jack" };
-            List<string> lastName = new List<string>() { "Johnson", "Alexandrov" };
+            List<string> firstName = new List<string>() { "John", "Alex", "Jane", "Jack", "Michael", "William" };
+            List<string> lastName = new List<string>() { "Johnson", "Alexandrov", "Brown", "Martinez" };
             Random random = new Random();
-            var x = random.Next(0, 1000000);
+            var x = random.Next(100000000, 999999999);
             Boolean isAdult = false;
 
             if (random.Next(100) < 40)
@@ -153,11 +168,32 @@ namespace Hotel_Reservation_Manager.Data
                 Id = Guid.NewGuid().ToString(),
                 FirstName = firstName[random.Next(0, firstName.Count)],
                 LastName = lastName[random.Next(0, lastName.Count)],
-                PhoneNumber = x.ToString("D6"),
+                PhoneNumber = x.ToString("D10"),
                 IsAdult = isAdult,
                 Email = email,
             };
             return customer;
+        }
+        private Room CreateRoom(int number = 100)
+        {
+            Random random = new Random();
+            decimal y = random.Next(0, 1000);
+            var z = random.Next(0, 10);
+            Array values = Enum.GetValues(typeof(RoomType));
+            RoomType randomType = (RoomType)values.GetValue(random.Next(values.Length));
+
+            //Create Room
+            Room room = new Room()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Capacity = z,
+                IsAvailable = true,
+                Number = number,
+                PricePerBedAdult = y,
+                PricePerBedChild = y / 2,
+                RoomType = randomType,
+            };
+            return room;
         }
 
     }
