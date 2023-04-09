@@ -16,13 +16,12 @@ namespace Hotel_Reservation_Manager.Services
         private readonly ApplicationDbContext context;
         public readonly IPasswordHasher<User> passwordHasher;
         private readonly UserManager<User> userManager;
-        public UsersService(ApplicationDbContext context,  IPasswordHasher<User> passwordHasher, UserManager<User> userManager)
+        public UsersService(ApplicationDbContext context, IPasswordHasher<User> passwordHasher, UserManager<User> userManager)
         {
             this.userManager = userManager;
             this.context = context;
             this.passwordHasher = passwordHasher;
         }
-        //TO-DO ADD VALIDATIONS AND CHECKS
         public async Task<UserDetailsViewModel> GetUserDetailsByIdAsync(string id)
         {
             User user = await this.context.Users.FindAsync(id);
@@ -46,6 +45,7 @@ namespace Hotel_Reservation_Manager.Services
         }
         public async Task<UsersIndexViewModel> GetUsersAsync(UsersIndexViewModel model)
         {
+<<<<<<< HEAD
             model.Users = await this.context.Users
                 .Skip((model.Page - 1) * model.ItemsPerPage)
                 .Take(model.ItemsPerPage)
@@ -64,6 +64,31 @@ namespace Hotel_Reservation_Manager.Services
                 })
                 .ToListAsync();
 
+=======
+            model.Users = await context.Users
+                .Where(x => model.Filter.FirstName != null ? (x.FirstName.StartsWith(model.Filter.FirstName)) : x.Id != null)
+                .Where(x => model.Filter.MiddleName != null ? (x.MiddleName.StartsWith(model.Filter.MiddleName)) : x.Id != null)
+                .Where(x => model.Filter.LastName != null ? (x.LastName.StartsWith(model.Filter.LastName)) : x.Id != null)
+                .Where(x => model.Filter.UserName != null ? (x.UserName.StartsWith(model.Filter.UserName)) : x.Id != null)
+                .Where(x => model.Filter.Email != null ? (x.Email.StartsWith(model.Filter.Email)) : x.Id != null)
+                .Skip((model.Page - 1) * model.ItemsPerPage)
+                .Take(model.ItemsPerPage)
+                .Select(x => new UserIndexViewModel()
+            {
+                Id = x.Id,
+                UserName = x.UserName,
+                Email = x.Email,
+                UCN = x.UCN,
+                PhoneNumber = x.PhoneNumber,
+                FirstName = x.FirstName,
+                MiddleName = x.MiddleName,
+                LastName = x.LastName,
+                HireDate = x.HireDate,
+                IsActive = x.IsActive,
+                FireDate = x.FireDate,
+            })
+                .ToListAsync();
+>>>>>>> 9b615d978ebcefaac978178e5eda4c713a65289f
             model.ElementsCount = await this.context.Users.CountAsync();
             return model;
         }
@@ -71,32 +96,30 @@ namespace Hotel_Reservation_Manager.Services
         {
             //Create User
             User user = new User()
-            {        
+            {
                 UserName = model.UserName,
                 NormalizedUserName = model.UserName.ToUpper(),
                 Email = model.Email,
                 NormalizedEmail = model.Email.ToUpper(),
                 PhoneNumber = model.PhoneNumber,
-                //Password = model.Password,
                 FirstName = model.FirstName,
                 MiddleName = model.MiddleName,
                 LastName = model.LastName,
                 UCN = model.UCN,
                 HireDate = model.HireDate,
                 IsActive = model.IsActive,
-                FireDate = model.FireDate,
-
             };
+            //Hash and add user password
             var hashedPassword = passwordHasher.HashPassword(user, model.Password);
             user.SecurityStamp = Guid.NewGuid().ToString();
             user.PasswordHash = hashedPassword;
-            
+
             //Add User to database and save
             await this.context.Users.AddAsync(user);
             await this.context.SaveChangesAsync();
 
             //Add User to role if IsActive is true
-            if (model.IsActive == true)
+            if (model.IsActive)
             {
                 await userManager.AddToRoleAsync(user, "User");
             }
@@ -111,9 +134,6 @@ namespace Hotel_Reservation_Manager.Services
                     Id = user.Id,
                     UserName = user.UserName,
                     PhoneNumber = user.PhoneNumber,
-                    ///TO-DO
-                    ///When editing a user, password always changes
-                    //NewPassword = user.PasswordHash.ToString(),
                     NewPassword = String.Empty,
                     FirstName = user.FirstName,
                     MiddleName = user.MiddleName,
@@ -131,8 +151,6 @@ namespace Hotel_Reservation_Manager.Services
         public async Task UpdateUserAsync(UserEditViewModel model)
         {
             User user = await this.context.Users.FindAsync(model.Id);
-            ///TO-DO
-            ///When editing a user, change only edited properties?
             user.UserName = model.UserName;
             user.NormalizedUserName = model.UserName.ToUpper();
             user.Email = model.Email;
@@ -143,16 +161,13 @@ namespace Hotel_Reservation_Manager.Services
             user.LastName = model.LastName;
             user.UCN = model.UCN;
             user.HireDate = model.HireDate;
-            user.IsActive = model.IsActive;
-            user.FireDate = model.FireDate;
-            user.SecurityStamp = Guid.NewGuid().ToString();
 
-            ///TO-DO
-            ///When editing a user, password always changes
-            /* 
-                var hashedPassword = passwordHasher.HashPassword(user, model.NewPassword);
-                user.PasswordHash = hashedPassword;
-            */
+            if (!model.IsActive && model.IsActive != user.IsActive)
+            {
+                user.FireDate = DateTime.Today;
+            }
+            user.IsActive = model.IsActive;
+            user.SecurityStamp = Guid.NewGuid().ToString();
             if (!String.IsNullOrWhiteSpace(model.NewPassword))
             {
                 var hashedPassword = passwordHasher.HashPassword(user, model.NewPassword);
@@ -160,7 +175,7 @@ namespace Hotel_Reservation_Manager.Services
             }
 
             //Remove Role if IsActive isn't true
-            if (model.IsActive == false)
+            if (!model.IsActive)
             {
                 await userManager.RemoveFromRoleAsync(user, "User");
             }
@@ -169,12 +184,10 @@ namespace Hotel_Reservation_Manager.Services
                 //Add User role if IsActive is true and User doesnt have Admin or User role
                 if (!await userManager.IsInRoleAsync(user, "Admin") || !await userManager.IsInRoleAsync(user, "User"))
                 {
-                  await userManager.AddToRoleAsync(user, "User");
+                    await userManager.AddToRoleAsync(user, "User");
                 }
+                user.FireDate = null;
             }
-
-
-
             this.context.Update(user);
             await context.SaveChangesAsync();
         }
@@ -205,9 +218,9 @@ namespace Hotel_Reservation_Manager.Services
             User user = await this.context.Users.FindAsync(model.Id);
             if (user != null)
             {
-               this.context.Users.Remove(user);
-               await this.context.SaveChangesAsync();
-            }          
+                this.context.Users.Remove(user);
+                await this.context.SaveChangesAsync();
+            }
         }
     }
 }

@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 ﻿namespace Hotel_Reservation_Manager.ViewModels.Shared
 {
     using System;
+=======
+﻿using System;
+
+namespace Hotel_Reservation_Manager.ViewModels.Shared
+{
+>>>>>>> 9b615d978ebcefaac978178e5eda4c713a65289f
     public class PagingViewModel
     {
         public PagingViewModel(int itemsPerPage = 10, string action = "Index")
@@ -27,5 +34,11 @@
         public int ItemsPerPage { get; set; }
 
         public string Action { get; set; }
+<<<<<<< HEAD
     }
 }
+=======
+
+    }
+}
+>>>>>>> 9b615d978ebcefaac978178e5eda4c713a65289f

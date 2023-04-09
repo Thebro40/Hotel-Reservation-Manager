@@ -8,7 +8,7 @@ namespace Hotel_Reservation_Manager.Services
     {
         Task<UsersIndexViewModel> GetUsersAsync(UsersIndexViewModel model);
         Task<UserDetailsViewModel> GetUserDetailsByIdAsync(string id);
-        Task CreateUserAsync(UserCreateViewModel user);
+        Task CreateUserAsync(UserCreateViewModel model);
         Task<UserEditViewModel> EditUserByIdAsync(string id);
         Task UpdateUserAsync(UserEditViewModel model);
         Task<UserDetailsViewModel> DeleteUserByIdAsync(string id);

@@ -12,6 +12,14 @@
     <Compile Remove="Data\Migrations\20230315123725_addrelationshipOneToOneRoomAndReservation.Designer.cs" />
     <Compile Remove="Data\Migrations\20230317134757_initial.cs" />
     <Compile Remove="Data\Migrations\20230317134757_initial.Designer.cs" />
+    <Compile Remove="Data\Migrations\20230409104021_SeedingForRooms.cs" />
+    <Compile Remove="Data\Migrations\20230409104021_SeedingForRooms.Designer.cs" />
+    <Compile Remove="Data\Migrations\20230409104413_SeedingForRooms.cs" />
+    <Compile Remove="Data\Migrations\20230409104413_SeedingForRooms.Designer.cs" />
+    <Compile Remove="Data\Migrations\20230409110955_ondeletesetnullforCustomer.cs" />
+    <Compile Remove="Data\Migrations\20230409110955_ondeletesetnullforCustomer.Designer.cs" />
+    <Compile Remove="Data\Migrations\20230409111211_ondeletesetnullforCustomer.cs" />
+    <Compile Remove="Data\Migrations\20230409111211_ondeletesetnullforCustomer.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,8 +36,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
   </ItemGroup>
 
+<<<<<<< HEAD
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
+=======
+>>>>>>> 9b615d978ebcefaac978178e5eda4c713a65289f
 </Project>

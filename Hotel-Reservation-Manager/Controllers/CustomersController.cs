@@ -16,7 +16,11 @@ namespace Hotel_Reservation_Manager.Controllers
         }
         public async Task<IActionResult> Index(CustomersIndexViewModel model)
         {
+<<<<<<< HEAD
             model = await customersService.GetCustomersAsync(model);
+=======
+            model = await this.customersService.GetCustomersAsync(model);
+>>>>>>> 9b615d978ebcefaac978178e5eda4c713a65289f
             return View(model);
         }
 
@@ -36,9 +40,9 @@ namespace Hotel_Reservation_Manager.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string id, CustomerDetailsViewModel model)
         {
-            CustomerDetailsViewModel model = await customersService.GetCustomerDetailsByIdAsync(id);
+            model = await customersService.GetCustomerDetailsByIdAsync(id);
             return View(model);
         }
 

@@ -9,7 +9,7 @@ namespace Hotel_Reservation_Manager.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
         }
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; }
         public string CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
         public int ResRoomNumber { get; set; }

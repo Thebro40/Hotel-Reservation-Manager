@@ -1,8 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<div id="cover">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center" style="background-color:rgba(100,100,100,0.4); padding:20px; border:solid 10px rgba(0,0,0,0.5); border-radius:10px">
+    <h1 class="display-4" style="color:white">Welcome</h1>
+    <h2 style="color:white">
+        You can see our privacy policy here:
+    </h2>
+    <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 </div>
+</div>
+<style>
+    #cover
+    {       
+        height:800px;
+        width:1200px;
+        padding:100px;
+        background-size: cover;
+        background-image:url(https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?cs=srgb&dl=pexels-pixabay-271639.jpg&fm=jpg);
+    }
+</style>

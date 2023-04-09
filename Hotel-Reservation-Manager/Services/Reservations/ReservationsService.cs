@@ -75,6 +75,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
         }
         public async Task<ReservationsIndexViewModel> GetReservationsAsync(ReservationsIndexViewModel model)
         {
+<<<<<<< HEAD
             model.Reservations = await this.context.Reservations
                 .Skip((model.Page - 1) * model.ItemsPerPage)
                 .Take(model.ItemsPerPage)
@@ -93,6 +94,24 @@ namespace Hotel_Reservation_Manager.Services.Reservations
 
             model.ElementsCount = await this.context.Reservations.CountAsync();
 
+=======
+            model.Reservations = await context.Reservations
+                .Skip((model.Page - 1) * model.ItemsPerPage)
+                .Take(model.ItemsPerPage)
+                .Select(x => new ReservationIndexViewModel()
+            {
+                Id = x.Id,
+                UserId = x.UserId,
+                Room = context.Rooms.FirstOrDefault(y=>y.Id==x.RoomId),
+                AccommodationDate = x.AccommodationDate,
+                LeaveDate = x.LeaveDate,
+                HasAllInclusive = x.HasAllInclusive,
+                HasBreakfast = x.HasBreakfast,
+                Price = x.Price,
+            })
+                .ToListAsync();
+            model.ElementsCount = await this.context.Reservations.CountAsync();
+>>>>>>> 9b615d978ebcefaac978178e5eda4c713a65289f
             return model;
         }
         public async Task<ReservationDetailsViewModel> GetReservationDetailsAsync(string id)
@@ -105,7 +124,6 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                 {
                     Id = reservation.Id,
                     UserId = reservation.UserId,
-                    RoomId = reservation.RoomId,
                     AccommodationDate = reservation.AccommodationDate,
                     LeaveDate = reservation.LeaveDate,
                     HasAllInclusive = reservation.HasAllInclusive,
@@ -145,8 +163,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                     HasAllInclusive = reservation.HasAllInclusive,
                     HasBreakfast = reservation.HasBreakfast,
                 };
-
-                model.CustomersToRemove = reservation.Customers.Select(x => new CustomerEditViewModel()
+                model.CustomersToRemove = reservation.Customers.Select(x => new CustomerIndexViewModel()
                 {
                     Id = x.Id,
                     Email = x.Email,
@@ -165,7 +182,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
 
                     for (int i = 0; i < model.SelectedRoomCap - reservation.Customers.Count; i++)
                     {
-                        model.CustomersToAdd.Add(new CustomerEditViewModel());
+                        model.CustomersToAdd.Add(new Customer());
                     }
 
                 }
@@ -242,18 +259,17 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                 await context.SaveChangesAsync();
             }
         }
-        public async Task<ReservationDeleteViewModel> GetReservationToDeleteAsync(string id)
+        public async Task<ReservationDetailsViewModel> GetReservationToDeleteAsync(string id)
         {
             Reservation reservation = await this.context.Reservations.FindAsync(id);
             if (reservation != null)
             {
-                ReservationDeleteViewModel model = new ReservationDeleteViewModel()
+                ReservationDetailsViewModel model = new ReservationDetailsViewModel()
                 {
                     Id = reservation.Id,
                     AccommodationDate = reservation.AccommodationDate,
                     LeaveDate = reservation.LeaveDate,
                     UserId = reservation.UserId,
-                    RoomId = reservation.RoomId,
                     HasAllInclusive = reservation.HasAllInclusive,
                     HasBreakfast = reservation.HasBreakfast,
                     Price = reservation.Price,
@@ -276,7 +292,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
             }
             return null;
         }
-        public async Task DeleteReservationAsync(ReservationDeleteViewModel model)
+        public async Task DeleteReservationAsync(ReservationDetailsViewModel model)
         {
             Reservation r = await this.context.Reservations.FindAsync(model.Id);
             if (r != null)
@@ -308,7 +324,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
         }
         public async Task<List<RoomSelectListViewModel>> GetFreeRoomsSelectListAsync()
         {
-            List<RoomSelectListViewModel> SelectList = await this.context.Rooms.Where(x => x.Reservation == null).Select(x => new RoomSelectListViewModel()
+            List<RoomSelectListViewModel> SelectList = await this.context.Rooms.Where(x => x.Reservation == null && x.IsAvailable).Select(x => new RoomSelectListViewModel()
             {
                 Id = x.Id,
                 Capacity = x.Capacity,
@@ -324,7 +340,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
         {
             List<RoomSelectListViewModel> SelectList = await GetFreeRoomsSelectListAsync();
             Room room = await context.Rooms.FirstOrDefaultAsync(x => x.Id == model.RoomId);
-            RoomSelectListViewModel vm = new RoomSelectListViewModel()
+            RoomSelectListViewModel rsvm = new RoomSelectListViewModel()
             {
                 Id = room.Id,
                 Capacity = room.Capacity,
@@ -333,7 +349,7 @@ namespace Hotel_Reservation_Manager.Services.Reservations
                 PricePerBedAdult = room.PricePerBedAdult,
                 PricePerBedChild = room.PricePerBedChild,
             };
-            SelectList.Add(vm);
+            SelectList.Add(rsvm);
             return SelectList;
         }
         private async Task RemoveCustomerReservationAsync(Customer dbCustomer, Reservation res)
@@ -418,6 +434,14 @@ x.LastName == cust.LastName && x.PhoneNumber == cust.PhoneNumber /*&& x.IsAdult 
                 price += room.PricePerBedChild * (decimal)duration.TotalDays;
             }
             return price;
+        }
+        public bool HasReservationPassed(DateTime LeaveDate)
+        {
+            if (LeaveDate <= DateTime.Now)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

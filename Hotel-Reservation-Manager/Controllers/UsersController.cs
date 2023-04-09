@@ -1,10 +1,7 @@
-﻿using Hotel_Reservation_Manager.Data.Models;
-using Hotel_Reservation_Manager.Services;
+﻿using Hotel_Reservation_Manager.Services;
 using Hotel_Reservation_Manager.ViewModels.Users;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Hotel_Reservation_Manager.Controllers

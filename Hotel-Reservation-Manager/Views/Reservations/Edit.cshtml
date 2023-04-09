@@ -13,72 +13,82 @@
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Id" />
-                    <table class="table table-responsive table-hover "
-                       style="border-radius: 10px; overflow: hidden;">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Phone Number</th>
-                                <th>Select for removal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < Model.CustomersToRemove.Count; i++)
-                            {
+                    <div class="form-group">
+
+                        <h4>
+                            Select customers to remove:
+                        </h4>
+                        <table class="table table-responsive table-hover "
+                           style="border-radius: 10px; overflow: hidden;">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <td>
-                                        @Html.DisplayFor(a=>a.CustomersToRemove[i].FirstName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(a=>a.CustomersToRemove[i].LastName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(a=>a.CustomersToRemove[i].PhoneNumber)
-                                    </td>
-                                    <td>
-                                        <input asp-for="CustomersToRemove[i].RemoveFromRes" type="checkbox" class="form-control" />
-                                        <input type="hidden" asp-for="CustomersToRemove[i].Id" />
-                                    </td>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Select for removal</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.CustomersToRemove.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(a=>a.CustomersToRemove[i].FirstName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(a=>a.CustomersToRemove[i].LastName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(a=>a.CustomersToRemove[i].PhoneNumber)
+                                        </td>
+                                        <td>
+                                            <input asp-for="CustomersToRemove[i].RemoveFromRes" type="checkbox" class="form-control" />
+                                            <input type="hidden" asp-for="CustomersToRemove[i].Id" />
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
 
-
-
-                    <table class="table table-responsive table-hover "
-                       style="border-radius: 10px; overflow: hidden;">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Phone Number</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < Model.SelectedRoomCap - Model.CustomersToRemove.Count; i++)
-                            {
+                    </div>
+                    <div class="form-group">
+                        <h4>
+                            Input existing customer Data:
+                        </h4>
+                        <small>(leave blank if needed)</small>
+                        <table class="table table-responsive table-hover "
+                           style="border-radius: 10px; overflow: hidden;">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <td>
-                                        <label asp-for="CustomersToAdd[i].FirstName" class="control-label"></label>
-                                        <input asp-for="CustomersToAdd[i].FirstName" class="form-control" />
-                                        <span asp-validation-for="CustomersToAdd[i].FirstName" class="text-danger"></span>
-                                    </td>
-                                    <td>
-                                        <label asp-for="CustomersToAdd[i].LastName" class="control-label"></label>
-                                        <input asp-for="CustomersToAdd[i].LastName" class="form-control" />
-                                        <span asp-validation-for="CustomersToAdd[i].LastName" class="text-danger"></span>
-                                    </td>
-                                    <td>
-                                        <label asp-for="CustomersToAdd[i].PhoneNumber" class="control-label"></label>
-                                        <input asp-for="CustomersToAdd[i].PhoneNumber" class="form-control" />
-                                        <span asp-validation-for="CustomersToAdd[i].PhoneNumber" class="text-danger"></span>
-                                    </td>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Phone Number</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.SelectedRoomCap - Model.CustomersToRemove.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            <label asp-for="CustomersToAdd[i].FirstName" class="control-label"></label>
+                                            <input asp-for="CustomersToAdd[i].FirstName" class="form-control" />
+                                            <span asp-validation-for="CustomersToAdd[i].FirstName" class="text-danger"></span>
+                                        </td>
+                                        <td>
+                                            <label asp-for="CustomersToAdd[i].LastName" class="control-label"></label>
+                                            <input asp-for="CustomersToAdd[i].LastName" class="form-control" />
+                                            <span asp-validation-for="CustomersToAdd[i].LastName" class="text-danger"></span>
+                                        </td>
+                                        <td>
+                                            <label asp-for="CustomersToAdd[i].PhoneNumber" class="control-label"></label>
+                                            <input asp-for="CustomersToAdd[i].PhoneNumber" class="form-control" />
+                                            <span asp-validation-for="CustomersToAdd[i].PhoneNumber" class="text-danger"></span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="justify-content-center text-center">
                         <span asp-validation-for="CustomersToAdd" class="text-danger text-center"></span>
                     </div>

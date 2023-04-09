@@ -1,4 +1,5 @@
-﻿using Hotel_Reservation_Manager.ViewModels.Rooms;
+﻿using Hotel_Reservation_Manager.Data.Models;
+using Hotel_Reservation_Manager.ViewModels.Rooms;
 using System.Threading.Tasks;
 
 namespace Hotel_Reservation_Manager.Services.Rooms
@@ -12,5 +13,6 @@ namespace Hotel_Reservation_Manager.Services.Rooms
         Task UpdateRoomAsync(RoomEditViewModel model);
         Task DeleteConfirmRoomAsync(RoomDetailsViewModel model);
         Task<RoomDetailsViewModel> DeleteRoomByIdAsync(string id);
+        bool DoesRoomNumberExist(int modelNumber,string roomId= null);
     }
 }
